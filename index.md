@@ -1,37 +1,27 @@
-## Welcome to GitHub Pages
+Voice skills today are very limited - primarily supporting basic
+'Command-Response' type usage. Violet lets you take the next step. Build basic
+skills with ease, and supercharge your Voice Applications to get answers from
+users and even provide coaching as needed.
 
-You can use the [editor on GitHub](https://github.com/salesforce/HelloViolet.ai/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+## Basics
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Violet is a Node.js framework that allows you to create voice-scripts in an
+intuitive manner, while consisting of a set of plugins to hide low-level API
+calls. Conversations can be tested locally using its web interface, and are
+typically deployed on Amazon's Alex API.
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### violet-conversations
 
-```markdown
-Syntax highlighted code block
+This is the core module used by any of the Violet projects. Tools are provided
+so that scripts built here can be easily tested using a Web-UI, as well as
+an interface to ease skill registration.
 
-# Header 1
-## Header 2
-### Header 3
+### violet-samples
 
-- Bulleted
-- List
+These are built-out samples that are provided so that you can easily examine,
+customize, and/or create your own scripts.
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/salesforce/HelloViolet.ai/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+## Questions
+Please reach out on Stack Overflow, Twitter, or file a bug on the appropriate
+project.

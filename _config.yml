@@ -1,1 +1,6 @@
 theme: jekyll-theme-slate
+title: Violet
+descriptionX: Sophisticated Conversational Apps on Amazon's Alexa
+description: Enabling Sophisticated Voice Conversations
+github:
+  repository_url: https://github.com/salesforce/violet-conversations

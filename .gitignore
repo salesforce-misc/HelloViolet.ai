@@ -2,3 +2,6 @@ _site
 Gemfile
 Gemfile.lock
 .DS_Store
+
+# for experiments that we no longer need
+attic/*

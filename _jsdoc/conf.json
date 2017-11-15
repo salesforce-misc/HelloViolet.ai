@@ -9,16 +9,16 @@
     "includePattern": ".+\\.js(doc|x)?$",
     "excludePattern": "(^|\\/|\\\\)_"
   },
-  "plugins": ["jsdoc/custom-tags.js"],
+  "plugins": ["_jsdoc/custom-tags.js"],
   "tags": {
     "allowUnknownTags": false
   },
   "templates": {
     "default": {
-      "layoutFile": "jsdoc/main.tmpl"
+      "layoutFile": "_jsdoc/main.tmpl"
     }
   },
   "opts": {
-    "destination": "docs"
+    "destination": "../HelloViolet.ai-gh/docs"
   }
 }

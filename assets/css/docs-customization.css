@@ -1,0 +1,81 @@
+body {
+  background-color: #f2f2f2;
+  margin: 0px;
+}
+section {
+  background-color: inherit;
+}
+#top_banner {
+  display: block;
+  position: absolute;
+  top:5PX;
+  right: 10px;
+  z-index: 10;
+}
+
+#menu, #forkme_banner {
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(0,0,0,.5);
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+#menu {
+  padding: 10px 10px 10px 10px;
+}
+#forkme_banner {
+  padding: 10px 50px 10px 10px;
+  background: url('../assets/images/blacktocat.png') #0090ff no-repeat 95% 50%;
+}
+#header_wrap {
+  background: #212121;
+  background: -moz-linear-gradient(top, #373737, #212121);
+  background: -webkit-linear-gradient(top, #373737, #212121);
+  background: -ms-linear-gradient(top, #373737, #212121);
+  background: -o-linear-gradient(top, #373737, #212121);
+  background: linear-gradient(top, #373737, #212121);
+}
+
+#header_wrap .inner {
+  /*padding: 50px 10px 30px 10px;*/
+  padding: 10px 10px 10px 10px;
+}
+
+#project_title a {
+  color: #fff;
+}
+#project_title {
+  margin: 0;
+  font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: #111 0px 0px 10px;
+}
+
+#project_tagline {
+  color: #fff;
+  font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  background: none;
+  text-shadow: #111 0px 0px 10px;
+}
+
+.outer {
+  width: 100%;
+}
+
+.inner {
+  position: relative;
+  max-width: 640px;
+  padding: 20px 10px;
+  margin: 0 auto;
+}
+
+#main_wrap {
+  max-width: 640px;
+  margin: 0 auto;
+}

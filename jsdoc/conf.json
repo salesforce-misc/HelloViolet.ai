@@ -9,15 +9,16 @@
     "includePattern": ".+\\.js(doc|x)?$",
     "excludePattern": "(^|\\/|\\\\)_"
   },
-  "plugins": ["jsdoc-custom-tags.js"],
+  "plugins": ["jsdoc/custom-tags.js"],
   "tags": {
     "allowUnknownTags": false
   },
   "templates": {
+    "default": {
+      "layoutFile": "jsdoc/main.tmpl"
+    }
   },
   "opts": {
-    "template": "jsdoc-default-template-ext",
-    "templateXXX": "./node_modules/ink-docstrap/template",
     "destination": "docs"
   }
 }

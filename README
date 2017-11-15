@@ -1,1 +1,5 @@
 Violet website pulling in documentation from the different Violet projects.
+
+Can be updated by making sure that the other violet projects are siblings to 
+this project, are updated, and then typing:
+  rm -rf docs; jsdoc -c jsdoc/conf.json

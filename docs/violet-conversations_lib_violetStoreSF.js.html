@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: violet-conversations/lib/violetStoreSF.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: violet-conversations/lib/violetStoreSF.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* Copyright (c) 2017-present, salesforce.com, inc. All rights reserved */
+/* Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license */
+
+/**
+ * Plugin which makes it easy to store, update, and retrieve data form a
+ * Salesforce Org.
+ * @module violetStoreSF
+ */
+
+var nforce = require('nforce');
+var org = nforce.createConnection({
+  clientId: process.env.V_SFDC_CLIENT_ID,
+  clientSecret: process.env.V_SFDC_CLIENT_SECRET,
+  redirectUri: 'http://localhost:3000/oauth/_callback',
+  // apiVersion: 'v27.0',  // optional, defaults to current salesforce API version
+  // environment: 'production',  // optional, salesforce 'sandbox' or 'production', production default
+  autoRefresh: true,
+  onRefresh: function(newOauth, oldOauth, cb) {
+    console.log('SF Refresh Access Token - old: ', oldOauth.access_token);
+    console.log('SF Refresh Access Token - new: ', newOauth.access_token);
+    cb();
+  },
+  mode: 'single' // optional, 'single' or 'multi' user mode, multi default
+});
+org.authenticate({ username: process.env.V_SFDC_USERNAME, password: process.env.V_SFDC_PASSWORD}, function(err, resp){
+  // the oauth object was stored in the connection object
+  if(err) {
+    console.log('err: ', err);
+    return;
+  }
+
+  console.log('SF Access Token: ' + org.oauth.access_token);
+});
+
+const builtIn='*';
+
+var _nameToStr = (commonName)=>{
+  if (commonName.endsWith(builtIn))
+    return commonName.slice(0,-builtIn.length);
+  else
+    return commonName+'__c';
+};
+
+var _getCompoundNameToStr = (commonName)=>{
+  names = commonName.split('.');
+  var ret = '';
+  names.forEach((n)=>{
+    if (ret.length>0) ret+='.';
+    ret+=_nameToStr(n);
+  });
+  return ret;
+};
+var _getCompoundProperty = (obj, prop)=>{
+  var __nget=(o,p)=>{
+    if (o==null) {
+      console.log('Trying to get property: ' + prop + ' from null');
+      return null;
+    }
+    if (o.get)
+      return o.get(p);
+    else
+      return o[p];
+  }
+  var ret = obj;
+  propItems = prop.split('.');
+  propItems.forEach((p, ndx)=>{
+    ret = __nget(ret, _nameToStr(p));
+  });
+  return ret;
+}
+var _setCompundProperty = (obj, prop, val)=>{
+  prop = prop.replace(/\*/g,'');  // strip the built-in property differentiator
+  propItems = prop.split('.');
+  var lastObj = null;
+  propItems.forEach((p, ndx)=>{
+    lastObj = obj;
+    if (obj[p]==undefined) obj[p]={};
+    obj = obj[p];
+  });
+  lastObj[propItems[propItems.length-1]] = val;
+}
+
+
+var sfStore = {
+  defaultPropOfInterest: ['CreatedDate*'],
+  _objProps: (params)=>{
+    var objProps = sfStore.defaultPropOfInterest;
+    if (params.objName) objProps = objProps.concat(sfStore.propOfInterest[params.objName]);
+    if (params.propOfInterest) objProps = objProps.concat(params.propOfInterest);
+    return objProps;
+  },
+  /** */
+  load:  (params)=>{
+    // console.log('sfStore.load: ' + params.objName, sfStore._objProps(params));
+    var q = 'SELECT ';
+    if (params.query)
+      q+=' ' + params.query;
+    else
+      q+= sfStore._objProps(params).map((p)=>{return _getCompoundNameToStr(p);}).join(', ');
+    q+= ' FROM ' + _getCompoundNameToStr(params.objName);
+    if (params.keyName || params.filter) q+= ' WHERE';
+    if (params.keyName &amp;&amp; params.keyVal) {
+      if (params.keyName.startsWith(params.objName))
+        q+= ' ' + _getCompoundNameToStr(params.keyName.substr(params.objName.length+1)) + ' = \'' + params.keyVal + '\'';
+      else
+        q+= ' ' + _getCompoundNameToStr(params.keyName)+' = \'' + params.keyVal + '\'';
+    }
+    if (params.keyName &amp;&amp; params.keyVal &amp;&amp; params.filter) q+= ' AND'
+    if (params.filter) q+=' ' + params.filter;
+    if (params.queryXtra) q+=' ' + params.queryXtra;
+    console.log('soql: ' + q);
+
+    return org.query({ query: q }).then(function(resp){
+      if (!resp.records) {
+        console.log('no results');
+        return;
+      } else console.log('found ' + resp.records.length + ' records');
+
+      if (!params.objName || !params.propOfInterest) {
+        // we can't convert to js object
+        return resp.records;
+      }
+
+      var memRecords = [];
+      resp.records.forEach((rec)=>{
+        var recStore = {};
+        sfStore._objProps(params).forEach((p)=> {
+          _setCompundProperty(recStore, p, _getCompoundProperty(rec,p));
+        });
+        memRecords.push(recStore);
+      });
+      //console.log('memRecords', memRecords);
+      return memRecords;
+    }).catch((err)=>{
+      console.log('sfdc query err', err);
+    });
+  },
+  /** */
+  search: (objName, searchStr)=>{
+    // identical to load, except that we have a little more preamble in query,
+    // we pull properties from a hardcoded 'search' object, call the method
+    // `search` instead of `query` and get results in `searchRecords` instead of
+    // `records`
+    console.log('sfStore.search: ' + searchStr + ' in ' + objName);
+    var q = 'FIND {' + searchStr + '} IN ALL FIELDS RETURNING ' + _getCompoundNameToStr(objName) + '(';
+    q+= sfStore._objProps({objName}).map((p)=>{return _getCompoundNameToStr(p);}).join(', ');
+    q+=" WHERE PublishStatus='Online' AND LANGUAGE ='en_US')"
+    console.log('sosl: ' + q);
+
+    return org.search({ search: q/*, raw: true*/ }).then(function(resp){
+      // console.log(resp);
+      if (!resp.searchRecords) {
+        console.log('no results');
+        return;
+      } else console.log('found ' + resp.searchRecords.length + ' records');
+
+      var memRecords = [];
+      resp.searchRecords.forEach((rec)=>{
+        var recStore = {};
+        sfStore._objProps({objName}).forEach((p)=> {
+          _setCompundProperty(recStore, p, _getCompoundProperty(rec,p));
+        });
+        memRecords.push(recStore);
+      });
+      //console.log('memRecords', memRecords);
+      return memRecords;
+    }).catch((err)=>{
+      console.log('sfdc search err', err);
+    });
+  },
+  /** */
+  store: (objName, dataToStore)=>{
+    var dl = nforce.createSObject(_getCompoundNameToStr(objName));
+    // console.log(dataToStore);
+    console.log('storing: ' + objName, dataToStore);
+    for(var key in dataToStore){
+      dl.set(_getCompoundNameToStr(key), tgtObj[key]);
+    }
+
+    org.insert({ sobject: dl }, function(err, resp){
+      if(err) {
+        console.log('err: ', err);
+        return;
+      }
+      console.log('Stored');
+    });
+  },
+  /** */
+  update: (objName, keyName, keyVal, updateData)=>{
+    // console.log('sfStore.update: ' + objName, sfStore._objProps({objName}));
+    var q = 'SELECT ';
+    q+= sfStore._objProps({objName}).map((p)=>{return _getCompoundNameToStr(p);}).join(', ');
+    q+= ' FROM ' + _getCompoundNameToStr(objName);
+    q+= ' WHERE ';
+    if (keyName.startsWith(objName))
+      q+= _getCompoundNameToStr(keyName.substr(objName.length+1)) + ' = \'' + keyVal + '\'';
+    else
+      q+= _getCompoundNameToStr(keyName)+' = \'' + keyVal + '\'';
+    q+=' LIMIT 1';
+    console.log('soql: ' + q);
+
+    return org.query({ query: q }).then(function(resp){
+      if (!resp.records || resp.records.length == 0) {
+        console.log('no results');
+        return;
+      }
+
+      var dbObj = resp.records[0];
+
+      console.log('query succeded... updating: ' + objName, updateData);
+      for(var key in updateData){
+        dbObj.set(_getCompoundNameToStr(key), updateData[key]);
+      }
+
+      return org.update({ sobject: dbObj }).then(()=>{ console.log('Updated'); });
+
+    }).catch((err)=>{
+      console.log('sfdc update err', err);
+    });
+  },
+};
+
+// module.exports.store = sfStore;
+module.exports = function(violet) {
+  if (violet) violet.setPersistentStore(sfStore);
+  return {store: sfStore};
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Nov 14 2017 23:59:17 GMT-0500 (EST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

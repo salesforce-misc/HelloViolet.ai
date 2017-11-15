@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: violet-conversations/lib/violetList.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: violet-conversations/lib/violetList.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* Copyright (c) 2017-present, salesforce.com, inc. All rights reserved */
+/* Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license */
+
+
+/**
+ * List Widget for Voice
+ * @module violetList
+ */
+
+module.exports = (violet, widgetType, humanName, humanNamePl, itemTextProp) => {
+
+
+  var listWidget = {
+    getItemText: (ndx, results)=>{
+      var listItemObj = results[ndx];
+      return `${humanName} ${ndx+1} is ${listItemObj[itemTextProp]}. `;
+    },
+
+    respondWithItems: (response, results)=>{
+      var out = 'I found ' + results.length + ' ' + humanNamePl + '. '
+      for(var ndx=0; ndx&lt;3 &amp;&amp; ndx&lt;results.length; ndx++) {
+        out += listWidget.getItemText(ndx, results);
+      }
+      response.say(out);
+
+      if (results.length>3)
+        response.addGoal(`hearPastThree${widgetType}`)
+      response.addGoal(`interactWith${widgetType}`)
+    },
+
+    respondWithMoreItems: (response, results, start=0)=>{
+      var out = '';
+      for(var ndx=3+start; ndx&lt;10+start &amp;&amp; ndx&lt;results.length; ndx++) {
+        out += listWidget.getItemText(ndx, results);
+      }
+      response.say(out);
+
+      if (results.length>10 &amp;&amp; start==0) // we dont speak past 17 cases
+        response.addGoal(`hearPastTen${widgetType}`)
+      response.addGoal(`interactWith${widgetType}`)
+    },
+
+    getItemFromResults: (response, itemNo)=>{
+      const errMgrNotFoundItems = `Could not find ${humanNamePl}`;
+      const errMgrNotFoundTgtItem = `Could not find ${humanName} ${itemNo}`;
+      const errMgrInvalidItemNo = `Invalid ${humanName} Number`;
+      if (itemNo) {
+        itemNo = parseInt(itemNo)-1;
+      }
+      if (itemNo == undefined || itemNo == null || itemNo&lt;0 || itemNo>17)
+        return response.say(errMgrInvalidItemNo);
+
+      var results = response.get(widgetType);
+      if (results == undefined || results == null || !Array.isArray(results))
+        return response.say(errMgrNotFoundItems);
+      if (results.length&lt;itemNo)
+        return response.say(errMgrNotFoundTgtItem);
+
+      return results[itemNo];
+    },
+
+    interactionGoal: ()=>{
+      return `interactWith${widgetType}`;
+    }
+
+  };
+
+  violet.defineGoal({
+    goal: `hearPastThree${widgetType}`,
+    prompt: [`Do you want to hear more ${humanNamePl}?`],
+    respondTo: [{
+      expecting: ['Yes'],
+      resolve: (response) => {
+       response.say(`Getting more ${humanNamePl}.`);
+       var results = response.get(widgetType);
+       listWidget.respondWithMoreItems(response, results);
+    }}, {
+      expecting: ['No'],
+      resolve: (response) => {
+        response.addGoal(`interactWith${widgetType}`);
+    }}]
+  });
+
+  violet.defineGoal({
+    goal: `hearPastTen${widgetType}`,
+    prompt: [`Do you want to hear more ${humanNamePl}?`],
+    respondTo: [{
+      expecting: ['Yes'],
+      resolve: (response) => {
+       response.say(`Getting more ${humanNamePl}.`);
+       var results = response.get(widgetType);
+       listWidget.respondWithMoreItems(response, results, 10);
+    }}, {
+      expecting: ['No'],
+      resolve: (response) => {
+        response.addGoal(`interactWith${widgetType}`);
+    }}]
+  });
+
+
+  return listWidget;
+
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Nov 14 2017 23:59:17 GMT-0500 (EST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

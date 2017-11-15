@@ -1,12 +1,8 @@
 title: Violet
 descriptionX: Sophisticated Conversational Apps on Amazon's Alexa
 description: Enabling Sophisticated Voice Conversations
-repository: salesforce/violet-conversations
-githubx:
-  repository: salesforce/violet-conversations
+github:
   repository_url: https://github.com/salesforce/violet-conversations
-  zip_url: http://github.com/salesforce/violet-conversations/zipball/gh-pages
-  tar_url: http://github.com/salesforce/violet-conversations/tarball/gh-pages
+  zip_url: http://github.com/salesforce/violet-conversations/zipball/master
+  tar_url: http://github.com/salesforce/violet-conversations/tarball/master
 google_analytics: UA-109193428-1
-plugins:
-  - "jekyll-github-metadata"

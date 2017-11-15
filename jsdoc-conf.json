@@ -1,0 +1,23 @@
+{
+  "source": {
+    "include": [
+      "../violet-conversations/lib",
+      "../violet-samples/tutorials",
+      "../violet-samples/scripts",
+      "../violet-samples/apps"
+    ],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "plugins": ["jsdoc-custom-tags.js"],
+  "tags": {
+    "allowUnknownTags": false
+  },
+  "templates": {
+  },
+  "opts": {
+    "template": "jsdoc-default-template-ext",
+    "templateXXX": "./node_modules/ink-docstrap/template",
+    "destination": "docs"
+  }
+}

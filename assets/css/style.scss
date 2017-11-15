@@ -1,4 +1,29 @@
 ---
 ---
+@font-face {
+    font-family: 'Open Sans';
+    font-weight: normal;
+    font-style: normal;
+    src: url('../../docs/fonts/OpenSans-Regular-webfont.eot');
+    src:
+        local('Open Sans'),
+        local('OpenSans'),
+        url('../../docs/fonts/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+        url('../../docs/fonts/OpenSans-Regular-webfont.woff') format('woff'),
+        url('../../docs/fonts/OpenSans-Regular-webfont.svg#open_sansregular') format('svg');
+}
+
+@font-face {
+    font-family: 'Open Sans Light';
+    font-weight: normal;
+    font-style: normal;
+    src: url('../../docs/fonts/OpenSans-Light-webfont.eot');
+    src:
+        local('Open Sans Light'),
+        local('OpenSans Light'),
+        url('../../docs/fonts/OpenSans-Light-webfont.eot?#iefix') format('embedded-opentype'),
+        url('../../docs/fonts/OpenSans-Light-webfont.woff') format('woff'),
+        url('../../docs/fonts/OpenSans-Light-webfont.svg#open_sanslight') format('svg');
+}
 
 @import "jekyll-theme-slate";

@@ -51,6 +51,7 @@ section {
   font-size: 42px;
   font-weight: 700;
   -webkit-font-smoothing: antialiased;
+  letter-spacing: -1px;
   text-shadow: #111 0px 0px 10px;
 }
 
@@ -78,4 +79,8 @@ section {
 #main_wrap {
   /*max-width: 768px;*/
   margin: 0 auto;
+}
+
+html {
+  font-size: inherit;
 }

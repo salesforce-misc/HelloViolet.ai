@@ -5,3 +5,6 @@ Gemfile.lock
 
 # for experiments that we no longer need
 attic/*
+
+# we don't store these in the master repo
+docs/*

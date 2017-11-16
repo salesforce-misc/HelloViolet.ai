@@ -7,7 +7,7 @@ Two branches:
 Can be updated by making sure that the other violet projects are siblings to
 this project, as well as an extra copy of this repository with the gh-pages
 branch checkedout, with all repositories updated, and then typing:
-  rm -rf ../HelloViolet.ai-gh/docs; jsdoc -c _jsdoc/conf.json
+  rm -rf docs; jsdoc -c _jsdoc/conf.json
 
 Caution: Currently sources for Jekyll are in both master and gh-pages
 branches (other files should only be in one branch of the other).

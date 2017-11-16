@@ -19,6 +19,6 @@
     }
   },
   "opts": {
-    "destination": "../HelloViolet.ai-gh/docs"
+    "destination": "docs"
   }
 }

@@ -20,10 +20,10 @@ this project with all repositories updated, and then typing:
 ### Publishing
 Updated documentation and any other source files need to be copied to the `gh-pages` branch. The following commands should help (assuming that the repository is checked out in a sibling directory):
 ```
-  cp -r docs     ../HelloViolet.ai-gh/docs
-  cp -r _layouts ../HelloViolet.ai-gh/_layouts
-  cp -r _sass    ../HelloViolet.ai-gh/_sass
-  cp -r assets   ../HelloViolet.ai-gh/assets
-  cp index.md    ../HelloViolet.ai-gh/index.md
+  cp -r docs     ../HelloViolet.ai-gh
+  cp -r _layouts ../HelloViolet.ai-gh
+  cp -r _sass    ../HelloViolet.ai-gh
+  cp -r assets   ../HelloViolet.ai-gh
+  cp index.md    ../HelloViolet.ai-gh
 
 ```

@@ -84,3 +84,8 @@ section {
 html {
   font-size: inherit;
 }
+
+/* is this a good idea? seems to catch all the scopes, but does anything else get caught in it? */
+.type-signature {
+  display: none
+}

@@ -4,6 +4,12 @@ This repository has two branches:
 - master: source files and scripts to generate the website
 - gh-pages: content used by github-pages to host the site
 
+### Running Locally
+You can run the website locally by typing:
+```
+   bundle exec jekyll serve
+```
+
 ### Updating Documentation
 Documentation can be updated by making sure that the other violet projects are siblings to
 this project with all repositories updated, and then typing:

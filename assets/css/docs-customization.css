@@ -72,12 +72,12 @@ section {
 
 .inner {
   position: relative;
-  max-width: 640px;
+  max-width: 720px;
   padding: 20px 10px;
   margin: 0 auto;
 }
 
 #main_wrap {
-  max-width: 640px;
+  /*max-width: 768px;*/
   margin: 0 auto;
 }

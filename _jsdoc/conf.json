@@ -19,6 +19,7 @@
     }
   },
   "opts": {
+    "readme": "../violet-conversations/README.md",
     "destination": "docs"
   }
 }

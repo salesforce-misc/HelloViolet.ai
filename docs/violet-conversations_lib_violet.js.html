@@ -46,7 +46,13 @@
 /* Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license */
 
 /**
- * Core Violet Module
+ * This is the Core Violet Module - it provides the conversation engine that
+ * voice-scripts can take advantage of.
+
+ * Voice scripts can be grouped into multiple apps that are available on a
+ * single server. Currently Violet only supports registering intents for
+ * Amazon's Alexa Skills Kit.
+ *
  * @module violet
  */
 
@@ -101,7 +107,10 @@ var _interpolateParamsFromStore = function(str, varExtractionRE, store) {
 var appName = null; // set when loading a set of scripts
 var appToVioletInstances = {};
 
-/** Used by server - primarily allows for the loading of scripts */
+/**
+ * Assists with the loading of scripts by the Violet Server. Primarily enables
+ * apps to have multiple scripts.
+ */
 module.exports.server = function() {
   return {
     loadScript: (contextDir, scriptPath, name, alexaRouter) => {
@@ -124,8 +133,28 @@ module.exports.server = function() {
     }
   };
 }
-/** Used by scripts - instantiated and returns the Violet class */
-var violetScript = module.exports.script = function() {
+/**
+ * Clears any previous script information for the specified app - this helps
+ * because by default Violet intentionally groups scripts into an app). This
+ * method is primarily used by the test suite as it uses the same app repeatedly.
+ */
+module.exports.clearAppInfo = function(_appName) {
+  delete appToVioletInstances[_appName];
+};
+/**
+ * Instantiates and returns the core Violet class. Most violet scripts start
+ * by making this call.
+ *
+ * @param appName - App name to attach this script to. Not setting this
+ * parameter will allow Violet to attach this script to the previous App. It is
+ * recommended to not set this parameter here (in the script) but to define it
+ * in the parent where the script is being loaded.
+ * @returns {violet} - The primary object:
+ * {@link module:violet.script~violet Violet} that scripts will be defining
+ * intents, goals, etc against.
+ */
+module.exports.script = function(_appName) {
+  if (appName == null &amp;&amp; _appName != null) appName = _appName;
   if (appName == null) {
     // allow scripts to be launched without the server and instead just initialize after 1s
     var violetSrvr = require('./violetSrvr.js')('/alexa');
@@ -133,7 +162,7 @@ var violetScript = module.exports.script = function() {
     appName = 'local'
     setTimeout(()=>{ // run after the full script loads
       violet.registerIntents();
-      violet.setServerApp(violetSrvr.getAlexaRouter());
+      violet.setServerApp(violetSrvr.getSvcRouter());
       violetSrvr.displayScriptInitialized(srvrInstance, violet);
     }, 1*1000);
   }
@@ -367,10 +396,37 @@ var violetScript = module.exports.script = function() {
       _persistentStoreReal: () => {return persistentStore;},
       _persistentStore: () => {return sessionStore;}, // we are phasing out easy access to anything but the session store
 
+      /**
+       * Responds to the user. When an array is provided Violet picks a
+       * random item - this allows responses to not be repetitive. Additionally
+       * you can add input parameters directly in the response by adding them
+       * in [[]]
+       *
+       * @example
+       *  response.say('Hello')
+       *  response.say(['Hello', 'Hi'])
+       *  response.say('I like the name [[name]]')
+       * @param {string[]} potResponses - response or array of potential
+       * responses for the user
+       * @param {boolean} [quick=false] - do not put a pause between the
+       * previous say statement and this one
+       */
       say: (potResponses, quick=false) => {_say(response, potResponses, quick)},
+
+      /**
+       * Asks the user a question. Items being asked are placed after the say
+       * statements. Additionally, only one ask is done at a time, giving the
+       * user time to respond.
+       *
+       * @param {string[]} potResponses - response or array of potential
+       * questions for the user
+       */
       ask: (potResponses) => {_ask(response, potResponses)},
 
-      /** should the conversation end after the current script response?
+      /**
+       * Ends the conversation after the response. By default Violet assumes
+       * that you want to keep the conversation open.
+       *
        * @default keepConversationRunning=true
        */
       endConversation: () => {keepConversationRunning=false},
@@ -407,6 +463,23 @@ var violetScript = module.exports.script = function() {
         console.log(`*** Cannot process param: ${varStr} ***`);
         return false;
       },
+
+      /**
+       * Gets parameter from the user
+       *
+       * @example
+       *  violet.respondTo({
+       *    expecting: 'My age is [[age]]',
+       *    resolve: (response) => {
+       *      var age = response.get('age');
+       *      if (age &amp;&amp; age&lt;17)
+       *        response.say('I need to be careful, you are a minor');
+       *      else
+       *        response.say('Good to meet you. I will remember the you are [[age]]');
+       *  }});
+       *
+       * @param {string} varStr - variable name
+       */
       get: (varStr) => {
         if (!response.__isStorageParamClassed(varStr)) return sessionStore.get(varStr);
 
@@ -415,6 +488,13 @@ var violetScript = module.exports.script = function() {
 
         return "store type not found";
       },
+
+      /**
+       * Sets parameter value for access later
+       *
+       * @param {string} varStr - variable name
+       * @param {Object} val - value attached to the variable
+       */
       set: (varStr, val) => {
         if (!response.__isStorageParamClassed(varStr)) return sessionStore.set(varStr, val);
 
@@ -426,6 +506,12 @@ var violetScript = module.exports.script = function() {
 
         return "store type not found";
       },
+
+      /**
+       * Clears parameter that might have been gotten from the user
+       *
+       * @param {string} varStr - variable name
+       */
       clear: (varStr) => {
         if (!response.__isStorageParamClassed(varStr)) return sessionStore.clear(varStr);
 
@@ -668,7 +754,13 @@ var violetScript = module.exports.script = function() {
     }
   };
 
-  /** @class */
+  /**
+   * The primary object for scripts to use to define how they
+   * {@link module:violet.script~violet.respondTo respond to} users (intents)
+   * and more
+   *
+   * @class
+   */
   var violet = {
     app: _app,
 
@@ -684,14 +776,22 @@ var violetScript = module.exports.script = function() {
       });
     },
 
+    /**
+     * Used to define parameters that can be expected from the user
+     * @example
+     * violet.addInputTypes({
+     *   'name': 'AMAZON.US_FIRST_NAME',
+     * });
+     *
+     * violet.respondTo(['My name is [[name]]'],
+     *  (response) => {
+     *    response.say('I like the name [[name]]')
+     *  });
+     */
     addInputTypes: function(_keyTypes) {
       for (var type in _keyTypes) {
         keyTypes[type] = _keyTypes[type];
       }
-    },
-    // deprecated
-    addKeyTypes: function(_keyTypes) {
-      return violet.addInputTypes(_keyTypes);
     },
 
     addPhraseEquivalents: function(_phraseEquivalents) {
@@ -751,14 +851,33 @@ var violetScript = module.exports.script = function() {
       _registerIntents(_getIntentsDef());
     },
 
-    /*
-      params - passed in as an object:
-        expecting &lt;-- array of strings that a user could say
-        resolve   &lt;-- callback when one of the `expecting` items is said
-        goal      &lt;-- (optional) goal during which the above is valid
+    // TODO: why is the below not showing up in the generated docs?
+    /**
+     * Called when a user triggers one of the actions (intents) that has been
+     * registered by a script.
+     *
+     * @callback resolveCallback
+     * @param {Object} response - The response object
+     */
 
-      alternatively, can pass in params as: userSpeech, resolve, goal
-    */
+    /**
+     * Declare how you are going to be responding to users
+     * @example &lt;caption>a basic example&lt;/caption>
+     * violet.respondTo('Hello',
+     *  (response) => {
+     *    response.say('Hi');
+     *  });
+     * @example &lt;caption>using most of the parameters&lt;/caption>
+     * violet.respondTo({
+     *    expecting: ['I live in [[city]]', 'My house is in [[city]]', 'We are renting in [[city]]'],
+     *    resolve: (response) => {
+     *     response.say('I like the city [[city]]')
+     * }});
+     * @param {Object} intentDef - intent definition
+     * @param {string[]} intentDef.expecting - array of strings that a user could say
+     * @param {resolveCallback} intentDef.resolve - callback when one of the `expecting` items is said
+     * @param {string} intentDef.goal - (optional) goal during which the above is valid
+     */
     respondTo: function(intentDef) {
       if (arguments.length>1) {
         var p = {};
@@ -816,7 +935,25 @@ var violetScript = module.exports.script = function() {
 
 </div>
 
-<nav>
+<nav id="organized">
+  <h2><a href="index.html">Home</a></h2>
+  <h3>Modules</h3><ul>
+    <li><a href="module-utils.html">utils</a></li>
+    <li><a href="module-violet.html">violet</a></li>
+    <li><a href="module-violetSrvr.html">violetSrvr</a></li>
+  </ul>
+  <h3>Plugins</h3><ul>
+    <li><a href="module-violetList.html">violetList</a></li>
+    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
+    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
+    <li><a href="module-violetTime.html">violetTime</a></li>
+  </ul>
+  <h3>Classes</h3><ul>
+    <li><a href="module-violet.script-__getResponse-response.html">response</a></li>
+    <li><a href="module-violet.script-violet.html">violet</a></li>
+  </ul>
+</nav>
+<nav id="generated" style="display:none">
     <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
 </nav>
 
@@ -825,10 +962,18 @@ var violetScript = module.exports.script = function() {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Nov 15 2017 23:06:30 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Nov 20 2017 15:58:12 GMT-0800 (PST)
 </footer>
 
 <script> prettyPrint(); </script>
 <script src="scripts/linenumber.js"> </script>
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-109193428-1', 'auto');
+  ga('send', 'pageview');
+</script>
 </body>
 </html>

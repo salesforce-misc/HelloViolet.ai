@@ -58,6 +58,187 @@
 
 
 
+    <section>
+        <article><p><a href="https://travis-ci.org/salesforce/violet-conversations"><img src="https://travis-ci.org/salesforce/violet-conversations.svg?branch=master" alt="Build Status"></a>
+<a href="https://codecov.io/gh/salesforce/violet-conversations"><img src="https://codecov.io/gh/salesforce/violet-conversations/branch/master/graph/badge.svg" alt="codecov"></a>
+<a href="https://gitter.im/HelloViolet-ai/Lobby"><img src="https://badges.gitter.im/HelloViolet0ai/Lobby.png" alt="Gitter chat"></a></p>
+<p>For easily deployable sample code see the <a href="https://github.com/salesforce/violet-samples">violet-samples</a> project.</p>
+<h1>violet-conversations</h1><p>Violet provides support for building sophisticated conversational apps/bots on
+Amazon's Alexa. Conversations are built via scripts,
+and Violet provides a conversation engine that runs as an Alexa Skill.</p>
+<p>Support for sophisticated voice apps is supported by allowing:</p>
+<ul>
+<li>(a) for easily building basic logic supported conversation-flows i.e.
+classically referred to as the view layer in web, mobile, and desktop apps;</li>
+<li>(b) primitives for grouping user/app interactions:<ul>
+<li>(b-i) using goals to enable for what is classically referred to as dialog
+in many conversation systems,</li>
+<li>(b-ii) using widgets for generating goals depending on the use-case, such
+as for supporting lists, and</li>
+<li>(b-iii) having scripts to allow for further modularization of voice
+functionality;</li>
+</ul>
+</li>
+<li>(c) plugins for moving out significant parts of complexity that support the
+voice scripts.</li>
+</ul>
+<h2>Table Of Contents</h2><ul>
+<li><a href="#voice-scripting">Voice Scripting</a><ul>
+<li><a href="#basics">Basics</a></li>
+<li><a href="#goals">Conversational Goals</a></li>
+</ul>
+</li>
+<li><a href="#plugins">Plugins</a><ul>
+<li><a href="#persistence">Persistence</a></li>
+<li><a href="#timed-delay">Timed delay</a></li>
+<li><a href="#violet-client-integration">Violet Client Integration</a></li>
+</ul>
+</li>
+<li><a href="#advanced-topics">Advanced Topics</a><ul>
+<li><a href="#custom-types">Custom types</a></li>
+</ul>
+</li>
+<li><a href="#debugging-conversations">Debugging Conversations</a></li>
+<li><a href="#contributionsupporting">Contribution/Supporting</a></li>
+</ul>
+<h2>Voice Scripting</h2><p>This project contains the Violet Conversation Engine that can be used as the basis of your Voice Application.</p>
+<p>Every voice script should start will typically start with declaring <code>violet</code> for use
+throughout:</p>
+<pre class="prettyprint source lang-javascript"><code>var violet = require('../lib/violet.js').script();</code></pre><p>See <code>examples/tutorial.js</code> for documentation on how to build a skill.</p>
+<h3>Basics</h3><p>A simple way to respond to a user request:</p>
+<pre class="prettyprint source lang-javascript"><code>violet.respondTo(['Can you help me', 'What can I do'],
+ (response) => {
+   response.say(`I can help you with your current account balance, with
+                  financial planning, budgeting, investing, or taking out a
+                  loan`);
+ });</code></pre><p>If you want to accept data from a user, you will need to declare it with its
+type and then tell the script engine where to expect it:</p>
+<pre class="prettyprint source lang-javascript"><code>violet.addInputTypes({
+  'name': 'AMAZON.US_FIRST_NAME',
+});
+
+violet.respondTo(['My name is [[name]]'],
+ (response) => {
+   response.say('I like the name [[name]]')
+ });</code></pre><p>You can use phrase equivalents to tell the engine that two phrases are identical
+in all situations:</p>
+<pre class="prettyprint source lang-javascript"><code>violet.addPhraseEquivalents([
+  ['My name is', 'I call myself'],
+]);</code></pre><h3>Conversational Goals</h3><p>Sophisticated conversations are supported by Violet using goals. When a user
+indicates a need for a discussion on a particular topic, a script can just add
+the topic as a goal to be met. Goals could theoretically also be set by a script
+to proactively check-in with a user or to raise an item related to another goal.</p>
+<p>The below simply adds a goal to be met by the system when the user asks for
+flight arrival information.</p>
+<pre class="prettyprint source lang-javascript"><code>violet.respondTo('What time does the [[airline]] flight arrive', 'from [[city]]',
+  (response) => {
+    response.addGoal('flightArrivalTime');
+});
+
+violet.respondTo('What time does the flight arrive from [[city]]',
+  (response) => {
+    response.addGoal('flightArrivalTime');
+});</code></pre><p>The conversation engine tries to meet goals based on goal definitions provided
+in the script. Goals are one of two types. The first type of goal is when
+additional information is needed</p>
+<pre class="prettyprint source lang-javascript"><code>violet.defineGoal({
+  goal: 'flightArrivalTime',
+  resolve: (response) => {
+    if (!response.ensureGoalFilled('airline')
+        || !response.ensureGoalFilled('city')
+        || !response.ensureGoalFilled('flightDay') ) {
+          return false; // dependent goals not met
+        }
+    var airline = response.get('airline');
+    var city = response.get('city');
+    var flightDay = response.get('flightDay');
+    flightArrivalTimeSvc.query(airline, city, flightDay, (arrivalTime)=>{
+      response.say('Flight ' + airline + ' from ' + city + ' is expected to arrive ' + flightDay + ' at ' + arrivalTime);
+    });
+    return true;
+  }
+});</code></pre><pre class="prettyprint source lang-javascript"><code>violet.defineGoal({
+  goal: 'city',
+  prompt: ['What city do you want the flight to be arriving from'],
+  respondTo: [{
+    expecting: '[[city]]',
+    resolve: (response) => {
+      response.set('city', response.get('city') );
+  }}]
+});</code></pre><h2>Plugins</h2><p>There are a number of plugins that allow you to further extend the capabilities
+of Violet Skills</p>
+<h3>Persistence</h3><p>These plugins will allow you to easily store and load data from a data store.</p>
+<p>The main plugin provided currently is the Salesforce integration plugin
+<code>violetStoreSF</code>. If you are using this integration,
+then you will need to set up the following environment variables (locally and on
+any deployed platform): <code>V_SFDC_CLIENT_ID</code>, <code>V_SFDC_CLIENT_SECRET</code>,
+<code>V_SFDC_USERNAME</code> and <code>V_SFDC_PASSWORD</code>.</p>
+<p>To include the plugin in your code you would need to add this after the violet
+script:</p>
+<pre class="prettyprint source lang-javascript"><code>var violetStoreSF = require('../lib/violetStoreSF.js')(violet);</code></pre><pre class="prettyprint source lang-javascript"><code>violet.respondTo('I recieved a bill from [[company]] today for [[amount]]',
+  (response) => {
+    response.store('bills',
+        'user': response.get('userId'),
+        'from': response.get('company'),
+        'amount': response.get('amount')
+      });
+    response.say('xxxx');
+});</code></pre><p>To retried data from the database you need to use the load method. <strong>Caution</strong>
+Load returns a promise to the db results  - if you need to use the
+values retrieved from it, you need to (a) either use a .then after it OR
+(b) you need to make you resolve method a generator and place a yield before
+the call to the load method</p>
+<pre class="prettyprint source lang-javascript"><code>// example a:
+violet.respondTo(
+  expecting: 'Who did I receive my bill from most recently?',
+  resolve: (response) => {
+    return response.load('bills', 'bills.user', response.get('userId') )
+      .then((results)=>{
+        response.say(`You received a bill from ${results[0].from} for ${results[0].amount}`);
+      });
+});
+// example b: (note the 'function *' and the 'yield' below)
+violet.respondTo(
+  expecting: 'Who did I receive my bill from most recently?',
+  resolve: function *(response) {
+    var results = yield response.load('bills', 'bills.user', response.get('userId') )
+    response.say(`You received a bill from ${results[0].from} for ${results[0].amount}`);
+});</code></pre><h3>Timed delay</h3><pre class="prettyprint source lang-javascript"><code>var violetTime = require('../lib/violetTime.js')(violet);</code></pre><p>Possible spoken commands:</p>
+<ul>
+<li>What is the current time</li>
+<li>Advance 5 days, hours, or minutes</li>
+</ul>
+<pre class="prettyprint source lang-javascript"><code>violetTime.repeat(48*60, ()=>{ violet.addGoal('checkIn'); });</code></pre><h3>Violet Client Integration</h3><pre class="prettyprint source lang-javascript"><code>var violetClientTx = require('../lib/violetClientTx.js')(violet);</code></pre><p>Allows setting voice and creating alerts (the latter needs testing)</p>
+<h2>Advanced Topics</h2><h3>Custom types</h3><p>The voice engine can recognize better what the user is saying when it knows to
+expect one of a limited set of inputs. One helpful way to do this is to use
+create custom type and have it as an input parameter in your script.</p>
+<p>In the below example - from violetTime.js - a custom type called <code>timeUnit</code> is
+declared.</p>
+<pre class="prettyprint source lang-javascript"><code>violet.addInputTypes({
+  &quot;time&quot;: &quot;NUMBER&quot;,
+  &quot;timeUnit&quot;: {
+    &quot;type&quot;: &quot;timeUnitType&quot;,
+    &quot;values&quot;: [&quot;days&quot;, &quot;hours&quot;, &quot;minutes&quot;]
+  },
+});</code></pre><p>After declaring a custom type, the values and the type name need to be provided
+to Amazon's Skill Configuration Site as a custom slot type.</p>
+<h2>Debugging Conversations</h2><p>When developing conversational scripts - it helps to debug/test it in three phrases:</p>
+<ol>
+<li>Make sure the code compiles/runs by typing <code>npm start</code>. Fix any errors and keep re-starting the service until misplaced punctuations and declarations have been fixed.</li>
+<li>Test the script in the included tester view, by running the script and opening it in a browser, for example: http://localhost:8080/alexa/einstein You will likely want to submit IntentRequest's based on the Utterance's at the bottom of the page. Once you submit a request, verify that the response output SSML is per your needs. Additionally, it is helpful to walk through the script a few times to ensure that the application supports the different user scenarios.</li>
+<li>Once the script works locally, deploy it to the cloud and configure Alexa to talk to the underlying skill using Amazon's Skill Configuration site. At this stage you will likely benefit from testing by iterating rapidly with: invoking the voice-client, examining the conversational-app's logs, and tweaking the utterances in Amazon's Configuration. Testing a voice client is likely best done first through a PC based tool that provides additional debugging information like the <a href="https://github.com/sfxi/violet-client">Violet Client</a> or a web testing tool like <a href="https://echosim.io">Echosim.io</a>.</li>
+</ol>
+<h2>Contribution/Supporting</h2><p>We appreciate any help. In order of decreasing priority, we would like to see:</p>
+<ul>
+<li><p>Sophisticated conversational applications built on top of the <code>violet-conversations</code> project. As you build it, let us know how it went. What worked well? What was challenging?</p>
+</li>
+<li><p>Tests: If you want to make sure that we improve the framework that we don't break a use case that you are depending on - make sure we have an automated test.</p>
+</li>
+<li><p>File issues: If something is not working as expected, please file an issue on the appropriate project.</p>
+</li>
+</ul></article>
+    </section>
+
 
 
 
@@ -65,7 +246,25 @@
 
 </div>
 
-<nav>
+<nav id="organized">
+  <h2><a href="index.html">Home</a></h2>
+  <h3>Modules</h3><ul>
+    <li><a href="module-utils.html">utils</a></li>
+    <li><a href="module-violet.html">violet</a></li>
+    <li><a href="module-violetSrvr.html">violetSrvr</a></li>
+  </ul>
+  <h3>Plugins</h3><ul>
+    <li><a href="module-violetList.html">violetList</a></li>
+    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
+    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
+    <li><a href="module-violetTime.html">violetTime</a></li>
+  </ul>
+  <h3>Classes</h3><ul>
+    <li><a href="module-violet.script-__getResponse-response.html">response</a></li>
+    <li><a href="module-violet.script-violet.html">violet</a></li>
+  </ul>
+</nav>
+<nav id="generated" style="display:none">
     <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
 </nav>
 
@@ -74,10 +273,18 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Nov 15 2017 23:06:30 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Nov 20 2017 15:58:12 GMT-0800 (PST)
 </footer>
 
 <script> prettyPrint(); </script>
 <script src="scripts/linenumber.js"> </script>
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-109193428-1', 'auto');
+  ga('send', 'pageview');
+</script>
 </body>
 </html>

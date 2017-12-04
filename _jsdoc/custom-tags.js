@@ -4,7 +4,6 @@
 var examineNode = function(node, e, parser, currentSourceName) {
 
     const tgtObjMethod = 'respondTo';
-    const tgtParamName = 'name';
     if (node.type === 'CallExpression' && node.callee.property && node.callee.property.name === tgtObjMethod) {
       // console.log(node);
 
@@ -21,14 +20,32 @@ var examineNode = function(node, e, parser, currentSourceName) {
         return paramArr.findIndex(e=>{return e.key.name === tgtParamName});
       };
       if (!node.arguments[0].properties) return; // happens we do not have an object as param 1
-      var pNdx = node.arguments[0].properties.findIndex(matchParamName(tgtParamName));
-      var pVal = '(unnamed)'
-      if (pNdx!==-1)
-        pVal = node.arguments[0].properties[pNdx].value.value;
-      // console.log(pVal);
+      var matchAndGetParamVal = function(tgtPropName, properties) {
+        var getVal = function(propItem) {
+          var result = propItem.value;
+          if (result.value) return result.value;
+          if (result.type == 'ArrayExpression') {
+            return result.elements.map(arrNode=>{
+              return arrNode.value;
+            }).join(', ');
+          }
+          console.log(`Unexpected type ${result.type}`);
+          return result;
+        };
+        var pVal = '(unnamed)';
+        var pNdx = node.arguments[0].properties.findIndex(matchParamName(tgtPropName));
+        if (pNdx!==-1)
+          pVal = getVal(node.arguments[0].properties[pNdx]);
+        // console.log(`Matching:${tgtPropName}. Found at ${pNdx} - value:`, pVal);
+        return pVal;
+      };
+      var intentName = matchAndGetParamVal('name', node.arguments[0].properties);
+      var intentExpecting = matchAndGetParamVal('expecting', node.arguments[0].properties);
+
+      var comment = `${leadingComments}\n<br><b>Responds To:</b> ${intentExpecting}\n @var ${intentName}`;
 
       e = {
-        comment: `/** ${leadingComments}\n @var ${pVal} */`,
+        comment: `/** ${comment} */`,
         lineno: node.loc.start.line,
         columnno: node.loc.start.column,
         filename: currentSourceName,

@@ -2277,14 +2277,16 @@ fieldset[disabled] a.btn {
 .btn-primary {
     color: #fff;
     /*background-color: #6c59b4;*/
-    background: transparent;
-    border-color: #6c59b4
+    /*background: transparent;*/
+    background-color: #8A63BD;
+    border-color: #8A63BD
 }
 
 .btn-primary:hover {
     color: #fff;
     /*background-color: #554496;*/
-    border-color: #51418f
+    border-color: #7353A5;
+    background-color: #7353A5;
 }
 
 .btn-primary:focus,
@@ -4909,7 +4911,7 @@ a.text-danger:hover {
 
 .bg-inverse {
     color: #eceeef;
-    background-color: #312f38
+    background-color: #222;
 }
 
 .bg-faded {
@@ -9078,7 +9080,7 @@ body {
 .jumbotron {
     padding-top: 7rem;
     margin-bottom: 0;
-    /*background: #663fb5 url(../img/bg-header.jpg) no-repeat center bottom;*/
+    background: #663fb5 url(../images/hero.png) no-repeat center bottom;
     background-size: cover;
     border-radius: 0
 }
@@ -10268,6 +10270,12 @@ figure {
 .jumbotron.bg-inverse.notfull {
     height: 600px;
 }
+
+.jumbotron.bg-inverse.footer {
+    height: 300px;
+}
+
+
 
 * {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;

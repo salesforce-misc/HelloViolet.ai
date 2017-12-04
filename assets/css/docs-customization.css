@@ -102,6 +102,21 @@ section {
   padding: 0px;
 }
 
+/* prettify customization */
+.prettyprint code, .prettyprint.linenums {
+  background-color: #272822;
+}
+.prettyprint.linenums {
+  line-height: 1.5;
+}
+.prettyprint.linenums li {
+  border-left: 1px #ddd solid
+}
+/*comment*/.com {color: slategray}
+/*plain-text*/.pln, /*punctuation*/.pun {color: #f8f8f2}
+/*string*/.str {color: #a6e22e}
+/*keyword*/.kwd {color: #66d9ef}
+
 /* is this a good idea? seems to catch all the scopes, but does anything else get caught in it? */
 .type-signature {
   display: none

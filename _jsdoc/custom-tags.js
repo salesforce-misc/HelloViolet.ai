@@ -42,7 +42,7 @@ var examineNode = function(node, e, parser, currentSourceName) {
       var intentName = matchAndGetParamVal('name', node.arguments[0].properties);
       var intentExpecting = matchAndGetParamVal('expecting', node.arguments[0].properties);
 
-      var comment = `${leadingComments}\n<br><b>Responds To:</b> ${intentExpecting}\n @var ${intentName}`;
+      var comment = `${leadingComments}\n<br><b>Responds To:</b> ${intentExpecting}\n @event ${intentName}`;
 
       e = {
         comment: `/** ${comment} */`,

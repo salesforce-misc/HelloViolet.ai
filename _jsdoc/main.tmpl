@@ -97,12 +97,12 @@
     if (!node.className.match(/lang/)) node.className += ' language-javascript'
     if (node.className.match(/linenums/)) node.className += ' line-numbers'
   }
-  // changes '<h3 class="subsection-title">Members</h3>'==><h3 class="subsection-title">Intents</h3>
+  // changes '<h3 class="subsection-title">Events</h3>'==><h3 class="subsection-title">Intents</h3>
   var headingEntries = document.getElementsByTagName('h3');
   for (var ndx=0; ndx<headingEntries.length; ndx++) {
     var node = headingEntries[ndx];
     if (node.className !== 'subsection-title') continue;
-    if (node.textContent == 'Members') node.textContent = 'Intents';
+    if (node.textContent == 'Events') node.textContent = 'Intents';
   }
 </script>
 <script type="text/javascript">

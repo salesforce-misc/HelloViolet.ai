@@ -9,10 +9,11 @@
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
-    <link type="text/css" rel="stylesheet" href="../assets/css/docs-customization.css">
-    <link type="text/css" rel="stylesheet" href="../assets/css/landio.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css"/>
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/docs-customization.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/landio.css"/>
+    <link type="text/css" rel="stylesheet" href="../assets/css/prism.css"/>
 </head>
 
 <body>
@@ -49,19 +50,19 @@
 <nav id="organized">
   <h2><a href="index.html">Home</a></h2>
   <h3>Modules</h3><ul>
-    <li><a href="module-utils.html">utils</a></li>
     <li><a href="module-violet.html">violet</a></li>
+    <ul>
+      <li><a href="module-violet.script-__getResponse-response.html">- response</a></li>
+      <li><a href="module-violet.script-violet.html">- violet</a></li>
+    </ul>
     <li><a href="module-violetSrvr.html">violetSrvr</a></li>
+    <li><a href="module-utils.html">utils</a></li>
   </ul>
   <h3>Plugins</h3><ul>
     <li><a href="module-violetList.html">violetList</a></li>
     <li><a href="module-violetStorePG.html">violetStorePG</a></li>
     <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
     <li><a href="module-violetTime.html">violetTime</a></li>
-  </ul>
-  <h3>Classes</h3><ul>
-    <li><a href="module-violet.script-__getResponse-response.html">response</a></li>
-    <li><a href="module-violet.script-violet.html">violet</a></li>
   </ul>
 </nav>
 <nav id="generated" style="display:none">
@@ -82,7 +83,10 @@
             <pre class="prettyprint source linenums"><code>/* Copyright (c) 2017-present, salesforce.com, inc. All rights reserved */
 /* Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license */
 
-/** General purpose utilities - helpful when building Voice apps
+/**
+ * This is a module of general purpose utilities that are helpful when building
+ * Voice apps
+ *
  * @module utils
  */
 
@@ -90,8 +94,19 @@ var fs = require('fs');
 var path = require('path');
 var Promise = require('bluebird');
 
-/** Loads a newline seperated array from a file - especially helpful when you
+/**
+ *  Loads a newline seperated array from a file - especially helpful when you
  *  have a long list of possible values
+ *
+ * @example
+ *  violet.addInputTypes({
+ *    category: {
+ *      type: 'categoryType',
+ *      values: utils.loadArrayFromFile(__dirname, 'potentialCategories.txt')
+ *    }
+ *  });
+ * @param {string} dirName - path to target file
+ * @param {string} fileName - newline seperated array backed file
  */
 exports.loadArrayFromFile =  function(dirName, fileName) {
   return fs.readFileSync(path.join(dirName, fileName), 'utf8')
@@ -99,19 +114,34 @@ exports.loadArrayFromFile =  function(dirName, fileName) {
       .filter(v=>{return v.length>0;});
 };
 
-/** Returns random number  */
+/**
+ * Returns a random number
+ *
+ * @param {Number} min - generated number is to not be below this
+ * @param {Number} max - generated number is to not be greater than this
+ */
 exports.getRand =  function(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
-/** Converts an array to a string */
+/**
+ * Converts an array to a string
+ *
+ * @example
+ *   utils.getArrAsStr([1, 2, 3])
+ *   // returns '1, 2 and 3'
+ * @param {Object[]} arr - array of objects to be pulled togeter into a string
+ */
 exports.getArrAsStr = function(arr) {
   if (arr.length==1) return arr[0];
   arr.splice(arr.length-1, 0, 'and');
   return arr.join(', ').replace(', and, ', ' and ');
 }
 
-/** Converts numbers 0-999 to a string */
+/** Converts numbers 0-999 to a string
+ * @function getNumAsStr
+ * @param {Number} num - that is converted into a string, i.e. 11 -> eleven
+ */
 var _getNumAsStr = exports.getNumAsStr = function(num, subpart=false) {
   if (typeof num == 'string') num = parseInt(num);
   if (num&lt;0) return 'err';
@@ -158,9 +188,15 @@ var _getNumAsStr = exports.getNumAsStr = function(num, subpart=false) {
   if (num&lt;700+100) return hdr + 'seven hundred' + _getNumAsStr(num-700, /*subpart*/true);
   if (num&lt;800+100) return hdr + 'eight hundred' + _getNumAsStr(num-800, /*subpart*/true);
   if (num&lt;900+100) return hdr + 'nine hundred' + _getNumAsStr(num-900, /*subpart*/true);
+  return 'err';
 };
 
-/** Supporting While Loop with promises */
+/** Supporting While Loop with promises
+ * @deprecated Use the module 'promise-while' instead
+ * @function promiseWhile
+ * @param {Function} condition - function returning a boolean as to whether the loop should run
+ * @param {Function} action - function returning a promise and performing the loop action
+ */
 var promiseWhile = exports.promiseWhile = Promise.method(function(condition, action) {
   if (!condition()) return;
   return action().then(promiseWhile.bind(null, condition, action));
@@ -182,14 +218,25 @@ var promiseWhile = exports.promiseWhile = Promise.method(function(condition, act
 
 </div><!-- id="main_wrap" -->
 
-<br class="clear">
+<!-- br class="clear" -->
 
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Dec 03 2017 23:35:47 GMT-0500 (EST)
+<footer class="container">
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Dec 04 2017 11:35:12 GMT-0500 (EST)
 </footer>
 
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+<script> /*prettyPrint();*/ </script>
+<script src="../assets/js/prism.js"></script>
+<!-- script src="scripts/linenumber.js"> </script -->
+<script>
+  // prism-ize: add language type and line-numbers
+  var codeEntries = document.getElementsByTagName('pre');
+  for (var ndx=0; ndx<codeEntries.length; ndx++) {
+    var node = codeEntries[ndx];
+    if (node.children.length!=1 && node.children[0].tagName!='CODE') continue;
+    if (!node.className.match(/lang/)) node.className += ' language-javascript'
+    if (node.className.match(/linenums/)) node.className += ' line-numbers'
+  }
+</script>
 <script type="text/javascript">
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

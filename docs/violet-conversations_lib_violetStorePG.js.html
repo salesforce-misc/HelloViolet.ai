@@ -12,24 +12,61 @@
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
     <link type="text/css" rel="stylesheet" href="../assets/css/docs-customization.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/landio.css">
 </head>
 
 <body>
 
-  <!-- HEADER FROM JEKYLL THEME -->
-  <div id="header_wrap" class="outer">
-      <header class="inner">
-        <div id="top_banner">
-          <a id="menu" href="/docs">Documentation</a>
-          <a id="forkme_banner" href="https://github.com/salesforce/violet-conversations">View on GitHub</a>
-        </div>
+  <!-- HEADER FROM SITE THEME -->
+  <nav class="navbar navbar-dark bg-inverse bg-inverse-custom navbar-fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="../assets/images/logo4.png" style="width:80px;"/>
+        <span class="sr-only">Violet</span>
+      </a>
+      <a class="navbar-toggler hidden-md-up pull-xs-right" onclick="$('#collapsingNavbar').toggle()">
+      &#9776;
+    </a>
 
-        <h1 id="project_title"><a href="/">Violet</a></h1>
-        <h2 id="project_tagline">Enabling Sophisticated Voice Conversations</h2>
+      <div id="collapsingNavbar" class="collapse navbar-toggleable-custom" role="tabpanel" aria-labelledby="collapsingNavbar">
+        <ul class="nav navbar-nav pull-xs-right">
+          <li class="nav-item nav-item-toggable">
+            <a class="nav-link" href="/docs" id="totop">Documentation</a>
+          </li>
+          <li class="nav-item nav-item-toggable">
+            <a class="nav-link" href="https://github.com/salesforce/violet-conversations">GitHub</a>
+          </li>
+        </ul>
+      </div>
 
-      </header>
-  </div>
-  <div id="main_wrap">
+    </div>
+  </nav>
+
+
+
+  <div id="main_wrap" class="container">
+
+<nav id="organized">
+  <h2><a href="index.html">Home</a></h2>
+  <h3>Modules</h3><ul>
+    <li><a href="module-utils.html">utils</a></li>
+    <li><a href="module-violet.html">violet</a></li>
+    <li><a href="module-violetSrvr.html">violetSrvr</a></li>
+  </ul>
+  <h3>Plugins</h3><ul>
+    <li><a href="module-violetList.html">violetList</a></li>
+    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
+    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
+    <li><a href="module-violetTime.html">violetTime</a></li>
+  </ul>
+  <h3>Classes</h3><ul>
+    <li><a href="module-violet.script-__getResponse-response.html">response</a></li>
+    <li><a href="module-violet.script-violet.html">violet</a></li>
+  </ul>
+</nav>
+<nav id="generated" style="display:none">
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
+</nav>
 
 <div id="main">
 
@@ -54,16 +91,26 @@
 var pg = require('pg');
 
 var client = null;
-if (process.env.DATABASE_URL) {
-  client = new pg.Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true,
-  });
-} else {
-  client = new pg.Client();
-}
+var connectionCB = [];
+var _connectToDB = function() {
+  if (process.env.DATABASE_URL) {
+    client = new pg.Client({
+      connectionString: process.env.DATABASE_URL,
+      ssl: true,
+    });
+  } else {
+    client = new pg.Client();
+  }
 
-client.connect();
+  console.log('Connecting to Postgres');
+  return client.connect().then(()=>{
+    console.log('Connected to Postgres');
+    connectionCB.forEach(cb=>{cb()});
+    connectionCB = null;
+    return Promise.resolve(client);
+  });
+}
+_connectToDB();
 
 
 // a lot of the below can be simplified
@@ -147,14 +194,76 @@ var pgStore = {
     }).catch((err)=>{
       console.log('sfdc query err', err);
     });
-  }
+  },
+  /** */
+  store: (objName, dataToStore)=>{
+    var objKeys = Object.keys(dataToStore);
+    var objValues =  objKeys.map(k=>{return dataToStore[k]});
+    var insertValues = Object.keys(objKeys).map(k=>{return '$'+(parseInt(k)+1)});
+    var insertStmt = `insert into ${_getCompoundNameToStr(objName)} (${objKeys.join(', ')}) values (${insertValues.join(', ')})`;
+    console.log('storing: ' + insertStmt, objValues);
+    return client.query({text: insertStmt, values: objValues}).then(()=>{
+      console.log('Stored');
+    }).catch((err)=>{
+      console.log('pg store err', err);
+    });
+  },
+  /** */
+  update: (objName, keyName, keyVal, updateData)=>{
+    // console.log('sfStore.update: ' + objName, sfStore._objProps({objName}));
+    var objKeys = Object.keys(updateData);
+    var objValues =  objKeys.map(k=>{return updateData[k]});
+    var updateValues = Object.keys(objKeys).map(k=>{return '$'+(parseInt(k)+1)});
+    var updateStmt = `UPDATE ${_getCompoundNameToStr(objName)}
+              SET (${objKeys.join(', ')}) = (${updateValues.join(', ')})
+              WHERE ${_getCompoundNameToStr(keyName)} = '${keyVal}'`;
+
+    console.log('updating: ' + updateStmt, objValues);
+    return client.query({ text: updateStmt, values: objValues }).then(function(){
+      console.log('Updated');
+    }).catch((err)=>{
+      console.log('pg update err', err);
+    });
+  },
+  /** */
+  delete: (objName, keyName, keyVal)=>{
+    // console.log('sfStore.update: ' + objName, sfStore._objProps({objName}));
+    var deleteStmt = `Delete FROM ${_getCompoundNameToStr(objName)}
+              WHERE ${_getCompoundNameToStr(keyName)} = '${keyVal}'`;
+
+    console.log('deleting: ' + deleteStmt);
+    return client.query(deleteStmt).then(function(){
+      console.log('Deleted');
+    }).catch((err)=>{
+      console.log('pg delete err', err);
+    });
+  },
+
 
 };
 
 // module.exports.store = pgStore;
 module.exports = function(violet) {
   if (violet) violet.setPersistentStore(pgStore);
-  return {store: pgStore, client};
+  var connectionsCnt = 0;
+  return {
+    store: pgStore,
+    connect: ()=>{
+      connectionsCnt++;
+      if (client == null) return _connectToDB();                  // likely someone already cleaned-up
+      if (connectionCB == null) return Promise.resolve(client);   // already connected
+      return new Promise(function(resolve, reject) {              // trying to connect - add ourselves to the CB
+        connectionCB.push(()=>{resolve(client)});
+      });
+    },
+    cleanup: ()=>{
+      connectionsCnt--;
+      if (connectionsCnt > 0) return;
+      console.log('Cleaning connection to Postgres');
+      client.end();
+      client = null;
+    },
+  };
 };
 </code></pre>
         </article>
@@ -165,34 +274,13 @@ module.exports = function(violet) {
 
 </div>
 
-<nav id="organized">
-  <h2><a href="index.html">Home</a></h2>
-  <h3>Modules</h3><ul>
-    <li><a href="module-utils.html">utils</a></li>
-    <li><a href="module-violet.html">violet</a></li>
-    <li><a href="module-violetSrvr.html">violetSrvr</a></li>
-  </ul>
-  <h3>Plugins</h3><ul>
-    <li><a href="module-violetList.html">violetList</a></li>
-    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
-    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
-    <li><a href="module-violetTime.html">violetTime</a></li>
-  </ul>
-  <h3>Classes</h3><ul>
-    <li><a href="module-violet.script-__getResponse-response.html">response</a></li>
-    <li><a href="module-violet.script-violet.html">violet</a></li>
-  </ul>
-</nav>
-<nav id="generated" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
-</nav>
 
 </div><!-- id="main_wrap" -->
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Nov 20 2017 16:03:34 GMT-0800 (PST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Dec 03 2017 23:35:47 GMT-0500 (EST)
 </footer>
 
 <script> prettyPrint(); </script>

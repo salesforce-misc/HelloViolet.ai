@@ -12,24 +12,61 @@
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
     <link type="text/css" rel="stylesheet" href="../assets/css/docs-customization.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/landio.css">
 </head>
 
 <body>
 
-  <!-- HEADER FROM JEKYLL THEME -->
-  <div id="header_wrap" class="outer">
-      <header class="inner">
-        <div id="top_banner">
-          <a id="menu" href="/docs">Documentation</a>
-          <a id="forkme_banner" href="https://github.com/salesforce/violet-conversations">View on GitHub</a>
-        </div>
+  <!-- HEADER FROM SITE THEME -->
+  <nav class="navbar navbar-dark bg-inverse bg-inverse-custom navbar-fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="../assets/images/logo4.png" style="width:80px;"/>
+        <span class="sr-only">Violet</span>
+      </a>
+      <a class="navbar-toggler hidden-md-up pull-xs-right" onclick="$('#collapsingNavbar').toggle()">
+      &#9776;
+    </a>
 
-        <h1 id="project_title"><a href="/">Violet</a></h1>
-        <h2 id="project_tagline">Enabling Sophisticated Voice Conversations</h2>
+      <div id="collapsingNavbar" class="collapse navbar-toggleable-custom" role="tabpanel" aria-labelledby="collapsingNavbar">
+        <ul class="nav navbar-nav pull-xs-right">
+          <li class="nav-item nav-item-toggable">
+            <a class="nav-link" href="/docs" id="totop">Documentation</a>
+          </li>
+          <li class="nav-item nav-item-toggable">
+            <a class="nav-link" href="https://github.com/salesforce/violet-conversations">GitHub</a>
+          </li>
+        </ul>
+      </div>
 
-      </header>
-  </div>
-  <div id="main_wrap">
+    </div>
+  </nav>
+
+
+
+  <div id="main_wrap" class="container">
+
+<nav id="organized">
+  <h2><a href="index.html">Home</a></h2>
+  <h3>Modules</h3><ul>
+    <li><a href="module-utils.html">utils</a></li>
+    <li><a href="module-violet.html">violet</a></li>
+    <li><a href="module-violetSrvr.html">violetSrvr</a></li>
+  </ul>
+  <h3>Plugins</h3><ul>
+    <li><a href="module-violetList.html">violetList</a></li>
+    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
+    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
+    <li><a href="module-violetTime.html">violetTime</a></li>
+  </ul>
+  <h3>Classes</h3><ul>
+    <li><a href="module-violet.script-__getResponse-response.html">response</a></li>
+    <li><a href="module-violet.script-violet.html">violet</a></li>
+  </ul>
+</nav>
+<nav id="generated" style="display:none">
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
+</nav>
 
 <div id="main">
 
@@ -54,6 +91,25 @@
 
 module.exports = (violet) => {
   var simulatedTimeDeltaInMinutes = 0;
+
+  var timerMgr = {
+    timers: [],
+
+    // setTimeout takes delay as the first parameter - it is more uniform to have cb as last parameter
+    setTimeout: (delay, cb) => {
+      var timer = setTimeout(()=>{timerMgr.done(timer);cb();}, delay);
+      timerMgr.timers.push(timer);
+    },
+    done: (timer) => {
+      var timerNdx = timerMgr.timers.indexOf(timer);
+      if (timerNdx != -1) timerMgr.timers(timerNdx, 1);
+    },
+    clear: () => {
+      timerMgr.timers.forEach(timer=>{
+        clearTimeout(timer);
+      });
+    }
+  };
 
   var _currentTime = ()=>{
     return new Date(Date.now() + simulatedTimeDeltaInMinutes*60*1000);
@@ -95,9 +151,9 @@ module.exports = (violet) => {
   var timeoutId = -1;
   var _repeatedCheckForAlerts = () => {
     _checkForAlerts();
-    timeoutId = setTimeout(_repeatedCheckForAlerts, _repeatedCheckLength);
+    timerMgr.setTimeout(_repeatedCheckLength, _repeatedCheckForAlerts);
   };
-  timeoutId = setTimeout(_repeatedCheckForAlerts, _repeatedCheckLength);
+  timerMgr.setTimeout(_repeatedCheckLength, _repeatedCheckForAlerts);
 
 
   violet.addInputTypes({
@@ -133,15 +189,16 @@ module.exports = (violet) => {
         case 'minutes': simulatedTimeDeltaInMinutes += time;
       };
       response.say(["Advancing in 5 seconds"]);
-      setTimeout(()=>{
+      timerMgr.setTimeout(5*1000, ()=>{
         _checkForAlerts();
-      }, 5*1000)
+      });
   }});
 
   return {
     /**
      * Returns the current time incremented by any amount of delay that has
      * been requested.
+     * @returns {Date}
      */
     currentTime: () => { return _currentTime(); },
 
@@ -164,7 +221,7 @@ module.exports = (violet) => {
      * once every hour).
      */
     clearTimers: () => {
-      if (timeoutId != -1) clearTimeout(timeoutId);
+      timerMgr.clear();
     }
 
   };
@@ -178,34 +235,13 @@ module.exports = (violet) => {
 
 </div>
 
-<nav id="organized">
-  <h2><a href="index.html">Home</a></h2>
-  <h3>Modules</h3><ul>
-    <li><a href="module-utils.html">utils</a></li>
-    <li><a href="module-violet.html">violet</a></li>
-    <li><a href="module-violetSrvr.html">violetSrvr</a></li>
-  </ul>
-  <h3>Plugins</h3><ul>
-    <li><a href="module-violetList.html">violetList</a></li>
-    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
-    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
-    <li><a href="module-violetTime.html">violetTime</a></li>
-  </ul>
-  <h3>Classes</h3><ul>
-    <li><a href="module-violet.script-__getResponse-response.html">response</a></li>
-    <li><a href="module-violet.script-violet.html">violet</a></li>
-  </ul>
-</nav>
-<nav id="generated" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
-</nav>
 
 </div><!-- id="main_wrap" -->
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Nov 20 2017 16:03:34 GMT-0800 (PST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Dec 03 2017 23:35:47 GMT-0500 (EST)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -12,24 +12,61 @@
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
     <link type="text/css" rel="stylesheet" href="../assets/css/docs-customization.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/landio.css">
 </head>
 
 <body>
 
-  <!-- HEADER FROM JEKYLL THEME -->
-  <div id="header_wrap" class="outer">
-      <header class="inner">
-        <div id="top_banner">
-          <a id="menu" href="/docs">Documentation</a>
-          <a id="forkme_banner" href="https://github.com/salesforce/violet-conversations">View on GitHub</a>
-        </div>
+  <!-- HEADER FROM SITE THEME -->
+  <nav class="navbar navbar-dark bg-inverse bg-inverse-custom navbar-fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="../assets/images/logo4.png" style="width:80px;"/>
+        <span class="sr-only">Violet</span>
+      </a>
+      <a class="navbar-toggler hidden-md-up pull-xs-right" onclick="$('#collapsingNavbar').toggle()">
+      &#9776;
+    </a>
 
-        <h1 id="project_title"><a href="/">Violet</a></h1>
-        <h2 id="project_tagline">Enabling Sophisticated Voice Conversations</h2>
+      <div id="collapsingNavbar" class="collapse navbar-toggleable-custom" role="tabpanel" aria-labelledby="collapsingNavbar">
+        <ul class="nav navbar-nav pull-xs-right">
+          <li class="nav-item nav-item-toggable">
+            <a class="nav-link" href="/docs" id="totop">Documentation</a>
+          </li>
+          <li class="nav-item nav-item-toggable">
+            <a class="nav-link" href="https://github.com/salesforce/violet-conversations">GitHub</a>
+          </li>
+        </ul>
+      </div>
 
-      </header>
-  </div>
-  <div id="main_wrap">
+    </div>
+  </nav>
+
+
+
+  <div id="main_wrap" class="container">
+
+<nav id="organized">
+  <h2><a href="index.html">Home</a></h2>
+  <h3>Modules</h3><ul>
+    <li><a href="module-utils.html">utils</a></li>
+    <li><a href="module-violet.html">violet</a></li>
+    <li><a href="module-violetSrvr.html">violetSrvr</a></li>
+  </ul>
+  <h3>Plugins</h3><ul>
+    <li><a href="module-violetList.html">violetList</a></li>
+    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
+    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
+    <li><a href="module-violetTime.html">violetTime</a></li>
+  </ul>
+  <h3>Classes</h3><ul>
+    <li><a href="module-violet.script-__getResponse-response.html">response</a></li>
+    <li><a href="module-violet.script-violet.html">violet</a></li>
+  </ul>
+</nav>
+<nav id="generated" style="display:none">
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
+</nav>
 
 <div id="main">
 
@@ -286,6 +323,11 @@ module.exports.script = function(_appName) {
     console.log('--> TL Goal added: ' + goal);
     topLevelGoals.push(goal);
   };
+  var _hasGoal = (goal) => {
+    console.log('--> Checking goal: ' + goal);
+    var ndx = goalsToMeet.indexOf(goal);
+    return (ndx !== -1);
+  };
   var _clearGoal = (goal) => {
     console.log('--> Clearing Goal: ' + goal);
     var ndx = goalsToMeet.indexOf(goal);
@@ -352,8 +394,15 @@ module.exports.script = function(_appName) {
 
         var tgtGoalObj = registeredGoals[tgtGoal];
         lastGoal = tgtGoal;
+        if (!tgtGoalObj) {
+          console.log('ERROR: Goal not defined - ' + tgtGoal);
+          moreGoalsToSeek=false;
+          return Promise.resolve();
+        }
 
-        console.log('--> Trying to meet goal: ' + tgtGoal);
+        // console.log('--> Trying to meet goal: ' + tgtGoal);
+        // console.log('--> registeredGoals: ', registeredGoals);
+        // console.log('--> tgtGoalObj: ', tgtGoalObj);
         if (tgtGoalObj.resolve) {
           return resolveGoal(tgtGoalObj.resolve, tgtGoal, response);
         } else if (tgtGoalObj.prompt) {
@@ -546,13 +595,15 @@ module.exports.script = function(_appName) {
           return response.load(p);
         }
 
-        if (params.objName == null) {
-          console.log('Need object to load');
+        if (!params.objName &amp;&amp; !params.query) {
+          console.log('Need object or query to load');
           return Promise.resolve();
         }
 
+        if (!params.query) params.query = ''
         if (!params.queryXtra) params.queryXtra = ''
-        if (params.queryXtra.toLowerCase().indexOf('limit') == -1)
+        if (params.query.toLowerCase().indexOf('limit') == -1 &amp;&amp;
+              params.queryXtra.toLowerCase().indexOf('limit') == -1)
           params.queryXtra += ' limit 100';
 
         if (params.objName)
@@ -569,10 +620,36 @@ module.exports.script = function(_appName) {
         console.log('Updating object: ' + objName);
         return persistentStore.update(objName, keyName, keyVal, updateData);
       },
+      delete: (objName, keyName, keyVal, deleteData) => {
+        console.log('Deleting object: ' + objName);
+        return persistentStore.delete(objName, keyName, keyVal, deleteData);
+      },
 
       // goals support
+
+      /**
+       * Tells Violet that a goal needs to be met. These goals can be checked
+       * to see if they are set by calling *hasGoal* and can be cleared by
+       * calling *clearGoal*.
+       * &lt;br>&lt;br>
+       * Once called Violet will call any defined goals after the current
+       * *resolve* method finishes.
+       */
       addGoal: (goal) => {_addGoal(goal);},
+
+      /**
+       * Checks if a goal has been set.
+       */
+      hasGoal: (goal) => {return _hasGoal(goal);},
+
+      /**
+       * Clears goals
+       */
       clearGoal: (goal) => {_clearGoal(goal);},
+
+      /**
+       * Clears all goals
+       */
       clearAllGoals: () => {_clearAllGoals();},
       goalFilledByStore: (destParamName, srcParamName) => {
         if (response.contains(destParamName)) {
@@ -651,18 +728,20 @@ module.exports.script = function(_appName) {
     var max = userSpeech.length;
     for (var ndx = 0; ndx&lt;max; ndx++) {
       var userSpeechItem = userSpeech[ndx];
+      // go through all equivalent phrases (phraseEquivalents x equivSets) to see if there are any matches
       phraseEquivalents.forEach((equivSets) => {
         equivSets.forEach((phrase, phraseNdx) => {
-          var addToUserSpeech = function(phraseEquivSet, foundPhrase, foundPhrasePos, foundPhraseNdx) {
-            // go through everything in phraseEquivSet except foundPhraseNdx
-            phraseEquivSet.forEach((phraseToInclude, phraseToIncludeNdx) => {
-              if (phraseToIncludeNdx == foundPhraseNdx) return;
-              userSpeech.push(_interpolate(userSpeechItem, foundPhrase, foundPhrasePos, phraseToInclude));
-            });
-          }
-          var phrasePos = userSpeechItem.indexOf(phrase);
+          var phrasePos = userSpeechItem.toLowerCase().indexOf(phrase.toLowerCase());
           if (phrasePos == -1) return;
-          addToUserSpeech(equivSets, phrase, phrasePos, phraseNdx);
+
+          // found a match, lets add everything in the equivSets
+          var foundPhrasePos = phrasePos;
+          var foundPhrase = phrase;
+          var foundPhraseNdx = phraseNdx;
+          equivSets.forEach((phraseToInclude, phraseToIncludeNdx) => {
+            if (phraseToIncludeNdx == foundPhraseNdx) return;
+            userSpeech.push(_interpolate(userSpeechItem, foundPhrase, foundPhrasePos, phraseToInclude));
+          });
         });
       });
     }
@@ -794,6 +873,17 @@ module.exports.script = function(_appName) {
       }
     },
 
+    /**
+     * Gives a set of equivalent phrases
+     * @example
+     * violet.addPhraseEquivalents([
+     *   ['My name is', 'I call myself'],
+     * ]);
+     * violet.respondTo(['My name is [[name]]'],
+     *   (response) => {
+     *     response.say('I like the name [[name]]')
+     *   });
+     */
     addPhraseEquivalents: function(_phraseEquivalents) {
       // add to phraseEquivalents after lowering case
       _phraseEquivalents.forEach((_equivSets) => {
@@ -814,11 +904,6 @@ module.exports.script = function(_appName) {
 
     setSpokenRate: (_rate) => {
       spokenRate = _rate;
-    },
-
-    // deprecated
-    meetGoal: function(goalObj) {
-      violet.defineGoal(goalObj);
     },
 
     defineGoal: function(goalObj) {
@@ -935,34 +1020,13 @@ module.exports.script = function(_appName) {
 
 </div>
 
-<nav id="organized">
-  <h2><a href="index.html">Home</a></h2>
-  <h3>Modules</h3><ul>
-    <li><a href="module-utils.html">utils</a></li>
-    <li><a href="module-violet.html">violet</a></li>
-    <li><a href="module-violetSrvr.html">violetSrvr</a></li>
-  </ul>
-  <h3>Plugins</h3><ul>
-    <li><a href="module-violetList.html">violetList</a></li>
-    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
-    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
-    <li><a href="module-violetTime.html">violetTime</a></li>
-  </ul>
-  <h3>Classes</h3><ul>
-    <li><a href="module-violet.script-__getResponse-response.html">response</a></li>
-    <li><a href="module-violet.script-violet.html">violet</a></li>
-  </ul>
-</nav>
-<nav id="generated" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
-</nav>
 
 </div><!-- id="main_wrap" -->
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Nov 20 2017 16:03:34 GMT-0800 (PST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Dec 03 2017 23:35:47 GMT-0500 (EST)
 </footer>
 
 <script> prettyPrint(); </script>

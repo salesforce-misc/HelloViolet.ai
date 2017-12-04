@@ -12,24 +12,61 @@
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
     <link type="text/css" rel="stylesheet" href="../assets/css/docs-customization.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/landio.css">
 </head>
 
 <body>
 
-  <!-- HEADER FROM JEKYLL THEME -->
-  <div id="header_wrap" class="outer">
-      <header class="inner">
-        <div id="top_banner">
-          <a id="menu" href="/docs">Documentation</a>
-          <a id="forkme_banner" href="https://github.com/salesforce/violet-conversations">View on GitHub</a>
-        </div>
+  <!-- HEADER FROM SITE THEME -->
+  <nav class="navbar navbar-dark bg-inverse bg-inverse-custom navbar-fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="../assets/images/logo4.png" style="width:80px;"/>
+        <span class="sr-only">Violet</span>
+      </a>
+      <a class="navbar-toggler hidden-md-up pull-xs-right" onclick="$('#collapsingNavbar').toggle()">
+      &#9776;
+    </a>
 
-        <h1 id="project_title"><a href="/">Violet</a></h1>
-        <h2 id="project_tagline">Enabling Sophisticated Voice Conversations</h2>
+      <div id="collapsingNavbar" class="collapse navbar-toggleable-custom" role="tabpanel" aria-labelledby="collapsingNavbar">
+        <ul class="nav navbar-nav pull-xs-right">
+          <li class="nav-item nav-item-toggable">
+            <a class="nav-link" href="/docs" id="totop">Documentation</a>
+          </li>
+          <li class="nav-item nav-item-toggable">
+            <a class="nav-link" href="https://github.com/salesforce/violet-conversations">GitHub</a>
+          </li>
+        </ul>
+      </div>
 
-      </header>
-  </div>
-  <div id="main_wrap">
+    </div>
+  </nav>
+
+
+
+  <div id="main_wrap" class="container">
+
+<nav id="organized">
+  <h2><a href="index.html">Home</a></h2>
+  <h3>Modules</h3><ul>
+    <li><a href="module-utils.html">utils</a></li>
+    <li><a href="module-violet.html">violet</a></li>
+    <li><a href="module-violetSrvr.html">violetSrvr</a></li>
+  </ul>
+  <h3>Plugins</h3><ul>
+    <li><a href="module-violetList.html">violetList</a></li>
+    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
+    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
+    <li><a href="module-violetTime.html">violetTime</a></li>
+  </ul>
+  <h3>Classes</h3><ul>
+    <li><a href="module-violet.script-__getResponse-response.html">response</a></li>
+    <li><a href="module-violet.script-violet.html">violet</a></li>
+  </ul>
+</nav>
+<nav id="generated" style="display:none">
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
+</nav>
 
 <div id="main">
 
@@ -66,14 +103,17 @@ var org = nforce.createConnection({
   },
   mode: 'single' // optional, 'single' or 'multi' user mode, multi default
 });
+var connectionCB = [];
 org.authenticate({ username: process.env.V_SFDC_USERNAME, password: process.env.V_SFDC_PASSWORD}, function(err, resp){
   // the oauth object was stored in the connection object
-  if(err) {
+  if (err) {
     console.log('err: ', err);
     return;
   }
 
   console.log('SF Access Token: ' + org.oauth.access_token);
+  connectionCB.forEach(cb=>{cb()});
+  connectionCB = null;
 });
 
 const builtIn='*';
@@ -123,15 +163,22 @@ var _setCompundProperty = (obj, prop, val)=>{
   });
   lastObj[propItems[propItems.length-1]] = val;
 }
+var _dedupe = (ary)=>{
+  return ary.sort().filter((item, ndx, _ary)=>{
+    if (ndx!=0 &amp;&amp; item == ary[ndx-1]) return false;
+    return true;
+  });
+}
 
 
 var sfStore = {
-  defaultPropOfInterest: ['CreatedDate*'],
+  defaultPropOfInterest: ['Id*', 'CreatedDate*'],
   _objProps: (params)=>{
-    var objProps = sfStore.defaultPropOfInterest;
+    var objProps = [];
     if (params.objName) objProps = objProps.concat(sfStore.propOfInterest[params.objName]);
     if (params.propOfInterest) objProps = objProps.concat(params.propOfInterest);
-    return objProps;
+    if (objProps.length == 0) return objProps; // return empty array if we don't have a way to get any propOfInterest
+    return objProps.concat(sfStore.defaultPropOfInterest);
   },
   /** */
   load:  (params)=>{
@@ -140,8 +187,9 @@ var sfStore = {
     if (params.query)
       q+=' ' + params.query;
     else
-      q+= sfStore._objProps(params).map((p)=>{return _getCompoundNameToStr(p);}).join(', ');
-    q+= ' FROM ' + _getCompoundNameToStr(params.objName);
+      q+= _dedupe(sfStore._objProps(params).map((p)=>{return _getCompoundNameToStr(p);})).join(', ');
+    if (params.objName)
+      q+= ' FROM ' + _getCompoundNameToStr(params.objName);
     if (params.keyName || params.filter) q+= ' WHERE';
     if (params.keyName &amp;&amp; params.keyVal) {
       if (params.keyName.startsWith(params.objName))
@@ -160,7 +208,8 @@ var sfStore = {
         return;
       } else console.log('found ' + resp.records.length + ' records');
 
-      if (!params.objName || !params.propOfInterest) {
+      var objProperties = sfStore._objProps(params);
+      if (objProperties.length==0) {
         // we can't convert to js object
         return resp.records;
       }
@@ -168,7 +217,7 @@ var sfStore = {
       var memRecords = [];
       resp.records.forEach((rec)=>{
         var recStore = {};
-        sfStore._objProps(params).forEach((p)=> {
+        objProperties.forEach((p)=> {
           _setCompundProperty(recStore, p, _getCompoundProperty(rec,p));
         });
         memRecords.push(recStore);
@@ -187,7 +236,7 @@ var sfStore = {
     // `records`
     console.log('sfStore.search: ' + searchStr + ' in ' + objName);
     var q = 'FIND {' + searchStr + '} IN ALL FIELDS RETURNING ' + _getCompoundNameToStr(objName) + '(';
-    q+= sfStore._objProps({objName}).map((p)=>{return _getCompoundNameToStr(p);}).join(', ');
+    q+= _dedupe(sfStore._objProps({objName}).map((p)=>{return _getCompoundNameToStr(p);})).join(', ');
     q+=" WHERE PublishStatus='Online' AND LANGUAGE ='en_US')"
     console.log('sosl: ' + q);
 
@@ -218,14 +267,10 @@ var sfStore = {
     // console.log(dataToStore);
     console.log('storing: ' + objName, dataToStore);
     for(var key in dataToStore){
-      dl.set(_getCompoundNameToStr(key), tgtObj[key]);
+      dl.set(_getCompoundNameToStr(key), dataToStore[key]);
     }
 
-    org.insert({ sobject: dl }, function(err, resp){
-      if(err) {
-        console.log('err: ', err);
-        return;
-      }
+    return org.insert({ sobject: dl }).then(()=>{
       console.log('Stored');
     });
   },
@@ -233,7 +278,7 @@ var sfStore = {
   update: (objName, keyName, keyVal, updateData)=>{
     // console.log('sfStore.update: ' + objName, sfStore._objProps({objName}));
     var q = 'SELECT ';
-    q+= sfStore._objProps({objName}).map((p)=>{return _getCompoundNameToStr(p);}).join(', ');
+    q+= _dedupe(sfStore._objProps({objName}).map((p)=>{return _getCompoundNameToStr(p);})).join(', ');
     q+= ' FROM ' + _getCompoundNameToStr(objName);
     q+= ' WHERE ';
     if (keyName.startsWith(objName))
@@ -262,12 +307,50 @@ var sfStore = {
       console.log('sfdc update err', err);
     });
   },
+  /** */
+  delete: (objName, keyName, keyVal)=>{
+    // console.log('sfStore.delete: ' + objName, sfStore._objProps({objName}));
+    var q = 'SELECT ';
+    q+= _dedupe(sfStore._objProps({objName}).map((p)=>{return _getCompoundNameToStr(p);})).join(', ');
+    q+= ' FROM ' + _getCompoundNameToStr(objName);
+    q+= ' WHERE ';
+    if (keyName.startsWith(objName))
+      q+= _getCompoundNameToStr(keyName.substr(objName.length+1)) + ' = \'' + keyVal + '\'';
+    else
+      q+= _getCompoundNameToStr(keyName)+' = \'' + keyVal + '\'';
+    q+=' LIMIT 1';
+    console.log('soql: ' + q);
+
+    return org.query({ query: q }).then(function(resp){
+      if (!resp.records || resp.records.length == 0) {
+        console.log('no results');
+        return;
+      }
+
+      var dbObj = resp.records[0];
+
+      console.log('query succeded... updating: ' + objName);
+
+      return org.delete({ sobject: dbObj }).then(()=>{ console.log('Deleted'); });
+
+    }).catch((err)=>{
+      console.log('sfdc delete err', err);
+    });
+  },
 };
 
 // module.exports.store = sfStore;
 module.exports = function(violet) {
   if (violet) violet.setPersistentStore(sfStore);
-  return {store: sfStore};
+  return {
+    connected: ()=>{
+      if (connectionCB == null) return Promise.resolve();
+      return new Promise(function(resolve, reject) {
+        connectionCB.push(()=>{resolve()});
+      });
+    },
+    store: sfStore
+  };
 };
 </code></pre>
         </article>
@@ -278,34 +361,13 @@ module.exports = function(violet) {
 
 </div>
 
-<nav id="organized">
-  <h2><a href="index.html">Home</a></h2>
-  <h3>Modules</h3><ul>
-    <li><a href="module-utils.html">utils</a></li>
-    <li><a href="module-violet.html">violet</a></li>
-    <li><a href="module-violetSrvr.html">violetSrvr</a></li>
-  </ul>
-  <h3>Plugins</h3><ul>
-    <li><a href="module-violetList.html">violetList</a></li>
-    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
-    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
-    <li><a href="module-violetTime.html">violetTime</a></li>
-  </ul>
-  <h3>Classes</h3><ul>
-    <li><a href="module-violet.script-__getResponse-response.html">response</a></li>
-    <li><a href="module-violet.script-violet.html">violet</a></li>
-  </ul>
-</nav>
-<nav id="generated" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
-</nav>
 
 </div><!-- id="main_wrap" -->
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Nov 20 2017 16:03:34 GMT-0800 (PST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Dec 03 2017 23:35:47 GMT-0500 (EST)
 </footer>
 
 <script> prettyPrint(); </script>

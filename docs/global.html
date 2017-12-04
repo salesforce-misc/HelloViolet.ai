@@ -12,24 +12,61 @@
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
     <link type="text/css" rel="stylesheet" href="../assets/css/docs-customization.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/landio.css">
 </head>
 
 <body>
 
-  <!-- HEADER FROM JEKYLL THEME -->
-  <div id="header_wrap" class="outer">
-      <header class="inner">
-        <div id="top_banner">
-          <a id="menu" href="/docs">Documentation</a>
-          <a id="forkme_banner" href="https://github.com/salesforce/violet-conversations">View on GitHub</a>
-        </div>
+  <!-- HEADER FROM SITE THEME -->
+  <nav class="navbar navbar-dark bg-inverse bg-inverse-custom navbar-fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="../assets/images/logo4.png" style="width:80px;"/>
+        <span class="sr-only">Violet</span>
+      </a>
+      <a class="navbar-toggler hidden-md-up pull-xs-right" onclick="$('#collapsingNavbar').toggle()">
+      &#9776;
+    </a>
 
-        <h1 id="project_title"><a href="/">Violet</a></h1>
-        <h2 id="project_tagline">Enabling Sophisticated Voice Conversations</h2>
+      <div id="collapsingNavbar" class="collapse navbar-toggleable-custom" role="tabpanel" aria-labelledby="collapsingNavbar">
+        <ul class="nav navbar-nav pull-xs-right">
+          <li class="nav-item nav-item-toggable">
+            <a class="nav-link" href="/docs" id="totop">Documentation</a>
+          </li>
+          <li class="nav-item nav-item-toggable">
+            <a class="nav-link" href="https://github.com/salesforce/violet-conversations">GitHub</a>
+          </li>
+        </ul>
+      </div>
 
-      </header>
-  </div>
-  <div id="main_wrap">
+    </div>
+  </nav>
+
+
+
+  <div id="main_wrap" class="container">
+
+<nav id="organized">
+  <h2><a href="index.html">Home</a></h2>
+  <h3>Modules</h3><ul>
+    <li><a href="module-utils.html">utils</a></li>
+    <li><a href="module-violet.html">violet</a></li>
+    <li><a href="module-violetSrvr.html">violetSrvr</a></li>
+  </ul>
+  <h3>Plugins</h3><ul>
+    <li><a href="module-violetList.html">violetList</a></li>
+    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
+    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
+    <li><a href="module-violetTime.html">violetTime</a></li>
+  </ul>
+  <h3>Classes</h3><ul>
+    <li><a href="module-violet.script-__getResponse-response.html">response</a></li>
+    <li><a href="module-violet.script-violet.html">violet</a></li>
+  </ul>
+</nav>
+<nav id="generated" style="display:none">
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
+</nav>
 
 <div id="main">
 
@@ -119,72 +156,6 @@
 
 
 
-<div class="description">
-    help with script
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-samples_scripts_sf-leadsAndOpportunities.js.html">violet-samples/scripts/sf-leadsAndOpportunities.js</a>, <a href="violet-samples_scripts_sf-leadsAndOpportunities.js.html#line36">line 36</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    check for any new leads
-</div>
-
 
 
 
@@ -220,190 +191,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html">violet-samples/scripts/sf-leadsAndOpportunities-orig.js</a>, <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html#line98">line 98</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    TODO: how can we make the below (nested goals more intuitive????) .... esp with primitives like goalFilled
- create a lead
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html">violet-samples/scripts/sf-leadsAndOpportunities-orig.js</a>, <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html#line61">line 61</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    help with script
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html">violet-samples/scripts/sf-leadsAndOpportunities-orig.js</a>, <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html#line40">line 40</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-samples_scripts_sf-knowledge-base.js.html">violet-samples/scripts/sf-knowledge-base.js</a>, <a href="violet-samples_scripts_sf-knowledge-base.js.html#line42">line 42</a>
+        <a href="violet-samples_scripts_apiai-docs.js.html">violet-samples/scripts/apiai-docs.js</a>, <a href="violet-samples_scripts_apiai-docs.js.html#line79">line 79</a>
     </li></ul></dd>
     
 
@@ -462,64 +250,6 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="violet-samples_scripts_sf-cases-employee.js.html">violet-samples/scripts/sf-cases-employee.js</a>, <a href="violet-samples_scripts_sf-cases-employee.js.html#line139">line 139</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-samples_scripts_sf-cases-employee.js.html">violet-samples/scripts/sf-cases-employee.js</a>, <a href="violet-samples_scripts_sf-cases-employee.js.html#line127">line 127</a>
     </li></ul></dd>
     
 
@@ -895,6 +625,68 @@
 
 
 <div class="description">
+    check my calendar
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html">violet-samples/scripts/sf-leadsAndOpportunities-orig.js</a>, <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html#line133">line 133</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
     opportunity status
 </div>
 
@@ -934,6 +726,126 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html">violet-samples/scripts/sf-leadsAndOpportunities-orig.js</a>, <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html#line117">line 117</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-samples_scripts_sf-knowledge-base.js.html">violet-samples/scripts/sf-knowledge-base.js</a>, <a href="violet-samples_scripts_sf-knowledge-base.js.html#line42">line 42</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    check for any new leads
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html">violet-samples/scripts/sf-leadsAndOpportunities-orig.js</a>, <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html#line98">line 98</a>
     </li></ul></dd>
     
 
@@ -1188,6 +1100,354 @@
 
 
 
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-samples_scripts_apiai-docs.js.html">violet-samples/scripts/apiai-docs.js</a>, <a href="violet-samples_scripts_apiai-docs.js.html#line108">line 108</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-samples_scripts_apiai-docs.js.html">violet-samples/scripts/apiai-docs.js</a>, <a href="violet-samples_scripts_apiai-docs.js.html#line102">line 102</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-samples_scripts_apiai-docs.js.html">violet-samples/scripts/apiai-docs.js</a>, <a href="violet-samples_scripts_apiai-docs.js.html#line93">line 93</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-samples_scripts_sf-cases-employee.js.html">violet-samples/scripts/sf-cases-employee.js</a>, <a href="violet-samples_scripts_sf-cases-employee.js.html#line127">line 127</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-samples_scripts_apiai-docs.js.html">violet-samples/scripts/apiai-docs.js</a>, <a href="violet-samples_scripts_apiai-docs.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-samples_scripts_apiai-docs.js.html">violet-samples/scripts/apiai-docs.js</a>, <a href="violet-samples_scripts_apiai-docs.js.html#line55">line 55</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
+
+
+
+
 <div class="description">
     check my calendar
 </div>
@@ -1285,7 +1545,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-samples_scripts_apiai-docs.js.html">violet-samples/scripts/apiai-docs.js</a>, <a href="violet-samples_scripts_apiai-docs.js.html#line108">line 108</a>
+        <a href="violet-samples_scripts_apiai-docs.js.html">violet-samples/scripts/apiai-docs.js</a>, <a href="violet-samples_scripts_apiai-docs.js.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -1473,354 +1733,6 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="violet-samples_scripts_sf-leadsAndOpportunities.js.html">violet-samples/scripts/sf-leadsAndOpportunities.js</a>, <a href="violet-samples_scripts_sf-leadsAndOpportunities.js.html#line57">line 57</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-samples_scripts_apiai-docs.js.html">violet-samples/scripts/apiai-docs.js</a>, <a href="violet-samples_scripts_apiai-docs.js.html#line102">line 102</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-samples_scripts_apiai-docs.js.html">violet-samples/scripts/apiai-docs.js</a>, <a href="violet-samples_scripts_apiai-docs.js.html#line93">line 93</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-samples_scripts_apiai-docs.js.html">violet-samples/scripts/apiai-docs.js</a>, <a href="violet-samples_scripts_apiai-docs.js.html#line79">line 79</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-samples_scripts_apiai-docs.js.html">violet-samples/scripts/apiai-docs.js</a>, <a href="violet-samples_scripts_apiai-docs.js.html#line67">line 67</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-samples_scripts_apiai-docs.js.html">violet-samples/scripts/apiai-docs.js</a>, <a href="violet-samples_scripts_apiai-docs.js.html#line55">line 55</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-samples_scripts_apiai-docs.js.html">violet-samples/scripts/apiai-docs.js</a>, <a href="violet-samples_scripts_apiai-docs.js.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -2088,7 +2000,8 @@
 
 
 <div class="description">
-    check my calendar
+    TODO: how can we make the below (nested goals more intuitive????) .... esp with primitives like goalFilled
+ create a lead
 </div>
 
 
@@ -2126,7 +2039,131 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html">violet-samples/scripts/sf-leadsAndOpportunities-orig.js</a>, <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html#line133">line 133</a>
+        <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html">violet-samples/scripts/sf-leadsAndOpportunities-orig.js</a>, <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html#line61">line 61</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    help with script
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html">violet-samples/scripts/sf-leadsAndOpportunities-orig.js</a>, <a href="violet-samples_scripts_sf-leadsAndOpportunities-orig.js.html#line40">line 40</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="(unnamed)"><span class="type-signature"></span>(unnamed)<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    help with script
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-samples_scripts_sf-leadsAndOpportunities.js.html">violet-samples/scripts/sf-leadsAndOpportunities.js</a>, <a href="violet-samples_scripts_sf-leadsAndOpportunities.js.html#line36">line 36</a>
     </li></ul></dd>
     
 
@@ -2699,34 +2736,13 @@
 
 </div>
 
-<nav id="organized">
-  <h2><a href="index.html">Home</a></h2>
-  <h3>Modules</h3><ul>
-    <li><a href="module-utils.html">utils</a></li>
-    <li><a href="module-violet.html">violet</a></li>
-    <li><a href="module-violetSrvr.html">violetSrvr</a></li>
-  </ul>
-  <h3>Plugins</h3><ul>
-    <li><a href="module-violetList.html">violetList</a></li>
-    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
-    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
-    <li><a href="module-violetTime.html">violetTime</a></li>
-  </ul>
-  <h3>Classes</h3><ul>
-    <li><a href="module-violet.script-__getResponse-response.html">response</a></li>
-    <li><a href="module-violet.script-violet.html">violet</a></li>
-  </ul>
-</nav>
-<nav id="generated" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
-</nav>
 
 </div><!-- id="main_wrap" -->
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Nov 20 2017 16:03:34 GMT-0800 (PST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Dec 03 2017 23:35:47 GMT-0500 (EST)
 </footer>
 
 <script> prettyPrint(); </script>

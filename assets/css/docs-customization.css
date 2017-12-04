@@ -1,6 +1,13 @@
-body {
+/*body {
   background-color: #f2f2f2;
   margin: 0px;
+}*/
+nav {
+  margin-top: 0px;
+  width: auto;
+  border-left: medium none currentColor;
+  float: right;
+  padding-left: 20px;
 }
 section {
   background-color: inherit;
@@ -79,10 +86,20 @@ section {
 #main_wrap {
   /*max-width: 768px;*/
   margin: 0 auto;
+  margin-top: 120px;
+}
+
+#main {
+  float: none;
+  width: auto;
 }
 
 html {
   font-size: inherit;
+}
+
+section {
+  padding: 0px;
 }
 
 /* is this a good idea? seems to catch all the scopes, but does anything else get caught in it? */

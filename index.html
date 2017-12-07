@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>HelloViolet.ai - Voice Platform</title>
+    <title>HelloViolet.ai - Voice Application Framework</title>
     <meta name="description" content="A Node.js based platform for building sophisticated Voice Conversations" />
     <meta name="keywords" content="voice" />
     <meta name="author" content="Vineet Sinha" />
@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="assets/css/prism.css" />
     <style>
       .btn-primary { margin-left: 14px; margin-right: 14px; }
+      #inline-code { /*background-color:#f4f5f7; color: inherit;*/ padding: 5px; }
     </style>
   </head>
 
@@ -56,20 +57,26 @@
 
     <header class="jumbotron bg-inverse text-xs-center center-vertically notfull" role="banner">
       <div class="container">
-        <h1 class="display-3">Hello Violet</h1>
+        <h1 class="display-3">Violet</h1>
         <h2 class="m-b-3">Enabling Sophisticated Voice Conversations</h2>
         <!-- <a class="btn btn-secondary-outline m-b-1" href="http://tympanus.net/codrops/?p=25217" role="button"><span class="icon-sketch"></span>Sketch included</a> -->
         <div class="row">
-          <div class="col-xs-2"></div>
-          <div class="col-xs-8">
-            <p>Violet is a Node.js framework that allows you to create voice-scripts in an intuitive manner, while consisting of a set of plugins to hide low-level API calls. Conversations can be tested locally using its web interface, and are typically deployed on Amazon’s Alexa API.</p>
+          <div class="hidden-xs-down col-md-2"></div>
+          <div class="col-xs-12 col-md-8">
+            <p>
+              A Node.js framework you to create voice-scripts in an intuitive
+              manner.
+              Conversations can be tested locally using a web interface, plugins
+              are used to hide low-level API calls, and scripts are easily
+              deployed on Amazon’s Alexa API.
+            </p>
           </div>
-          <div class="col-xs-2"></div>
+          <div class="hidden-xs-down col-md-2"></div>
         </div>
         <div class="row">
           <div class="col-xs-12 buttons">
             <a class="btn btn-primary" href="./docs">Documentation</a>
-            <a class="btn btn-primary" href="https://github.com/salesforce/violet-conversations" target="_blank">GitHub Repo</a>
+            <a class="btn btn-primary-outline" href="https://github.com/salesforce/violet-conversations" target="_blank">GitHub Repo</a>
           </div>
         </div>
       </div>
@@ -89,7 +96,12 @@
                   <h6 class="card-subtitle text-muted">Conversation Support</h6>
                 </div>
 
-                <p>This is the core module used by any of the Violet projects. Tools are provided so that scripts built here can be easily tested using a Web-UI, as well as an interface to ease skill registration.</p>
+                <p>
+                  Violet's core is designed to aid in building Conversational applications.
+                  Basic Voice scripts require minimal coding, and involved conversations
+                  are enabled using Goals.
+                  <!-- Tools are provided so that scripts built here can be easily tested using a Web-UI, as well as an interface to ease skill registration. -->
+                </p>
               </div>
             </div>
           </div>
@@ -98,9 +110,13 @@
               <div class="card-block">
                 <div class="text-center">
                   <img src="assets/images/plugin.svg" class="topicon"/>
-                  <h6 class="card-subtitle text-muted">Force.com &amp; Postgres Plugins</h6>
+                  <h6 class="card-subtitle text-muted">Included Plugins</h6>
                 </div>
-                <p>Force.com, etc.</p>
+                <p>
+                  Complexity in voice scripts is hidden using plugins.
+                  Plugins support connecting to data stores like Postgres and
+                  Force.com, and we are working on enabling more to be built.
+                </p>
               </div>
             </div>
           </div>
@@ -111,7 +127,10 @@
                   <img src="assets/images/code.svg" class="topicon"/>
                   <h6 class="card-subtitle text-muted">Samples</h6>
                 </div>
-                <p>These are built-out samples that are provided so that you can easily examine, customize, and/or create your own scripts.</p>
+                <p>
+                  Examine one of our built-out samples to get ideas on how to build scripts.
+                  We are looking forward to hearing how you customize or create your own scripts.
+                </p>
               </div>
             </div>
           </div>
@@ -120,29 +139,103 @@
     </section>
 
 
+    <!--
+    <section class="section-features text-xs-left" style="padding-top:2.65rem">
+      <div class="container">
+        <h6 class="text-xs-center card-subtitle text-muted">Get Started</h6>
+        <div class="row">
+          <div class="col-md-4">
+            <p>Download Violet via npm or yarn.</p>
+          </div>
+          <div class="col-md-8">
+            <pre><code class="language-bash">$ npm install violet-conversations --save</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-xl-12 text-center m-b-3">
+          Download Violet via npm or yarn: <code class="language-bash" id="inline-code">$ npm install violet-conversations --save</code>
+        </div>
+      </div>
+    </div>
+  </section>
+-->
+
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h2>Get Started</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-xl-12 m-b-3">
+          Install the dependency: <code class="language-xxx" id="inline-code">$ npm install violet-conversations --save</code><br>
+          Add to your script: <code class="language-xxx" id="inline-code">var violet = require('violet-conversations/lib/violet').script();</code><br>
+        </div>
+      </div>
+    </div>
+  </section>
+
     <section class="text-xs-left">
       <div class="container">
         <div class="row">
-          <div class="col-xs-12 text-center">
-                      <h2 class="m-b-3-2">Quick Examples</h2>
+          <div class="col-xs-12">
+            <h2>Respond to Users</h2>
           </div>
         </div>
         <div class="row">
           <div class="col-md-4">
-            <h6 class="card-subtitle text-muted">Simplicity</h6>
-            <p>These are built-out samples that are provided so that you can easily examine, customize, and/or create your own scripts.</p>
+            <p>
+              Declare what you would like to respond to from the user and what your response would be when the intent is triggered.
+            </p>
           </div>
           <div class="col-md-8">
-            <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.respondTo(['Can you help me', 'What can I do'],
- (response) => {
-   response.say(`I can help you with your current account balance, with financial planning, budgeting, investing, or taking out a loan`);
- });</code></pre>
+            <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.respondTo({
+  expecting: "Whats next on my todo",
+  resolve: function(response) {
+    var nextItem = todoSvc.getNextItem();
+    response.say(`Next item on your list is ${nextItem}`);
+}});</code></pre>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <h2>Get Input from Users</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <p>
+              Declare input variables and use them when expecting an input from users.
+            </p>
+          </div>
+          <div class="col-md-8">
+            <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.addInputTypes({
+  'todoItem': LITERAL
+});
+
+violet.respondTo({
+  expecting: 'Remind me to do [[todoItem]]'],
+  response: function(response) {
+    todoSvc.add(response.get('todoItem'));
+    response.say('Added [[todoItem]] to your list');
+}});</code></pre>
           </div>
         </div>
 
+        <!--
+        <div class="row">
+          <div class="col-xs-12">
+            <h2>Force.com Data Access</h2>
+          </div>
+        </div>
         <div class="row">
           <div class="col-md-4">
-            <h6 class="card-subtitle text-muted">Force.com Data Access</h6>
             <p>To retried data from the database you need to use the load method. Caution Load returns a promise to the db results - if you need to use the values retrieved from it, you need to (a) either use a .then after it OR (b) you need to make you resolve method a generator and place a yield before the call to the load method</p>
           </div>
           <div class="col-md-8">
@@ -164,23 +257,38 @@ violet.respondTo(
 });</code></pre>
           </div>
         </div>
+      -->
 
         <div class="row">
+          <div class="col-xs-12">
+            <h2>Conversation Goals</h2>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-md-4">
-            <h6 class="card-subtitle text-muted">Conversation Goals</h6>
-            <p>Sophisticated conversations are supported by Violet using goals. When a user indicates a need for a discussion on a particular topic, a script can just add the topic as a goal to be met. Goals could theoretically also be set by a script to proactively check-in with a user or to raise an item related to another goal.</p>
-            <p>The below simply adds a goal to be met by the system when the user asks for flight arrival information.</p>
+            <p>
+              Sophisticated conversations are supported by grouping user intents and responses into goals.
+              When a user indicates a need for a discussion on a particular topic, a script can just add the
+              topic as a goal to be met.
+            </p>
           </div>
           <div class="col-md-8">
-            <pre style="white-space: pre-wrap" class="line-numbers"><code class="language-javascript">violet.respondTo('What time does the [[airline]] flight arrive', 'from [[city]]',
-  (response) => {
-    response.addGoal('flightArrivalTime');
-});
+            <pre style="white-space: pre-wrap" class="line-numbers"><code class="language-javascript">violet.respondTo({
+  expecting: 'Remind me [to do [todoItem]]',
+  resolve: (response) => {
+    if (quipSvc.getCategoryCount() > 1)
+      response.addGoal('getCategory');
+    //...
+}});
 
-violet.respondTo('What time does the flight arrive from [[city]]',
-  (response) => {
-    response.addGoal('flightArrivalTime');
-});</code></pre>
+violet.defineGoal({
+  goal: 'getCategory',
+  prompt: 'Which category?',
+  respondTo: [{
+    expecting: 'Category [[categoryNo]]',
+    resolve: (response) => {
+      //...
+}]});</code></pre>
           </div>
         </div>
 
@@ -225,7 +333,7 @@ violet.respondTo('What time does the flight arrive from [[city]]',
         <div class="row">
           <div class="col-xs-12 buttons">
             <a class="btn btn-primary" href="./docs">Documentation</a>
-            <a class="btn btn-primary" href="https://github.com/salesforce/violet-conversations" target="_blank">GitHub Repo</a>
+            <a class="btn btn-primary-outline" href="https://github.com/salesforce/violet-conversations" target="_blank">GitHub Repo</a>
           </div>
         </div>
       </div>

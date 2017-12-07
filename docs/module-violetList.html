@@ -9,6 +9,8 @@
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <link rel="icon" type="image/png" href="../assets/images/logo4.png">
+    <link rel="shortcut icon" href="../assets/images/logo4.png">
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css"/>
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css"/>
     <link type="text/css" rel="stylesheet" href="../assets/css/docs-customization.css"/>
@@ -59,14 +61,17 @@
     <li><a href="module-utils.html">utils</a></li>
   </ul>
   <h3>Plugins</h3><ul>
-    <li><a href="module-violetList.html">violetList</a></li>
-    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
-    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
     <li><a href="module-violetTime.html">violetTime</a></li>
+    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
+    <li><a href="module-violetStoreSF-pgStore.html">- pgStore</a></li>
+    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
+    <li><a href="module-violetStoreSF-sfStore.html">- sfStore</a></li>
+    <li><a href="module-violetList.html">violetList</a></li>
+    <li><a href="module-violetList-listWidget.html">- listWidget</a></li>
   </ul>
 </nav>
 <nav id="generated" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
 </nav>
 
 <div id="main">
@@ -92,7 +97,8 @@
     <div class="container-overview">
     
         
-            <div class="description">List Widget for Voice</div>
+            <div class="description">List Widget for Voice - supports the common use case when a user needs to
+interact with one of multiple items.</div>
         
 
         
@@ -106,6 +112,156 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>violet</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Violet</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the pointer to the violet instance so that we can
+ hook in appropriately to script resources. This plugin does expect that
+ the calling script defineGoal with goal name as given by the
+ <code>interactionGoal</code> method.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>widgetType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">a string representing the type for the contents
+ of this widget. This widget is called by setting the list in question with
+ name being the same as the <code>widgetType</code> and calling the
+ <code>respondWithItems</code> method.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>humanName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">what to refer to an item in this list when
+ speaking to the user.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>humanNamePl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">what to refer to mutliple items in this list
+ when speaking to the user.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>itemTextProp</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">how to get the itemText (the main name) of a
+ list item.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -178,6 +334,13 @@
     
 
     
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="module-violetList-listWidget.html">listWidget</a></dt>
+            <dd></dd>
+        </dl>
+    
 
     
 
@@ -207,7 +370,7 @@
 <!-- br class="clear" -->
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Dec 04 2017 11:35:12 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Dec 07 2017 11:37:40 GMT-0500 (EST)
 </footer>
 
 <script> /*prettyPrint();*/ </script>
@@ -221,6 +384,13 @@
     if (node.children.length!=1 && node.children[0].tagName!='CODE') continue;
     if (!node.className.match(/lang/)) node.className += ' language-javascript'
     if (node.className.match(/linenums/)) node.className += ' line-numbers'
+  }
+  // changes '<h3 class="subsection-title">Events</h3>'==><h3 class="subsection-title">Intents</h3>
+  var headingEntries = document.getElementsByTagName('h3');
+  for (var ndx=0; ndx<headingEntries.length; ndx++) {
+    var node = headingEntries[ndx];
+    if (node.className !== 'subsection-title') continue;
+    if (node.textContent == 'Events') node.textContent = 'Intents';
   }
 </script>
 <script type="text/javascript">

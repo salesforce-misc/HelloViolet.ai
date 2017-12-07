@@ -9,6 +9,8 @@
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <link rel="icon" type="image/png" href="../assets/images/logo4.png">
+    <link rel="shortcut icon" href="../assets/images/logo4.png">
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css"/>
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css"/>
     <link type="text/css" rel="stylesheet" href="../assets/css/docs-customization.css"/>
@@ -59,14 +61,17 @@
     <li><a href="module-utils.html">utils</a></li>
   </ul>
   <h3>Plugins</h3><ul>
-    <li><a href="module-violetList.html">violetList</a></li>
-    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
-    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
     <li><a href="module-violetTime.html">violetTime</a></li>
+    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
+    <li><a href="module-violetStoreSF-pgStore.html">- pgStore</a></li>
+    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
+    <li><a href="module-violetStoreSF-sfStore.html">- sfStore</a></li>
+    <li><a href="module-violetList.html">violetList</a></li>
+    <li><a href="module-violetList-listWidget.html">- listWidget</a></li>
   </ul>
 </nav>
 <nav id="generated" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
 </nav>
 
 <div id="main">
@@ -186,134 +191,6 @@ simulation to advance it for testing purposes</div>
 
     
 
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<h4 class="name" id="~timeFwd"><span class="type-signature">(inner) </span>timeFwd<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    Advances the current time for development purposes
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_violetTime.js.html">violet-conversations/lib/violetTime.js</a>, <a href="violet-conversations_lib_violetTime.js.html#line100">line 100</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="~timeReq"><span class="type-signature">(inner) </span>timeReq<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    Returns the current time to end-users
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_violetTime.js.html">violet-conversations/lib/violetTime.js</a>, <a href="violet-conversations_lib_violetTime.js.html#line89">line 89</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
     
 
     
@@ -689,6 +566,186 @@ been requested.
     
 
     
+        <h3 class="subsection-title">Events</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~event:timeFwd">timeFwd</h4>
+    
+
+    
+
+
+
+<div class="description">
+    Advances the current time for development purposes
+   
+<br><b>Responds To:</b> Advance [[time]] [[timeUnit]]
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-conversations_lib_violetTime.js.html">violet-conversations/lib/violetTime.js</a>, <a href="violet-conversations_lib_violetTime.js.html#line100">line 100</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~event:timeReq">timeReq</h4>
+    
+
+    
+
+
+
+<div class="description">
+    Returns the current time to end-users
+   
+<br><b>Responds To:</b> What is the current time
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-conversations_lib_violetTime.js.html">violet-conversations/lib/violetTime.js</a>, <a href="violet-conversations_lib_violetTime.js.html#line89">line 89</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
 </article>
 
 </section>
@@ -704,7 +761,7 @@ been requested.
 <!-- br class="clear" -->
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Dec 04 2017 11:35:12 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Dec 07 2017 11:37:40 GMT-0500 (EST)
 </footer>
 
 <script> /*prettyPrint();*/ </script>
@@ -718,6 +775,13 @@ been requested.
     if (node.children.length!=1 && node.children[0].tagName!='CODE') continue;
     if (!node.className.match(/lang/)) node.className += ' language-javascript'
     if (node.className.match(/linenums/)) node.className += ' line-numbers'
+  }
+  // changes '<h3 class="subsection-title">Events</h3>'==><h3 class="subsection-title">Intents</h3>
+  var headingEntries = document.getElementsByTagName('h3');
+  for (var ndx=0; ndx<headingEntries.length; ndx++) {
+    var node = headingEntries[ndx];
+    if (node.className !== 'subsection-title') continue;
+    if (node.textContent == 'Events') node.textContent = 'Intents';
   }
 </script>
 <script type="text/javascript">

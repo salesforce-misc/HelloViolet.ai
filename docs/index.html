@@ -9,6 +9,8 @@
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <link rel="icon" type="image/png" href="../assets/images/logo4.png">
+    <link rel="shortcut icon" href="../assets/images/logo4.png">
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css"/>
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css"/>
     <link type="text/css" rel="stylesheet" href="../assets/css/docs-customization.css"/>
@@ -59,14 +61,17 @@
     <li><a href="module-utils.html">utils</a></li>
   </ul>
   <h3>Plugins</h3><ul>
-    <li><a href="module-violetList.html">violetList</a></li>
-    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
-    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
     <li><a href="module-violetTime.html">violetTime</a></li>
+    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
+    <li><a href="module-violetStoreSF-pgStore.html">- pgStore</a></li>
+    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
+    <li><a href="module-violetStoreSF-sfStore.html">- sfStore</a></li>
+    <li><a href="module-violetList.html">violetList</a></li>
+    <li><a href="module-violetList-listWidget.html">- listWidget</a></li>
   </ul>
 </nav>
 <nav id="generated" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
 </nav>
 
 <div id="main">
@@ -142,7 +147,7 @@ voice scripts.</li>
 <h2>Voice Scripting</h2><p>This project contains the Violet Conversation Engine that can be used as the basis of your Voice Application.</p>
 <p>Every voice script should start will typically start with declaring <code>violet</code> for use
 throughout:</p>
-<pre class="prettyprint source lang-javascript"><code>var violet = require('../lib/violet.js').script();</code></pre><p>See <code>examples/tutorial.js</code> for documentation on how to build a skill.</p>
+<pre class="prettyprint source lang-javascript"><code>var violet = require('violet-conversations/lib/violet.js').script();</code></pre><p>See <code>examples/tutorial.js</code> for documentation on how to build a skill.</p>
 <h3>Basics</h3><p>A simple way to respond to a user request:</p>
 <pre class="prettyprint source lang-javascript"><code>violet.respondTo(['Can you help me', 'What can I do'],
  (response) => {
@@ -213,7 +218,7 @@ any deployed platform): <code>V_SFDC_CLIENT_ID</code>, <code>V_SFDC_CLIENT_SECRE
 <code>V_SFDC_USERNAME</code> and <code>V_SFDC_PASSWORD</code>.</p>
 <p>To include the plugin in your code you would need to add this after the violet
 script:</p>
-<pre class="prettyprint source lang-javascript"><code>var violetStoreSF = require('../lib/violetStoreSF.js')(violet);</code></pre><pre class="prettyprint source lang-javascript"><code>violet.respondTo('I recieved a bill from [[company]] today for [[amount]]',
+<pre class="prettyprint source lang-javascript"><code>var violetStoreSF = require('violet-conversations/lib/violet StoreSF.js')(violet);</code></pre><pre class="prettyprint source lang-javascript"><code>violet.respondTo('I recieved a bill from [[company]] today for [[amount]]',
   (response) => {
     response.store('bills',
         'user': response.get('userId'),
@@ -241,12 +246,12 @@ violet.respondTo(
   resolve: function *(response) {
     var results = yield response.load('bills', 'bills.user', response.get('userId') )
     response.say(`You received a bill from ${results[0].from} for ${results[0].amount}`);
-});</code></pre><h3>Timed delay</h3><pre class="prettyprint source lang-javascript"><code>var violetTime = require('../lib/violetTime.js')(violet);</code></pre><p>Possible spoken commands:</p>
+});</code></pre><h3>Timed delay</h3><pre class="prettyprint source lang-javascript"><code>var violetTime = require('violet-conversations/lib/violetTime.js')(violet);</code></pre><p>Possible spoken commands:</p>
 <ul>
 <li>What is the current time</li>
 <li>Advance 5 days, hours, or minutes</li>
 </ul>
-<pre class="prettyprint source lang-javascript"><code>violetTime.repeat(48*60, ()=>{ violet.addGoal('checkIn'); });</code></pre><h3>Violet Client Integration</h3><pre class="prettyprint source lang-javascript"><code>var violetClientTx = require('../lib/violetClientTx.js')(violet);</code></pre><p>Allows setting voice and creating alerts (the latter needs testing)</p>
+<pre class="prettyprint source lang-javascript"><code>violetTime.repeat(48*60, ()=>{ violet.addGoal('checkIn'); });</code></pre><h3>Violet Client Integration</h3><pre class="prettyprint source lang-javascript"><code>var violetClientTx = require('violet-conversations/lib/violetClientTx.js')(violet);</code></pre><p>Allows setting voice and creating alerts (the latter needs testing)</p>
 <h2>Advanced Topics</h2><h3>Custom types</h3><p>The voice engine can recognize better what the user is saying when it knows to
 expect one of a limited set of inputs. One helpful way to do this is to use
 create custom type and have it as an input parameter in your script.</p>
@@ -290,7 +295,7 @@ to Amazon's Skill Configuration Site as a custom slot type.</p>
 <!-- br class="clear" -->
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Dec 04 2017 11:35:12 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Dec 07 2017 11:37:40 GMT-0500 (EST)
 </footer>
 
 <script> /*prettyPrint();*/ </script>
@@ -304,6 +309,13 @@ to Amazon's Skill Configuration Site as a custom slot type.</p>
     if (node.children.length!=1 && node.children[0].tagName!='CODE') continue;
     if (!node.className.match(/lang/)) node.className += ' language-javascript'
     if (node.className.match(/linenums/)) node.className += ' line-numbers'
+  }
+  // changes '<h3 class="subsection-title">Events</h3>'==><h3 class="subsection-title">Intents</h3>
+  var headingEntries = document.getElementsByTagName('h3');
+  for (var ndx=0; ndx<headingEntries.length; ndx++) {
+    var node = headingEntries[ndx];
+    if (node.className !== 'subsection-title') continue;
+    if (node.textContent == 'Events') node.textContent = 'Intents';
   }
 </script>
 <script type="text/javascript">

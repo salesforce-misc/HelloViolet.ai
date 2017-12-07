@@ -9,6 +9,8 @@
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <link rel="icon" type="image/png" href="../assets/images/logo4.png">
+    <link rel="shortcut icon" href="../assets/images/logo4.png">
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css"/>
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css"/>
     <link type="text/css" rel="stylesheet" href="../assets/css/docs-customization.css"/>
@@ -59,14 +61,17 @@
     <li><a href="module-utils.html">utils</a></li>
   </ul>
   <h3>Plugins</h3><ul>
-    <li><a href="module-violetList.html">violetList</a></li>
-    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
-    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
     <li><a href="module-violetTime.html">violetTime</a></li>
+    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
+    <li><a href="module-violetStoreSF-pgStore.html">- pgStore</a></li>
+    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
+    <li><a href="module-violetStoreSF-sfStore.html">- sfStore</a></li>
+    <li><a href="module-violetList.html">violetList</a></li>
+    <li><a href="module-violetList-listWidget.html">- listWidget</a></li>
   </ul>
 </nav>
 <nav id="generated" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#(unnamed)">(unnamed)</a></li><li><a href="global.html#Howdy">Howdy</a></li><li><a href="global.html#HowWork">HowWork</a></li><li><a href="global.html#Intro">Intro</a></li><li><a href="global.html#MajorIntent">MajorIntent</a></li><li><a href="global.html#setAlert">setAlert</a></li><li><a href="global.html#unsetAlert">unsetAlert</a></li><li><a href="global.html#WakeUp">WakeUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
 </nav>
 
 <div id="main">
@@ -92,8 +97,17 @@
     <div class="container-overview">
     
         
-            <div class="description">Plugin which makes it easy to store, update, and retrieve data form a
-Salesforce Org.</div>
+            <div class="description">Plugin which makes it easy to store, update, retrieve, and delete data form
+an underlying data store, i.e. a Salesforce Org. Additionally there is
+some support for performing and returning search results as well.
+<br><br>
+You can give the API a SOQL query or use one of the easier API's and
+the plugin will generate the query.
+<br><br>
+When giving accessing the api's using a '*' at the end of an object name
+or object data key is used to indicate a built-in attribute for Force.com;
+attributes are otherwise assumed to be custom and have a '__c' added to
+them.</div>
         
 
         
@@ -179,6 +193,41 @@ Salesforce Org.</div>
     
 
     
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="module-violetStoreSF-sfStore.html">sfStore</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="~store"><span class="type-signature">(inner) </span>store<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Allows access to the store
+</div>
+
+
+
+
+
+
+
+<dl class="details">
 
     
 
@@ -188,6 +237,135 @@ Salesforce Org.</div>
 
     
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-conversations_lib_violetStoreSF.js.html">violet-conversations/lib/violetStoreSF.js</a>, <a href="violet-conversations_lib_violetStoreSF.js.html#line410">line 410</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~connected"><span class="type-signature">(inner) </span>connected<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Returns a promise which will resolve with the store having access to the
+Salesforce API's
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-conversations_lib_violetStoreSF.js.html">violet-conversations/lib/violetStoreSF.js</a>, <a href="violet-conversations_lib_violetStoreSF.js.html#line403">line 403</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     
 
     
@@ -208,7 +386,7 @@ Salesforce Org.</div>
 <!-- br class="clear" -->
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Dec 04 2017 11:35:12 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Dec 07 2017 11:37:40 GMT-0500 (EST)
 </footer>
 
 <script> /*prettyPrint();*/ </script>
@@ -222,6 +400,13 @@ Salesforce Org.</div>
     if (node.children.length!=1 && node.children[0].tagName!='CODE') continue;
     if (!node.className.match(/lang/)) node.className += ' language-javascript'
     if (node.className.match(/linenums/)) node.className += ' line-numbers'
+  }
+  // changes '<h3 class="subsection-title">Events</h3>'==><h3 class="subsection-title">Intents</h3>
+  var headingEntries = document.getElementsByTagName('h3');
+  for (var ndx=0; ndx<headingEntries.length; ndx++) {
+    var node = headingEntries[ndx];
+    if (node.className !== 'subsection-title') continue;
+    if (node.textContent == 'Events') node.textContent = 'Intents';
   }
 </script>
 <script type="text/javascript">

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: utils</title>
+    <title>JSDoc: Class: listWidget</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -76,7 +76,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: utils</h1>
+    <h1 class="page-title">Class: listWidget</h1>
 
     
 
@@ -87,8 +87,8 @@
 
 <header>
     
-        
-            
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="module-violetList.html">violetList</a>~</span>listWidget<span class="signature">()</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -97,14 +97,20 @@
     <div class="container-overview">
     
         
-            <div class="description">This is a module of general purpose utilities that are helpful when building
-Voice apps</div>
-        
 
-        
-            
+    
+
+    
+    <h4 class="name" id="listWidget"><span class="type-signature"></span>new listWidget<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
 
 
+
+<div class="description">
+    Core object returned by the plugin
+</div>
 
 
 
@@ -147,7 +153,7 @@ Voice apps</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_utils.js.html">violet-conversations/lib/utils.js</a>, <a href="violet-conversations_lib_utils.js.html#line4">line 4</a>
+        <a href="violet-conversations_lib_violetList.js.html">violet-conversations/lib/violetList.js</a>, <a href="violet-conversations_lib_violetList.js.html#line35">line 35</a>
     </li></ul></dd>
     
 
@@ -175,7 +181,6 @@ Voice apps</div>
 
 
 
-        
     
     </div>
 
@@ -202,7 +207,7 @@ Voice apps</div>
     
 
     
-    <h4 class="name" id=".getArrAsStr"><span class="type-signature">(static) </span>getArrAsStr<span class="signature">(arr)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".getItemFromResults"><span class="type-signature">(static) </span>getItemFromResults<span class="signature">(response, itemNo)</span><span class="type-signature"> &rarr; {Object}</span></h4>
     
 
     
@@ -210,7 +215,8 @@ Voice apps</div>
 
 
 <div class="description">
-    Converts an array to a string
+    Will get an item from the result set, giving an error to the user if the
+requested item is not in the array.
 </div>
 
 
@@ -246,7 +252,213 @@ Voice apps</div>
 
         <tr>
             
-                <td class="name"><code>arr</code></td>
+                <td class="name"><code>response</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">response</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">so that the widget can prompt the user</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>itemNo</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">index of the item to be retrieved</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-conversations_lib_violetList.js.html">violet-conversations/lib/violetList.js</a>, <a href="violet-conversations_lib_violetList.js.html#line106">line 106</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    object that is desired or undefined if itemNo is
+ invalid
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".getItemText"><span class="type-signature">(static) </span>getItemText<span class="signature">(ndx, results)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Returns the text to speak to describe the target itemTextProp. This
+method is called by the widget and can be redefined to customize the
+the interaction with the user.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ndx</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">what is the item number being spoken</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>results</code></td>
             
 
             <td class="type">
@@ -262,7 +474,7 @@ Voice apps</div>
 
             
 
-            <td class="description last">array of objects to be pulled togeter into a string</td>
+            <td class="description last">array of items being spoken</td>
         </tr>
 
     
@@ -303,7 +515,7 @@ Voice apps</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_utils.js.html">violet-conversations/lib/utils.js</a>, <a href="violet-conversations_lib_utils.js.html#line53">line 53</a>
+        <a href="violet-conversations_lib_violetList.js.html">violet-conversations/lib/violetList.js</a>, <a href="violet-conversations_lib_violetList.js.html#line53">line 53</a>
     </li></ul></dd>
     
 
@@ -326,271 +538,57 @@ Voice apps</div>
 
 
 
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>utils.getArrAsStr([1, 2, 3])
-  // returns '1, 2 and 3'</code></pre>
-
-
+<h5>Returns:</h5>
 
         
-            
-
-    
-
-    
-    <h4 class="name" id=".getRand"><span class="type-signature">(static) </span>getRand<span class="signature">(min, max)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Returns a random number
+<div class="param-desc">
+    by default `${humanName} ${ndx+1} is ${results[ndx][itemTextProp]}. `
 </div>
 
 
 
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
         
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>min</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">generated number is to not be below this</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>max</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">generated number is to not be greater than this</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_utils.js.html">violet-conversations/lib/utils.js</a>, <a href="violet-conversations_lib_utils.js.html#line41">line 41</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".loadArrayFromFile"><span class="type-signature">(static) </span>loadArrayFromFile<span class="signature">(dirName, fileName)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Loads a newline seperated array from a file - especially helpful when you
- have a long list of possible values
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>dirName</code></td>
-            
-
-            <td class="type">
-            
-                
 <span class="param-type">string</span>
 
 
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">path to target file</td>
-        </tr>
+    </dd>
+</dl>
 
     
 
-        <tr>
-            
-                <td class="name"><code>fileName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
 
 
-            
-            </td>
 
-            
 
+        
             
-
-            <td class="description last">newline seperated array backed file</td>
-        </tr>
 
     
-    </tbody>
-</table>
+
+    
+    <h4 class="name" id=".interactionGoal"><span class="type-signature">(static) </span>interactionGoal<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Returns the goal that will be called when the user can interact with an
+item. This method should be called to define a goal in the parent script.
+</div>
+
+
+
+
+
+
+
 
 
 
@@ -626,7 +624,7 @@ Voice apps</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_utils.js.html">violet-conversations/lib/utils.js</a>, <a href="violet-conversations_lib_utils.js.html#line29">line 29</a>
+        <a href="violet-conversations_lib_violetList.js.html">violet-conversations/lib/violetList.js</a>, <a href="violet-conversations_lib_violetList.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -653,16 +651,6 @@ Voice apps</div>
 
 
 
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>violet.addInputTypes({
-   category: {
-     type: 'categoryType',
-     values: utils.loadArrayFromFile(__dirname, 'potentialCategories.txt')
-   }
- });</code></pre>
-
-
 
         
             
@@ -670,7 +658,7 @@ Voice apps</div>
     
 
     
-    <h4 class="name" id="~getNumAsStr"><span class="type-signature">(inner) </span>getNumAsStr<span class="signature">(num)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".respondWithItems"><span class="type-signature">(static) </span>respondWithItems<span class="signature">(response, results)</span><span class="type-signature"></span></h4>
     
 
     
@@ -678,7 +666,9 @@ Voice apps</div>
 
 
 <div class="description">
-    Converts numbers 0-999 to a string
+    When this method is called it launches the widget. It lists the first 3
+items and asks the user it he wants to hear more items or if he wants to
+interact with an item.
 </div>
 
 
@@ -714,13 +704,13 @@ Voice apps</div>
 
         <tr>
             
-                <td class="name"><code>num</code></td>
+                <td class="name"><code>response</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Number</span>
+<span class="param-type">response</span>
 
 
             
@@ -730,7 +720,30 @@ Voice apps</div>
 
             
 
-            <td class="description last">that is converted into a string, i.e. 11 -> eleven</td>
+            <td class="description last">so that the widget can prompt the user</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>results</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">array of items that need to be spoken</td>
         </tr>
 
     
@@ -771,7 +784,7 @@ Voice apps</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_utils.js.html">violet-conversations/lib/utils.js</a>, <a href="violet-conversations_lib_utils.js.html#line59">line 59</a>
+        <a href="violet-conversations_lib_violetList.js.html">violet-conversations/lib/violetList.js</a>, <a href="violet-conversations_lib_violetList.js.html#line66">line 66</a>
     </li></ul></dd>
     
 
@@ -805,7 +818,7 @@ Voice apps</div>
     
 
     
-    <h4 class="name" id="~promiseWhile"><span class="type-signature">(inner) </span>promiseWhile<span class="signature">(condition, action)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".respondWithMoreItems"><span class="type-signature">(static) </span>respondWithMoreItems<span class="signature">(response, results, start)</span><span class="type-signature"></span></h4>
     
 
     
@@ -813,7 +826,7 @@ Voice apps</div>
 
 
 <div class="description">
-    Supporting While Loop with promises
+    Used by the widget to list the next 7 items till the 17th item.
 </div>
 
 
@@ -849,13 +862,13 @@ Voice apps</div>
 
         <tr>
             
-                <td class="name"><code>condition</code></td>
+                <td class="name"><code>response</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type">response</span>
 
 
             
@@ -865,20 +878,20 @@ Voice apps</div>
 
             
 
-            <td class="description last">function returning a boolean as to whether the loop should run</td>
+            <td class="description last">so that the widget can prompt the user</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>action</code></td>
+                <td class="name"><code>results</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type">Array.&lt;Object></span>
 
 
             
@@ -888,7 +901,30 @@ Voice apps</div>
 
             
 
-            <td class="description last">function returning a promise and performing the loop action</td>
+            <td class="description last">array of items that need to be spoken</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>start</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">array of items that need to be spoken</td>
         </tr>
 
     
@@ -917,8 +953,6 @@ Voice apps</div>
     
 
     
-        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>Use the module 'promise-while' instead</li></ul></dd>
-    
 
     
 
@@ -931,7 +965,7 @@ Voice apps</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_utils.js.html">violet-conversations/lib/utils.js</a>, <a href="violet-conversations_lib_utils.js.html#line112">line 112</a>
+        <a href="violet-conversations_lib_violetList.js.html">violet-conversations/lib/violetList.js</a>, <a href="violet-conversations_lib_violetList.js.html#line85">line 85</a>
     </li></ul></dd>
     
 

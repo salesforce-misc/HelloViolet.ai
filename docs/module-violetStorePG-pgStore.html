@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: utils</title>
+    <title>JSDoc: Class: pgStore</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -76,7 +76,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: utils</h1>
+    <h1 class="page-title">Class: pgStore</h1>
 
     
 
@@ -87,8 +87,8 @@
 
 <header>
     
-        
-            
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="module-violetStorePG.html">violetStorePG</a>~</span>pgStore<span class="signature">()</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -97,14 +97,21 @@
     <div class="container-overview">
     
         
-            <div class="description">This is a module of general purpose utilities that are helpful when building
-Voice apps</div>
-        
 
-        
-            
+    
+
+    
+    <h4 class="name" id="pgStore"><span class="type-signature"></span>new pgStore<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
 
 
+
+<div class="description">
+    Implements support for the core operations supported by Violet (for
+Postgres).
+</div>
 
 
 
@@ -147,7 +154,7 @@ Voice apps</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_utils.js.html">violet-conversations/lib/utils.js</a>, <a href="violet-conversations_lib_utils.js.html#line4">line 4</a>
+        <a href="violet-conversations_lib_violetStorePG.js.html">violet-conversations/lib/violetStorePG.js</a>, <a href="violet-conversations_lib_violetStorePG.js.html#line57">line 57</a>
     </li></ul></dd>
     
 
@@ -175,7 +182,6 @@ Voice apps</div>
 
 
 
-        
     
     </div>
 
@@ -202,7 +208,7 @@ Voice apps</div>
     
 
     
-    <h4 class="name" id=".getArrAsStr"><span class="type-signature">(static) </span>getArrAsStr<span class="signature">(arr)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".delete"><span class="type-signature">(static) </span>delete<span class="signature">(objName, keyName, keyVal)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
     
 
     
@@ -210,7 +216,7 @@ Voice apps</div>
 
 
 <div class="description">
-    Converts an array to a string
+    Deletes given object in the underlying data store.
 </div>
 
 
@@ -246,307 +252,7 @@ Voice apps</div>
 
         <tr>
             
-                <td class="name"><code>arr</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;Object></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">array of objects to be pulled togeter into a string</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_utils.js.html">violet-conversations/lib/utils.js</a>, <a href="violet-conversations_lib_utils.js.html#line53">line 53</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>utils.getArrAsStr([1, 2, 3])
-  // returns '1, 2 and 3'</code></pre>
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".getRand"><span class="type-signature">(static) </span>getRand<span class="signature">(min, max)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Returns a random number
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>min</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">generated number is to not be below this</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>max</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">generated number is to not be greater than this</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_utils.js.html">violet-conversations/lib/utils.js</a>, <a href="violet-conversations_lib_utils.js.html#line41">line 41</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".loadArrayFromFile"><span class="type-signature">(static) </span>loadArrayFromFile<span class="signature">(dirName, fileName)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Loads a newline seperated array from a file - especially helpful when you
- have a long list of possible values
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>dirName</code></td>
+                <td class="name"><code>objName</code></td>
             
 
             <td class="type">
@@ -562,14 +268,15 @@ Voice apps</div>
 
             
 
-            <td class="description last">path to target file</td>
+            <td class="description last">the object/table name in the data store where
+  the give object is to be deleted</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>fileName</code></td>
+                <td class="name"><code>keyName</code></td>
             
 
             <td class="type">
@@ -585,7 +292,30 @@ Voice apps</div>
 
             
 
-            <td class="description last">newline seperated array backed file</td>
+            <td class="description last">the key name to find the object to be deleted</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>keyVal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the key value to find the object to be deleted</td>
         </tr>
 
     
@@ -626,7 +356,7 @@ Voice apps</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_utils.js.html">violet-conversations/lib/utils.js</a>, <a href="violet-conversations_lib_utils.js.html#line29">line 29</a>
+        <a href="violet-conversations_lib_violetStorePG.js.html">violet-conversations/lib/violetStorePG.js</a>, <a href="violet-conversations_lib_violetStorePG.js.html#line235">line 235</a>
     </li></ul></dd>
     
 
@@ -649,18 +379,40 @@ Voice apps</div>
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Promise that resolves when the data has been deleted in
+  the store
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>violet.addInputTypes({
-   category: {
-     type: 'categoryType',
-     values: utils.loadArrayFromFile(__dirname, 'potentialCategories.txt')
-   }
- });</code></pre>
+    <pre class="prettyprint"><code>resolve: function *(response) {
+  var caseObj = ...
+  yield response.update('Case', 'CaseNumber', caseObj.CaseNumber);
+  response.say( `Case ${caseObj.Subject} has been removed`);
+}</code></pre>
 
 
 
@@ -670,7 +422,7 @@ Voice apps</div>
     
 
     
-    <h4 class="name" id="~getNumAsStr"><span class="type-signature">(inner) </span>getNumAsStr<span class="signature">(num)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".load"><span class="type-signature">(static) </span>load<span class="signature">(queryParams)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
     
 
     
@@ -678,7 +430,7 @@ Voice apps</div>
 
 
 <div class="description">
-    Converts numbers 0-999 to a string
+    Retrieves given object from the underlying data store.
 </div>
 
 
@@ -714,13 +466,13 @@ Voice apps</div>
 
         <tr>
             
-                <td class="name"><code>num</code></td>
+                <td class="name"><code>queryParams</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Number</span>
+<span class="param-type">Object</span>
 
 
             
@@ -730,7 +482,174 @@ Voice apps</div>
 
             
 
-            <td class="description last">that is converted into a string, i.e. 11 -> eleven</td>
+            <td class="description last">query parameters
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>objName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the object/table name in the data
+  store where the give object is to be updated</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>keyName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the key name to find the object to be updated</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>keyVal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the key value to find the object to be updated</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>query</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the SQL query, i.e. what gets executed is "SELECT <query>"</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>filter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">additional query results filter - this
+ is added to the end of the SQL query</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>queryXtra</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">additional additional bits to be
+ added to the end of the query, for example "LIMIT 100"</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -771,7 +690,7 @@ Voice apps</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_utils.js.html">violet-conversations/lib/utils.js</a>, <a href="violet-conversations_lib_utils.js.html#line59">line 59</a>
+        <a href="violet-conversations_lib_violetStorePG.js.html">violet-conversations/lib/violetStorePG.js</a>, <a href="violet-conversations_lib_violetStorePG.js.html#line113">line 113</a>
     </li></ul></dd>
     
 
@@ -794,8 +713,68 @@ Voice apps</div>
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Promise that resolves with the data
+</div>
 
 
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Examples</h5>
+    
+        <p class="code-caption">performing a raw (SQL) query</p>
+    
+    <pre class="prettyprint"><code>resolve: function *(response) {
+  var results = yield response.load({
+    query: "CreatedDate, Status, Verified FROM Automated_Tests WHERE Status = 'New'  limit 100"
+  });
+  response.say(`Found ${results.length} tests`);
+});</code></pre>
+
+        <p class="code-caption">query with parameters as needed</p>
+    
+    <pre class="prettyprint"><code>violetSFStore.store.propOfInterest = {
+  'Automated_Tests': ['Name', 'Status', 'Verified']
+};
+...
+resolve: function *(response) {
+  var results = yield response.load({
+    objName: 'Automated_Tests',
+    keyName: 'Status',
+    keyVal: 'New'
+  });
+  response.say(`Found ${results.length} tests`);
+});</code></pre>
+
+        <p class="code-caption">basic query</p>
+    
+    <pre class="prettyprint"><code>violetSFStore.store.propOfInterest = {
+  'Automated_Tests': ['Name', 'Status', 'Verified']
+};
+...
+resolve: function *(response) {
+  var results = yield response.load('Automated_Tests', 'Status', 'New');
+  response.say(`Found ${results.length} tests`);
+});</code></pre>
 
 
 
@@ -805,7 +784,7 @@ Voice apps</div>
     
 
     
-    <h4 class="name" id="~promiseWhile"><span class="type-signature">(inner) </span>promiseWhile<span class="signature">(condition, action)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".store"><span class="type-signature">(static) </span>store<span class="signature">(objName, dataToStore)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
     
 
     
@@ -813,7 +792,7 @@ Voice apps</div>
 
 
 <div class="description">
-    Supporting While Loop with promises
+    Adds given object to the underlying data store.
 </div>
 
 
@@ -849,13 +828,13 @@ Voice apps</div>
 
         <tr>
             
-                <td class="name"><code>condition</code></td>
+                <td class="name"><code>objName</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type">string</span>
 
 
             
@@ -865,20 +844,21 @@ Voice apps</div>
 
             
 
-            <td class="description last">function returning a boolean as to whether the loop should run</td>
+            <td class="description last">the object/table name in the data store where
+  the give object is to be stored</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>action</code></td>
+                <td class="name"><code>dataToStore</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type">Object</span>
 
 
             
@@ -888,7 +868,8 @@ Voice apps</div>
 
             
 
-            <td class="description last">function returning a promise and performing the loop action</td>
+            <td class="description last">the object to be written (i.e. a set of
+  key:value pairs)</td>
         </tr>
 
     
@@ -917,8 +898,6 @@ Voice apps</div>
     
 
     
-        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>Use the module 'promise-while' instead</li></ul></dd>
-    
 
     
 
@@ -931,7 +910,7 @@ Voice apps</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_utils.js.html">violet-conversations/lib/utils.js</a>, <a href="violet-conversations_lib_utils.js.html#line112">line 112</a>
+        <a href="violet-conversations_lib_violetStorePG.js.html">violet-conversations/lib/violetStorePG.js</a>, <a href="violet-conversations_lib_violetStorePG.js.html#line167">line 167</a>
     </li></ul></dd>
     
 
@@ -954,8 +933,283 @@ Voice apps</div>
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Promise that resolves when the data has been written in
+  the store
+</div>
 
 
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>resolve: function *(response) {
+  var caseObj = ...
+  yield response.store('CaseComment', {
+    'CommentBody': 'Text String',
+    'ParentId': caseObj.Id
+  });
+  response.say(`Case ${caseObj.Subject} has comment added`);
+}</code></pre>
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".update"><span class="type-signature">(static) </span>update<span class="signature">(objName, keyName, keyVal, updateData)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Updates given object in the underlying data store.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>objName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the object/table name in the data store where
+  the give object is to be updated</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>keyName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the key name to find the object to be updated</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>keyVal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the key value to find the object to be updated</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>updateData</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the object values to be updated (i.e. a set of
+  key:value pairs)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-conversations_lib_violetStorePG.js.html">violet-conversations/lib/violetStorePG.js</a>, <a href="violet-conversations_lib_violetStorePG.js.html#line201">line 201</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Promise that resolves when the data has been updated in
+  the store
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>resolve: function *(response) {
+  var caseObj = ...
+  yield response.update('Case', 'CaseNumber', caseObj.CaseNumber, {
+      'Priority': response.get('casePriority')
+  });
+  response.say( `Case ${caseObj.Subject} has priority updated to [[casePriority]]`);
+}</code></pre>
 
 
 

@@ -1,43 +1,29 @@
 [![Build Status](https://travis-ci.org/salesforce/violet-conversations.svg?branch=master)](https://travis-ci.org/salesforce/violet-conversations)
 [![codecov](https://codecov.io/gh/salesforce/violet-conversations/branch/master/graph/badge.svg)](https://codecov.io/gh/salesforce/violet-conversations)
-[![Gitter chat](https://badges.gitter.im/HelloViolet0ai/Lobby.png)](https://gitter.im/HelloViolet-ai/Lobby)
+[![Gitter chat](https://badges.gitter.im/HelloViolet-ai/Lobby.png)](https://gitter.im/HelloViolet-ai/Lobby)
 
-For easily deployable sample code see the [violet-samples](https://github.com/salesforce/violet-samples) project.
+One quick way to get started with Violet is to look at the [collection of samples](https://github.com/salesforce/violet-samples) that we have along with
+the easy click to deploy button that we have set up.
 
-# violet-conversations
+Another options is to build a voice script locally. Doing this is as simple as:
+a) installing the dependencies via npm:
+```javascript
+npm install violet-conversations --save
+```
 
-Violet provides support for building sophisticated conversational apps/bots on
-Amazon's Alexa. Conversations are built via scripts,
-and Violet provides a conversation engine that runs as an Alexa Skill.
+b) trying a simple intent:
+```javascript
+var violet = require('violet-conversations/lib/violet').script();
 
-Support for sophisticated voice apps is supported by allowing:
-* (a) for easily building basic logic supported conversation-flows i.e.
-classically referred to as the view layer in web, mobile, and desktop apps;
-* (b) primitives for grouping user/app interactions:
-  * (b-i) using goals to enable for what is classically referred to as dialog
-    in many conversation systems,
-  * (b-ii) using widgets for generating goals depending on the use-case, such
-    as for supporting lists, and
-  * (b-iii) having scripts to allow for further modularization of voice
-    functionality;
-* (c) plugins for moving out significant parts of complexity that support the
-voice scripts.
+violet.respondTo({
+  expecting: "Whats next on my todo",
+  resolve: function(response) {
+    var nextItem = todoSvc.getNextItem();
+    response.say(`Next item on your list is ${nextItem}`);
+}});
+```
 
-
-## Table Of Contents
-
-* [Voice Scripting](#voice-scripting)
-  * [Basics](#basics)
-  * [Conversational Goals](#goals)
-* [Plugins](#plugins)
-  * [Persistence](#persistence)
-  * [Timed delay](#timed-delay)
-  * [Violet Client Integration](#violet-client-integration)
-* [Advanced Topics](#advanced-topics)
-  * [Custom types](#custom-types)
-* [Debugging Conversations](#debugging-conversations)
-* [Contribution/Supporting](#contributionsupporting)
-
+c) and running the code.
 
 
 ## Voice Scripting

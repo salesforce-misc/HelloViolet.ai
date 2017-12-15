@@ -1,64 +1,114 @@
+---
+layout: default
+---
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: "en-US" }}">
-
+<html lang="en">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width,maximum-scale=2">
-    <meta name="description" content="{{ site.title | default: site.github.repository_name }} : {{ site.description | default: site.github.project_tagline }}">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-
-{% seo %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>HelloViolet.ai - Voice Application Framework</title>
+    <meta name="description" content="A Node.js based platform for building sophisticated Voice Conversations" />
+    <meta name="keywords" content="voice" />
+    <meta name="author" content="Vineet Sinha" />
+    <link rel="icon" type="image/png" href="assets/images/logo6.png">
+    <link rel="manifest" href="assets/images/favicon/manifest.json">
+    <link rel="shortcut icon" href="assets/images/logo6.png">
+    <meta name="msapplication-TileColor" content="#663fb5">
+    <meta name="msapplication-TileImage" content="assets/images/favicon/mstile-144x144.png">
+    <meta name="msapplication-config" content="assets/images/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#663fb5">
+    <link rel="stylesheet" href="assets/css/landio.css">
+    <link rel="stylesheet" href="assets/css/prism.css" />
+    <style>
+      .btn-primary { margin-left: 14px; margin-right: 14px; }
+      #inline-code { /*background-color:#f4f5f7; color: inherit;*/ padding: 5px; }
+    </style>
   </head>
 
   <body>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <div id="top_banner">
-            <a id="menu" href="/docs">Documentation</a>
-            <a id="forkme_banner" href="{{ site.github.repository_url }}">View on GitHub</a>
+    <!-- Navigation
+    ================================================== -->
+
+    <nav class="navbar navbar-dark bg-inverse bg-inverse-custom navbar-fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="assets/images/logo6.png" style="width:80px;"/>
+          <span class="sr-only">Violet</span>
+        </a>
+        <a class="navbar-toggler hidden-md-up pull-xs-right" onclick="$('#collapsingNavbar').toggle()">
+        &#9776;
+      </a>
+
+        <div id="collapsingNavbar" class="collapse navbar-toggleable-custom" role="tabpanel" aria-labelledby="collapsingNavbar">
+          <ul class="nav navbar-nav pull-xs-right">
+            <li class="nav-item nav-item-toggable">
+              <a class="nav-link" href="./docs" id="totop">Documentation</a>
+            </li>
+            <li class="nav-item nav-item-toggable">
+              <a class="nav-link" href="./blog">Blog</a>
+            </li>
+            <li class="nav-item nav-item-toggable">
+              <a class="nav-link" href="https://github.com/salesforce/violet-conversations/releases" target="_blank">{{ site.release_version }}</a>
+            </li>
+            <li class="nav-item nav-item-toggable">
+              <a class="nav-link link-external" href="https://github.com/salesforce/violet-conversations" target="_blank">GitHub</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+
+    {{ content }}
+
+    <!-- Footer
+    ================================================== -->
+
+    <footer class="section-footer bg-inverse" role="contentinfo">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-lg-5">
+            <div class="media">
+              <small class="media-body media-bottom">
+                Violet maintained by <a href="http://www.salesforce.com">salesforce</a>
+              </small>
+            </div>
           </div>
+          <div class="col-md-6 col-lg-7">
+            <ul class="nav nav-inline">
+              <li class="nav-item"><a class="nav-link" href="./docs">Documentation</a></li>
+              <li class="nav-item"><a class="nav-link" href="https://github.com/salesforce/violet-conversations" target="_blank">GitHub</a></li>
+              <li class="nav-item"><a class="nav-link scroll-top" href="#totop">Back to top <span class="icon-caret-up"></span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
 
-          <h1 id="project_title">{{ site.title | default: site.github.repository_name }}</h1>
-          <h2 id="project_tagline">{{ site.description | default: site.github.project_tagline }}</h2>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="{{ site.github.zip_url }}">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="{{ site.github.tar_url }}">Download this project as a tar.gz file</a>
-            </section>
+    <!-- <link rel="stylesheet" href="assets/css/default.css"> -->
 
-        </header>
-    </div>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.1.0/highlightjs-line-numbers.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+      hljs.initLineNumbersOnLoad();
+    </script> -->
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        {{ content }}
-      </section>
-    </div>
+    <script src="assets/js/landio.js"></script>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        {% if site.github.is_project_page %}
-        <p class="copyright">{{ site.title | default: site.github.repository_name }} maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></p>
-        {% endif %}
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    {% if site.google_analytics %}
-      <script type="text/javascript">
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', '{{ site.google_analytics }}', 'auto');
-        ga('send', 'pageview');
-      </script>
-    {% endif %}
+    <script src="assets/js/prism.js"></script>
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-109193428-1', 'auto');
+      ga('send', 'pageview');
+    </script>
   </body>
 </html>

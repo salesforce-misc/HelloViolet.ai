@@ -2,10 +2,11 @@
 [![codecov](https://codecov.io/gh/salesforce/violet-conversations/branch/master/graph/badge.svg)](https://codecov.io/gh/salesforce/violet-conversations)
 [![Gitter chat](https://badges.gitter.im/HelloViolet-ai/Lobby.png)](https://gitter.im/HelloViolet-ai/Lobby)
 
-One quick way to get started with Violet is to look at the [collection of samples](https://github.com/salesforce/violet-samples) that we have along with
+You can get started quickly with Violet by looking at the [collection of samples](https://github.com/salesforce/violet-samples) that we have along with
 the easy click to deploy button that we have set up.
 
-Another options is to build a voice script locally. Doing this is as simple as:
+Another option is to build a voice script locally. Doing this is as simple as:
+
 a) installing the dependencies via npm:
 ```javascript
 npm install violet-conversations --save
@@ -25,18 +26,6 @@ violet.respondTo({
 
 c) and running the code.
 
-
-## Voice Scripting
-
-This project contains the Violet Conversation Engine that can be used as the basis of your Voice Application.
-
-Every voice script should start will typically start with declaring `violet` for use
-throughout:
-```javascript
-var violet = require('violet-conversations/lib/violet.js').script();
-```
-
-See `examples/tutorial.js` for documentation on how to build a skill.
 
 ### Basics
 

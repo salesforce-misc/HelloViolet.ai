@@ -744,7 +744,7 @@ h6 {
 .display-3 {
     font-size: 5rem;
     font-weight: 300;
-    margin-top: 80px;
+    /*margin-top: 80px;*/
     color: #8A63BD;
 }
 
@@ -10289,7 +10289,7 @@ figure {
 }
 
 .jumbotron.bg-inverse.notfull {
-    height: 600px;
+    height: 400px;
 }
 
 .jumbotron.bg-inverse.footer {

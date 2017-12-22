@@ -1,221 +1,171 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>HelloViolet.ai - Voice Application Framework</title>
-    <meta name="description" content="A Node.js based platform for building sophisticated Voice Conversations" />
-    <meta name="keywords" content="voice" />
-    <meta name="author" content="Vineet Sinha" />
-    <link rel="icon" type="image/png" href="assets/images/logo6.png">
-    <link rel="manifest" href="assets/images/favicon/manifest.json">
-    <link rel="shortcut icon" href="assets/images/logo6.png">
-    <meta name="msapplication-TileColor" content="#663fb5">
-    <meta name="msapplication-TileImage" content="assets/images/favicon/mstile-144x144.png">
-    <meta name="msapplication-config" content="assets/images/favicon/browserconfig.xml">
-    <meta name="theme-color" content="#663fb5">
-    <link rel="stylesheet" href="assets/css/landio.css">
-    <link rel="stylesheet" href="assets/css/prism.css" />
-    <style>
-      .btn-primary { margin-left: 14px; margin-right: 14px; }
-      #inline-code { /*background-color:#f4f5f7; color: inherit;*/ padding: 5px; }
-    </style>
-  </head>
+---
+layout: default
+---
 
-  <body>
+<!-- Hero Section
+================================================== -->
 
-    <!-- Navigation
-    ================================================== -->
-
-    <nav class="navbar navbar-dark bg-inverse bg-inverse-custom navbar-fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <img src="assets/images/logo6.png" style="width:80px;"/>
-          <span class="sr-only">Violet</span>
-        </a>
-        <a class="navbar-toggler hidden-md-up pull-xs-right" onclick="$('#collapsingNavbar').toggle()">
-        &#9776;
-      </a>
-
-        <div id="collapsingNavbar" class="collapse navbar-toggleable-custom" role="tabpanel" aria-labelledby="collapsingNavbar">
-          <ul class="nav navbar-nav pull-xs-right">
-            <li class="nav-item nav-item-toggable">
-              <a class="nav-link" href="./docs" id="totop">Documentation</a>
-            </li>
-            <li class="nav-item nav-item-toggable">
-              <a class="nav-link" href="https://github.com/salesforce/violet-conversations">GitHub</a>
-            </li>
-          </ul>
-        </div>
-
+<header class="jumbotron bg-inverse text-xs-center center-vertically notfull" role="banner">
+  <div class="container">
+    <h1 class="display-3">Violet</h1>
+    <h2 class="m-b-3">Enabling Sophisticated Voice Conversations</h2>
+    <!-- <a class="btn btn-secondary-outline m-b-1" href="http://tympanus.net/codrops/?p=25217" role="button"><span class="icon-sketch"></span>Sketch included</a> -->
+    <div class="row">
+      <div class="hidden-xs-down col-md-2"></div>
+      <div class="col-xs-12 col-md-8">
+        <p>
+          A Node.js framework for you to create voice-scripts in an intuitive
+          manner.
+          Conversations can be tested locally using a web interface, plugins
+          are used to hide low-level API calls, and scripts are easily
+          deployed on Amazon’s Alexa API.
+        </p>
       </div>
-    </nav>
+      <div class="hidden-xs-down col-md-2"></div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 buttons">
+        <a class="btn btn-primary" href="/api">Documentation</a>
+        <a class="btn btn-primary-outline" href="https://github.com/salesforce/violet-conversations" target="_blank">GitHub Repo</a>
+      </div>
+    </div>
+  </div>
+</header>
 
-    <!-- Hero Section
-    ================================================== -->
+<!-- Features
+================================================== -->
 
-    <header class="jumbotron bg-inverse text-xs-center center-vertically notfull" role="banner">
-      <div class="container">
-        <h1 class="display-3">Violet</h1>
-        <h2 class="m-b-3">Enabling Sophisticated Voice Conversations</h2>
-        <!-- <a class="btn btn-secondary-outline m-b-1" href="http://tympanus.net/codrops/?p=25217" role="button"><span class="icon-sketch"></span>Sketch included</a> -->
-        <div class="row">
-          <div class="hidden-xs-down col-md-2"></div>
-          <div class="col-xs-12 col-md-8">
+<section class="section-features text-xs-left" style="padding-top:2.65rem">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-block">
+            <div class="text-center">
+              <img src="assets/images/conversation2.svg" class="topicon"/>
+              <h6 class="card-subtitle text-muted">Conversation Support</h6>
+            </div>
+
             <p>
-              A Node.js framework for you to create voice-scripts in an intuitive
-              manner.
-              Conversations can be tested locally using a web interface, plugins
-              are used to hide low-level API calls, and scripts are easily
-              deployed on Amazon’s Alexa API.
+              Violet's core is designed to aid in building Conversational applications.
+              Basic Voice scripts require minimal coding, and involved conversations
+              are enabled using Goals.
+              <!-- Tools are provided so that scripts built here can be easily tested using a Web-UI, as well as an interface to ease skill registration. -->
             </p>
           </div>
-          <div class="hidden-xs-down col-md-2"></div>
         </div>
-        <div class="row">
-          <div class="col-xs-12 buttons">
-            <a class="btn btn-primary" href="./docs">Documentation</a>
-            <a class="btn btn-primary-outline" href="https://github.com/salesforce/violet-conversations" target="_blank">GitHub Repo</a>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-block">
+            <div class="text-center">
+              <img src="assets/images/plugin.svg" class="topicon"/>
+              <h6 class="card-subtitle text-muted">Included Plugins</h6>
+            </div>
+            <p>
+              Complexity in voice scripts is hidden using plugins.
+              Plugins support connecting to data stores like Postgres and
+              Force.com, and we are working on enabling more to be built.
+            </p>
           </div>
         </div>
       </div>
-    </header>
-
-    <!-- Features
-    ================================================== -->
-
-    <section class="section-features text-xs-left" style="padding-top:2.65rem">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-block">
-                <div class="text-center">
-                  <img src="assets/images/conversation2.svg" class="topicon"/>
-                  <h6 class="card-subtitle text-muted">Conversation Support</h6>
-                </div>
-
-                <p>
-                  Violet's core is designed to aid in building Conversational applications.
-                  Basic Voice scripts require minimal coding, and involved conversations
-                  are enabled using Goals.
-                  <!-- Tools are provided so that scripts built here can be easily tested using a Web-UI, as well as an interface to ease skill registration. -->
-                </p>
-              </div>
+      <div class="col-md-4">
+        <div class="card m-b-0">
+          <div class="card-block">
+            <div class="text-center">
+              <img src="assets/images/code.svg" class="topicon"/>
+              <h6 class="card-subtitle text-muted">Samples</h6>
             </div>
+            <p>
+              Examine one of our built-out samples to get ideas on how to build scripts.
+              We are looking forward to hearing how you customize or create your own scripts.
+            </p>
           </div>
-          <div class="col-md-4">
-            <div class="card">
-              <div class="card-block">
-                <div class="text-center">
-                  <img src="assets/images/plugin.svg" class="topicon"/>
-                  <h6 class="card-subtitle text-muted">Included Plugins</h6>
-                </div>
-                <p>
-                  Complexity in voice scripts is hidden using plugins.
-                  Plugins support connecting to data stores like Postgres and
-                  Force.com, and we are working on enabling more to be built.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card m-b-0">
-              <div class="card-block">
-                <div class="text-center">
-                  <img src="assets/images/code.svg" class="topicon"/>
-                  <h6 class="card-subtitle text-muted">Samples</h6>
-                </div>
-                <p>
-                  Examine one of our built-out samples to get ideas on how to build scripts.
-                  We are looking forward to hearing how you customize or create your own scripts.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <!--
-    <section class="section-features text-xs-left" style="padding-top:2.65rem">
-      <div class="container">
-        <h6 class="text-xs-center card-subtitle text-muted">Get Started</h6>
-        <div class="row">
-          <div class="col-md-4">
-            <p>Download Violet via npm or yarn.</p>
-          </div>
-          <div class="col-md-8">
-            <pre><code class="language-bash">$ npm install violet-conversations --save</code></pre>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  <section>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 col-xl-12 text-center m-b-3">
-          Download Violet via npm or yarn: <code class="language-bash" id="inline-code">$ npm install violet-conversations --save</code>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+
+<!--
+<section class="section-features text-xs-left" style="padding-top:2.65rem">
+  <div class="container">
+    <h6 class="text-xs-center card-subtitle text-muted">Get Started</h6>
+    <div class="row">
+      <div class="col-md-4">
+        <p>Download Violet via npm or yarn.</p>
+      </div>
+      <div class="col-md-8">
+        <pre><code class="language-bash">$ npm install violet-conversations --save</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-xl-12 text-center m-b-3">
+        Download Violet via npm or yarn: <code class="language-bash" id="inline-code">$ npm install violet-conversations --save</code>
+      </div>
+    </div>
+  </div>
+</section>
 -->
 
-  <section class="m-b-3">
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12">
-          <h2>Get Started</h2>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12 col-xl-12 m-b-3">
-          Install the dependency: <code class="language-xxx" id="inline-code">$ npm install violet-conversations --save</code><br>
-          Add to your script: <code class="language-xxx" id="inline-code">var violet = require('violet-conversations/lib/violet').script();</code><br>
-        </div>
+<section class="m-b-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <h2>Get Started</h2>
       </div>
     </div>
-  </section>
+    <div class="row">
+      <div class="col-md-12 col-xl-12 m-b-3">
+        Install the dependency: <code class="language-xxx" id="inline-code">$ npm install violet-conversations --save</code><br>
+        Add to your script: <code class="language-xxx" id="inline-code">var violet = require('violet-conversations/lib/violet').script();</code><br>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section class="text-xs-left">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12">
-            <h2>Respond to Users</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <p>
-              Declare what you would like to respond to from the user and what your response would be when the intent is triggered.
-            </p>
-          </div>
-          <div class="col-md-8">
-            <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.respondTo({
+<section class="text-xs-left">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <h2>Respond to Users</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <p>
+          Declare what you would like to respond to from the user and what your response would be when the intent is triggered.
+        </p>
+      </div>
+      <div class="col-md-8">
+        <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.respondTo({
   expecting: "Whats next on my todo",
   resolve: function(response) {
     var nextItem = todoSvc.getNextItem();
     response.say(`Next item on your list is ${nextItem}`);
 }});</code></pre>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <h2>Get Input from Users</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <p>
-              Declare input variables and use them when expecting an input from users.
-            </p>
-          </div>
-          <div class="col-md-8">
-            <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.addInputTypes({
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h2>Get Input from Users</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <p>
+          Declare input variables and use them when expecting an input from users.
+        </p>
+      </div>
+      <div class="col-md-8">
+        <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.addInputTypes({
   'todoItem': LITERAL
 });
 
@@ -225,21 +175,21 @@ violet.respondTo({
     todoSvc.add(response.get('todoItem'));
     response.say('Added [[todoItem]] to your list');
 }});</code></pre>
-          </div>
-        </div>
+      </div>
+    </div>
 
-        <!--
-        <div class="row">
-          <div class="col-xs-12">
-            <h2>Force.com Data Access</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <p>To retried data from the database you need to use the load method. Caution Load returns a promise to the db results - if you need to use the values retrieved from it, you need to (a) either use a .then after it OR (b) you need to make you resolve method a generator and place a yield before the call to the load method</p>
-          </div>
-          <div class="col-md-8">
-            <pre style="white-space: pre-wrap" class="line-numbers"><code class="language-javascript">// example a:
+    <!--
+    <div class="row">
+      <div class="col-xs-12">
+        <h2>Force.com Data Access</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <p>To retried data from the database you need to use the load method. Caution Load returns a promise to the db results - if you need to use the values retrieved from it, you need to (a) either use a .then after it OR (b) you need to make you resolve method a generator and place a yield before the call to the load method</p>
+      </div>
+      <div class="col-md-8">
+        <pre style="white-space: pre-wrap" class="line-numbers"><code class="language-javascript">// example a:
 violet.respondTo(
   expecting: 'Who did I receive my bill from most recently?',
   resolve: (response) => {
@@ -259,21 +209,21 @@ violet.respondTo(
         </div>
       -->
 
-        <div class="row">
-          <div class="col-xs-12">
-            <h2>Conversation Goals</h2>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <p>
-              Sophisticated conversations are supported by grouping user intents and responses into goals.
-              When a user indicates a need for a discussion on a particular topic, a script can just add the
-              topic as a goal to be met.
-            </p>
-          </div>
-          <div class="col-md-8">
-            <pre style="white-space: pre-wrap" class="line-numbers"><code class="language-javascript">violet.respondTo({
+    <div class="row">
+      <div class="col-xs-12">
+        <h2>Conversation Goals</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <p>
+          Sophisticated conversations are supported by grouping user intents and responses into goals.
+          When a user indicates a need for a discussion on a particular topic, a script can just add the
+          topic as a goal to be met.
+        </p>
+      </div>
+      <div class="col-md-8">
+        <pre style="white-space: pre-wrap" class="line-numbers"><code class="language-javascript">violet.respondTo({
   expecting: 'Remind me [to do [todoItem]]',
   resolve: (response) => {
     if (quipSvc.getCategoryCount() > 1)
@@ -289,103 +239,52 @@ violet.defineGoal({
     resolve: (response) => {
       //...
 }]});</code></pre>
-          </div>
-        </div>
-
       </div>
-    </section>
+    </div>
 
-    <!-- Video
-    ================================================== -->
+  </div>
+</section>
 
-
-
-    <!-- Sign Up
-    ================================================== -->
-
-    <section class="section-signup bg-faded">
-      <div class="container">
-        <h3 class="text-xs-center m-b-3">Questions?</h3>
-        <form>
-          <div class="row">
-            <div class="col-md-12 col-xl-12 text-center">
-              Please reach out on Stack Overflow, Twitter, or file a bug on the appropriate project.<br/><br/>
-            </div>
-            <!-- <div class="col-md-6 col-xl-3">
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block">Sign up for free!</button>
-              </div>
-            </div> -->
-          </div>
-        </form>
-      </div>
-    </section>
+<!-- Video
+================================================== -->
 
 
 
-    <header class="jumbotron bg-inverse text-xs-center center-vertically footer" role="banner">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12">
-            <h2 class="m-b-3">Get Started</h2>
-          </div>
+<!-- Sign Up
+================================================== -->
+
+<section class="section-signup bg-faded">
+  <div class="container">
+    <h3 class="text-xs-center m-b-3">Questions?</h3>
+    <form>
+      <div class="row">
+        <div class="col-md-12 col-xl-12 text-center">
+          Please reach out on Stack Overflow, Twitter, or file a bug on the appropriate project.<br/><br/>
         </div>
-        <div class="row">
-          <div class="col-xs-12 buttons">
-            <a class="btn btn-primary" href="./docs">Documentation</a>
-            <a class="btn btn-primary-outline" href="https://github.com/salesforce/violet-conversations" target="_blank">GitHub Repo</a>
+        <!-- <div class="col-md-6 col-xl-3">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Sign up for free!</button>
           </div>
-        </div>
+        </div> -->
       </div>
-    </header>
+    </form>
+  </div>
+</section>
 
 
 
-    <!-- Footer
-    ================================================== -->
-
-    <footer class="section-footer bg-inverse" role="contentinfo">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 col-lg-5">
-            <div class="media">
-              <small class="media-body media-bottom">
-                Violet maintained by <a href="http://www.salesforce.com">salesforce</a>
-              </small>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-7">
-            <ul class="nav nav-inline">
-              <li class="nav-item"><a class="nav-link" href="./docs">Documentation</a></li>
-              <li class="nav-item"><a class="nav-link" href="https://github.com/salesforce/violet-conversations" target="_blank">GitHub</a></li>
-              <li class="nav-item"><a class="nav-link scroll-top" href="#totop">Back to top <span class="icon-caret-up"></span></a></li>
-            </ul>
-          </div>
-        </div>
+<header class="jumbotron bg-inverse text-xs-center center-vertically footer" role="banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 class="m-b-3">Get Started</h2>
       </div>
-    </footer>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-
-    <!-- <link rel="stylesheet" href="assets/css/default.css"> -->
-
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.1.0/highlightjs-line-numbers.min.js"></script>
-    <script>
-      hljs.initHighlightingOnLoad();
-      hljs.initLineNumbersOnLoad();
-    </script> -->
-
-    <script src="assets/js/landio.js"></script>
-
-    <script src="assets/js/prism.js"></script>
-    <script type="text/javascript">
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-109193428-1', 'auto');
-      ga('send', 'pageview');
-    </script>
-  </body>
-</html>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 buttons">
+        <a class="btn btn-primary" href="/api">Documentation</a>
+        <a class="btn btn-primary-outline" href="https://github.com/salesforce/violet-conversations" target="_blank">GitHub Repo</a>
+      </div>
+    </div>
+  </div>
+</header>

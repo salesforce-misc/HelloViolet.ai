@@ -1,74 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+---
+layout: api
+title: 'JSDoc: Home'
+---
 
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link rel="icon" type="image/png" href="../assets/images/logo6.png">
-    <link rel="shortcut icon" href="../assets/images/logo6.png">
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css"/>
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css"/>
-    <link type="text/css" rel="stylesheet" href="../assets/css/docs-customization.css"/>
-    <link type="text/css" rel="stylesheet" href="../assets/css/landio.css"/>
-    <link type="text/css" rel="stylesheet" href="../assets/css/prism.css"/>
-</head>
-
-<body>
-
-  <!-- HEADER FROM SITE THEME -->
-  <nav class="navbar navbar-dark bg-inverse bg-inverse-custom navbar-fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="/">
-        <img src="../assets/images/logo6.png" style="width:80px;"/>
-        <span class="sr-only">Violet</span>
-      </a>
-      <a class="navbar-toggler hidden-md-up pull-xs-right" onclick="$('#collapsingNavbar').toggle()">
-      &#9776;
-    </a>
-
-      <div id="collapsingNavbar" class="collapse navbar-toggleable-custom" role="tabpanel" aria-labelledby="collapsingNavbar">
-        <ul class="nav navbar-nav pull-xs-right">
-          <li class="nav-item nav-item-toggable">
-            <a class="nav-link" href="/docs" id="totop">Documentation</a>
-          </li>
-          <li class="nav-item nav-item-toggable">
-            <a class="nav-link" href="https://github.com/salesforce/violet-conversations">GitHub</a>
-          </li>
-        </ul>
-      </div>
-
-    </div>
-  </nav>
-
-
-
-  <div id="main_wrap" class="container">
+<div id="main_wrap" class="container m-t-2">
 
 <nav id="organized">
-  <h2><a href="index.html">Home</a></h2>
-  <h3>Modules</h3><ul>
-    <li><a href="module-violet.html">violet</a></li>
-    <ul>
-      <li><a href="module-violet.script-__getResponse-response.html">- response</a></li>
-      <li><a href="module-violet.script-violet.html">- violet</a></li>
-    </ul>
-    <li><a href="module-violetSrvr.html">violetSrvr</a></li>
-    <li><a href="module-utils.html">utils</a></li>
-  </ul>
-  <h3>Plugins</h3><ul>
-    <li><a href="module-violetTime.html">violetTime</a></li>
-    <li><a href="module-violetStorePG.html">violetStorePG</a></li>
-    <li><a href="module-violetStoreSF-pgStore.html">- pgStore</a></li>
-    <li><a href="module-violetStoreSF.html">violetStoreSF</a></li>
-    <li><a href="module-violetStoreSF-sfStore.html">- sfStore</a></li>
-    <li><a href="module-violetList.html">violetList</a></li>
-    <li><a href="module-violetList-listWidget.html">- listWidget</a></li>
-  </ul>
+  {% include docs-sideNav.html %}
 </nav>
 <nav id="generated" style="display:none">
     <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
@@ -78,6 +16,8 @@
 
     <h1 class="page-title">Home</h1>
 
+
+    {% raw %}
     
 
 
@@ -104,50 +44,20 @@
     <section>
         <article><p><a href="https://travis-ci.org/salesforce/violet-conversations"><img src="https://travis-ci.org/salesforce/violet-conversations.svg?branch=master" alt="Build Status"></a>
 <a href="https://codecov.io/gh/salesforce/violet-conversations"><img src="https://codecov.io/gh/salesforce/violet-conversations/branch/master/graph/badge.svg" alt="codecov"></a>
-<a href="https://gitter.im/HelloViolet-ai/Lobby"><img src="https://badges.gitter.im/HelloViolet0ai/Lobby.png" alt="Gitter chat"></a></p>
-<p>For easily deployable sample code see the <a href="https://github.com/salesforce/violet-samples">violet-samples</a> project.</p>
-<h1>violet-conversations</h1><p>Violet provides support for building sophisticated conversational apps/bots on
-Amazon's Alexa. Conversations are built via scripts,
-and Violet provides a conversation engine that runs as an Alexa Skill.</p>
-<p>Support for sophisticated voice apps is supported by allowing:</p>
-<ul>
-<li>(a) for easily building basic logic supported conversation-flows i.e.
-classically referred to as the view layer in web, mobile, and desktop apps;</li>
-<li>(b) primitives for grouping user/app interactions:<ul>
-<li>(b-i) using goals to enable for what is classically referred to as dialog
-in many conversation systems,</li>
-<li>(b-ii) using widgets for generating goals depending on the use-case, such
-as for supporting lists, and</li>
-<li>(b-iii) having scripts to allow for further modularization of voice
-functionality;</li>
-</ul>
-</li>
-<li>(c) plugins for moving out significant parts of complexity that support the
-voice scripts.</li>
-</ul>
-<h2>Table Of Contents</h2><ul>
-<li><a href="#voice-scripting">Voice Scripting</a><ul>
-<li><a href="#basics">Basics</a></li>
-<li><a href="#goals">Conversational Goals</a></li>
-</ul>
-</li>
-<li><a href="#plugins">Plugins</a><ul>
-<li><a href="#persistence">Persistence</a></li>
-<li><a href="#timed-delay">Timed delay</a></li>
-<li><a href="#violet-client-integration">Violet Client Integration</a></li>
-</ul>
-</li>
-<li><a href="#advanced-topics">Advanced Topics</a><ul>
-<li><a href="#custom-types">Custom types</a></li>
-</ul>
-</li>
-<li><a href="#debugging-conversations">Debugging Conversations</a></li>
-<li><a href="#contributionsupporting">Contribution/Supporting</a></li>
-</ul>
-<h2>Voice Scripting</h2><p>This project contains the Violet Conversation Engine that can be used as the basis of your Voice Application.</p>
-<p>Every voice script should start will typically start with declaring <code>violet</code> for use
-throughout:</p>
-<pre class="prettyprint source lang-javascript"><code>var violet = require('violet-conversations/lib/violet.js').script();</code></pre><p>See <code>examples/tutorial.js</code> for documentation on how to build a skill.</p>
+<a href="https://gitter.im/HelloViolet-ai/Lobby"><img src="https://badges.gitter.im/HelloViolet-ai/Lobby.png" alt="Gitter chat"></a></p>
+<p>You can get started quickly with Violet by looking at the <a href="https://github.com/salesforce/violet-samples">collection of samples</a> that we have along with
+the easy click to deploy button that we have set up.</p>
+<p>Another option is to build a voice script locally. Doing this is as simple as:</p>
+<p>a) installing the dependencies via npm:</p>
+<pre class="prettyprint source lang-javascript"><code>npm install violet-conversations --save</code></pre><p>b) trying a simple intent:</p>
+<pre class="prettyprint source lang-javascript"><code>var violet = require('violet-conversations/lib/violet').script();
+
+violet.respondTo({
+  expecting: &quot;Whats next on my todo&quot;,
+  resolve: function(response) {
+    var nextItem = todoSvc.getNextItem();
+    response.say(`Next item on your list is ${nextItem}`);
+}});</code></pre><p>c) and running the code.</p>
 <h3>Basics</h3><p>A simple way to respond to a user request:</p>
 <pre class="prettyprint source lang-javascript"><code>violet.respondTo(['Can you help me', 'What can I do'],
  (response) => {
@@ -271,13 +181,13 @@ to Amazon's Skill Configuration Site as a custom slot type.</p>
 <li>Test the script in the included tester view, by running the script and opening it in a browser, for example: http://localhost:8080/alexa/einstein You will likely want to submit IntentRequest's based on the Utterance's at the bottom of the page. Once you submit a request, verify that the response output SSML is per your needs. Additionally, it is helpful to walk through the script a few times to ensure that the application supports the different user scenarios.</li>
 <li>Once the script works locally, deploy it to the cloud and configure Alexa to talk to the underlying skill using Amazon's Skill Configuration site. At this stage you will likely benefit from testing by iterating rapidly with: invoking the voice-client, examining the conversational-app's logs, and tweaking the utterances in Amazon's Configuration. Testing a voice client is likely best done first through a PC based tool that provides additional debugging information like the <a href="https://github.com/sfxi/violet-client">Violet Client</a> or a web testing tool like <a href="https://echosim.io">Echosim.io</a>.</li>
 </ol>
-<h2>Contribution/Supporting</h2><p>We appreciate any help. In order of decreasing priority, we would like to see:</p>
+<h2>Contribution/Supporting</h2><p>We appreciate any help, in particular we would like to see:</p>
 <ul>
-<li><p>Sophisticated conversational applications built on top of the <code>violet-conversations</code> project. As you build it, let us know how it went. What worked well? What was challenging?</p>
+<li><p>Sophisticated conversational applications built on top of this project. As you build it, let us know how it went. What worked well? What was challenging?</p>
 </li>
 <li><p>Tests: If you want to make sure that we improve the framework that we don't break a use case that you are depending on - make sure we have an automated test.</p>
 </li>
-<li><p>File issues: If something is not working as expected, please file an issue on the appropriate project.</p>
+<li><p>File issues: If something is not working as expected, please file an issue on the project.</p>
 </li>
 </ul></article>
     </section>
@@ -287,6 +197,7 @@ to Amazon's Skill Configuration Site as a custom slot type.</p>
 
 
 
+    {% endraw %}
 </div>
 
 
@@ -295,7 +206,7 @@ to Amazon's Skill Configuration Site as a custom slot type.</p>
 <!-- br class="clear" -->
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Dec 08 2017 12:57:04 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Dec 22 2017 18:01:54 GMT-0500 (EST)
 </footer>
 
 <script> /*prettyPrint();*/ </script>
@@ -318,13 +229,3 @@ to Amazon's Skill Configuration Site as a custom slot type.</p>
     if (node.textContent == 'Events') node.textContent = 'Intents';
   }
 </script>
-<script type="text/javascript">
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-109193428-1', 'auto');
-  ga('send', 'pageview');
-</script>
-</body>
-</html>

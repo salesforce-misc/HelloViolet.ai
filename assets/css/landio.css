@@ -138,6 +138,27 @@
     content: "\e619"
 }
 
+.icon-link-external:before {
+    content: "\f07f"
+}
+
+.link-external:after {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  content: "\f07f";
+  padding-left: 5px;
+  vertical-align: -1px;
+  color: #6d6d6d;
+}
+
 
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
@@ -723,7 +744,7 @@ h6 {
 .display-3 {
     font-size: 5rem;
     font-weight: 300;
-    margin-top: 80px;
+    /*margin-top: 80px;*/
     color: #8A63BD;
 }
 
@@ -10268,7 +10289,7 @@ figure {
 }
 
 .jumbotron.bg-inverse.notfull {
-    height: 600px;
+    height: 400px;
 }
 
 .jumbotron.bg-inverse.footer {

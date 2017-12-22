@@ -9,6 +9,9 @@ nav {
   float: right;
   padding-left: 20px;
 }
+nav.navbar {
+  float: none;
+}
 section {
   background-color: inherit;
 }
@@ -86,7 +89,7 @@ section {
 #main_wrap {
   /*max-width: 768px;*/
   margin: 0 auto;
-  margin-top: 120px;
+  /* margin-top: 120px; */
 }
 
 #main {

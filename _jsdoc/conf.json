@@ -20,6 +20,6 @@
   },
   "opts": {
     "readme": "_jsdoc/README.md",
-    "destination": "docs"
+    "destination": "api"
   }
 }

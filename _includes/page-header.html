@@ -1,0 +1,32 @@
+<!-- Navigation
+================================================== -->
+
+<nav class="navbar navbar-dark bg-inverse bg-inverse-custom">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/images/logo6.png" style="width:80px;"/>
+      <span class="sr-only">Violet</span>
+    </a>
+    <a class="navbar-toggler hidden-md-up pull-xs-right" onclick="$('#collapsingNavbar').toggle()">
+    &#9776;
+  </a>
+
+    <div id="collapsingNavbar" class="collapse navbar-toggleable-custom" role="tabpanel" aria-labelledby="collapsingNavbar">
+      <ul class="nav navbar-nav pull-xs-right">
+        <li class="nav-item nav-item-toggable">
+          <a class="nav-link" href="/api" id="totop">Docs</a>
+        </li>
+        <li class="nav-item nav-item-toggable m-r-3">
+          <a class="nav-link" href="/blog">Blog</a>
+        </li>
+        <li class="nav-item nav-item-toggable">
+          <a class="nav-link" href="https://github.com/salesforce/violet-conversations/releases" target="_blank">{{ site.release_version }}</a>
+        </li>
+        <li class="nav-item nav-item-toggable">
+          <a class="nav-link link-external" href="https://github.com/salesforce/violet-conversations" target="_blank">GitHub</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>

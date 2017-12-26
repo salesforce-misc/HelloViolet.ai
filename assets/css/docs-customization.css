@@ -9,6 +9,12 @@ nav {
   float: right;
   padding-left: 20px;
 }
+nav ul a {
+  font-family: inherit;
+}
+nav li {
+  margin-top: inherit;
+}
 nav.navbar {
   float: none;
 }

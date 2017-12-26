@@ -15,7 +15,16 @@
   <body>
     {% include page-header.html %}
 
-    {{ content }}
+    <div id="main_wrap" class="container m-t-2">
+      <nav id="organized">
+        {% include docs-sideNav.html %}
+      </nav>
+      <div id="main">
+        <h1 class="page-title">{{page.title}}</h1>
+        {{ content }}
+      </div>
+    </div><!-- id="main_wrap" -->
+    <!-- br class="clear" -->
 
     {% include page-footer.html %}
 

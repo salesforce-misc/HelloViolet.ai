@@ -22,9 +22,10 @@ Updated documentation and any other source files need to be copied to the `gh-pa
 ```
   cp -r api      ../HelloViolet.ai-gh
   cp -r docs     ../HelloViolet.ai-gh
+  cp -r _inclues ../HelloViolet.ai-gh
   cp -r _layouts ../HelloViolet.ai-gh
+  cp -r _posts   ../HelloViolet.ai-gh
   cp -r _sass    ../HelloViolet.ai-gh
   cp -r assets   ../HelloViolet.ai-gh
-  cp index.md    ../HelloViolet.ai-gh
-
+  cp *.html      ../HelloViolet.ai-gh
 ```

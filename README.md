@@ -10,8 +10,8 @@ You can run the website locally by typing:
    bundle exec jekyll serve
 ```
 
-### Updating Documentation
-Documentation can be updated by making sure that the other violet projects are siblings to
+### Updating Generated (API) Documentation
+API Documentation can be updated by making sure that the other violet projects are siblings to
 this project with all repositories updated, and then typing:
 ```
    rm -rf api; jsdoc -c _jsdoc/conf.json
@@ -20,12 +20,12 @@ this project with all repositories updated, and then typing:
 ### Publishing
 Updated documentation and any other source files need to be copied to the `gh-pages` branch. The following commands should help (assuming that the repository is checked out in a sibling directory):
 ```
-  cp -r api      ../HelloViolet.ai-gh
-  cp -r docs     ../HelloViolet.ai-gh
-  cp -r _inclues ../HelloViolet.ai-gh
-  cp -r _layouts ../HelloViolet.ai-gh
-  cp -r _posts   ../HelloViolet.ai-gh
-  cp -r _sass    ../HelloViolet.ai-gh
-  cp -r assets   ../HelloViolet.ai-gh
-  cp *.html      ../HelloViolet.ai-gh
+  cp -r api       ../HelloViolet.ai-gh
+  cp -r docs      ../HelloViolet.ai-gh
+  cp -r _includes ../HelloViolet.ai-gh
+  cp -r _layouts  ../HelloViolet.ai-gh
+  cp -r _posts    ../HelloViolet.ai-gh
+  cp -r _sass     ../HelloViolet.ai-gh
+  cp -r assets    ../HelloViolet.ai-gh
+  cp *.html       ../HelloViolet.ai-gh
 ```

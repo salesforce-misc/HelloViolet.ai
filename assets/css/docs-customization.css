@@ -9,8 +9,11 @@ nav {
   float: right;
   padding-left: 20px;
 }
-nav ul a {
+nav ul a, nav ul a:visited, nav ul a:active {
   font-family: inherit;
+}
+nav#sideNav ul a, nav#sideNav ul a:visited, nav#sideNav ul a:active {
+  line-height: 24px;
 }
 nav li {
   margin-top: inherit;

@@ -9,7 +9,7 @@ Another option is to build a voice script locally. Doing this is as simple as:
 
 a) installing the dependencies via npm:
 ```javascript
-npm install violet-conversations --save
+npm install violet --save
 ```
 
 b) trying a simple intent:

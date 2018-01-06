@@ -21,7 +21,7 @@ this project with all repositories updated, and then typing:
 Updated documentation and any other source files need to be copied to the `gh-pages` branch. The following command should help (assuming that the repository is checked out in a sibling directory):
 ```
   ./_publish.sh
-  cd ../HelloViolet.ai-master
+  cd ../HelloViolet.ai-gh
   git status
   git commit -am 'Website update'
 ```

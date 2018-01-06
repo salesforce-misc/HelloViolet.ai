@@ -14,7 +14,7 @@ npm install violet-conversations --save
 
 b) trying a simple intent:
 ```javascript
-var violet = require('violet-conversations/lib/violet').script();
+var violet = require('violet/lib/violet').script();
 
 violet.respondTo({
   expecting: "Whats next on my todo",
@@ -132,7 +132,7 @@ any deployed platform): `V_SFDC_CLIENT_ID`, `V_SFDC_CLIENT_SECRET`,
 To include the plugin in your code you would need to add this after the violet
 script:
 ```javascript
-var violetStoreSF = require('violet-conversations/lib/violet StoreSF.js')(violet);
+var violetStoreSF = require('violet/lib/violetStoreSF.js')(violet);
 ```
 
 
@@ -175,7 +175,7 @@ violet.respondTo(
 
 ### Timed delay
 ```javascript
-var violetTime = require('violet-conversations/lib/violetTime.js')(violet);
+var violetTime = require('violet/lib/violetTime.js')(violet);
 ```
 
 Possible spoken commands:
@@ -189,7 +189,7 @@ violetTime.repeat(48*60, ()=>{ violet.addGoal('checkIn'); });
 
 ### Violet Client Integration
 ```javascript
-var violetClientTx = require('violet-conversations/lib/violetClientTx.js')(violet);
+var violetClientTx = require('violet/lib/violetClientTx.js')(violet);
 ```
 
 Allows setting voice and creating alerts (the latter needs testing)

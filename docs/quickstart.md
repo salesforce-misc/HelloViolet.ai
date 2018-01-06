@@ -26,9 +26,9 @@ When building your own voice scripts the best way is to work locally.
 
 First make sure that you have [Node.js](https://nodejs.org) installed. For Violet you Node v6.x or later.
 
-You can then create a node project and then install the `violet-conversations` dependency by typing:
+You can then create a node project and then install the `violet` dependency by typing:
 ```bash
-$ npm install violet-conversations --save
+$ npm install violet --save
 ```
 
 Now you can start working on your script. Start by adding a reference to Violet:

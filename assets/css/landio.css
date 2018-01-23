@@ -9937,22 +9937,14 @@ figure {
     }
 }
 
-@media (min-width: 768px) {
-    .section-footer .media {
-        padding-top: 1.75rem
-    }
-}
-
-@media (min-width: 992px) {
-    .section-footer .media {
-        padding-top: 0
-    }
+.section-footer .media {
+    padding-top: 1rem
 }
 
 @media (min-width: 1200px) {
-    .section-footer .media {
-        padding-top: .55rem
-    }
+  .section-footer .media {
+    padding-top: 1.65rem
+  }
 }
 
 .section-footer .media-left {

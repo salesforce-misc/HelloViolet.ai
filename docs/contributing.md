@@ -5,11 +5,20 @@ title: Contributing
 
 # Contributing to Violet
 
-We welcome contributions on Github. Use Github to submit issues and enhancement requests.
+We appreciate any help, in particular we would like to see:
 
-If you are a new contributor, please sign, scan, and send the Salesforce [Contributor License Agreement](./SFDC_CLA.pdf) to osscore@salesforce.com. We're so excited to have you contribute to this project!
+* Sophisticated conversational applications built on top of this project. As you build it, let us know how it went. What worked well? What was challenging?
 
-The process:
+* Tests: It is the best way for you to make sure that as we improve the framework that we don't break a use case that you are depending on.
+
+* File issues: If something is not working as expected or if you want to see am improvement, please file an issue or enhancement reqest on the project.
+
+We are excited to have you contribute to this project!
+
+## The Process
+
+
+If you are a new contributor, please sign, scan, and send the Salesforce [Contributor License Agreement](./SFDC_CLA.pdf) to osscore@salesforce.com.
 
 1. Search for an existing issue. If none exists, create a new issue so that other contributors can keep track of what you are trying to add/fix and offer suggestions (or let you know if there is already an effort in progress).
 

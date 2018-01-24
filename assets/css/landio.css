@@ -171,6 +171,11 @@ nav#sideNav a, nav#sideNav a:visited, nav#sideNav a:active {
   color: black
 }
 
+nav#sideNav h2 {
+  font-size: 1.35rem;
+  margin-top: 1rem;
+}
+
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 html {
@@ -9937,22 +9942,14 @@ figure {
     }
 }
 
-@media (min-width: 768px) {
-    .section-footer .media {
-        padding-top: 1.75rem
-    }
-}
-
-@media (min-width: 992px) {
-    .section-footer .media {
-        padding-top: 0
-    }
+.section-footer .media {
+    padding-top: 1rem
 }
 
 @media (min-width: 1200px) {
-    .section-footer .media {
-        padding-top: .55rem
-    }
+  .section-footer .media {
+    padding-top: 1.65rem
+  }
 }
 
 .section-footer .media-left {

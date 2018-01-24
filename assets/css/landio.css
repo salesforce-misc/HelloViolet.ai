@@ -171,6 +171,11 @@ nav#sideNav a, nav#sideNav a:visited, nav#sideNav a:active {
   color: black
 }
 
+nav#sideNav h2 {
+  font-size: 1.35rem;
+  margin-top: 1rem;
+}
+
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 html {

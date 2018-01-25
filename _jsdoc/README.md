@@ -137,7 +137,7 @@ var violetStoreSF = require('violet/lib/violetStoreSF.js')(violet);
 
 
 ```javascript
-violet.respondTo('I recieved a bill from [[company]] today for [[amount]]',
+violet.respondTo('I received a bill from [[company]] today for [[amount]]',
   (response) => {
     response.store('bills',
         'user': response.get('userId'),

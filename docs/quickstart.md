@@ -2,18 +2,6 @@
 layout: docs
 title: Get Started
 ---
-# Prerequisite (Javascript)
-
-Violet is built in Javascript and while it tries to make build Voice Apps easy, a basic understanding of JavaScript is necessary. If needed, feel free to look at this [tutorial](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript). In particular we make liberal use of
-[arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions),
-[template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals), and
-[classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes),
-while the storage capabilities make significant use of
-[promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) along with
-[generator functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function*) and corresponding
-[yields](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/yield).
-
-
 # Get Started
 
 You can get started with Violet in a few ways.

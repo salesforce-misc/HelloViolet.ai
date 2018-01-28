@@ -165,15 +165,34 @@ p a, p a:visited, p a:active {
   background-color: rgba(138, 99, 189, 0.3);
   border-bottom: 1px solid rgba(0,0,0,0.2);
   color: black;
+  padding: 0 3px;
+}
+nav#sideNav {
+  margin-bottom: 100px;
 }
 nav#sideNav a, nav#sideNav a:visited, nav#sideNav a:active {
   /* color: #8a63bd */
-  color: black
+  color: black;
 }
 
 nav#sideNav h2 {
   font-size: 1.35rem;
   margin-top: 1rem;
+  background: rgba(169, 155, 189, 0.7);
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+nav#sideNav h3 {
+  font-size: 1.2rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+  background: lightgray;
+  padding: 1px 5px;
+}
+
+em {
+  font-style: italic;
 }
 
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */

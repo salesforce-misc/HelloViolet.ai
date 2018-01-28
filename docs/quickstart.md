@@ -6,15 +6,17 @@ title: Get Started
 
 You can get started with Violet in a few ways.
 
-We have a [collection of samples](https://github.com/salesforce/violet-samples) and you should be able to deploy them straight from GitHub by clicking on the Deploy to Heroku button. The alternative, is when building your own voice scripts.
+If you want to just try out Violet or just look at how to build Voice Applications with Violet we have a [collection of samples](https://github.com/salesforce/violet-samples). You should be able to deploy them straight from GitHub by clicking on the Deploy to Heroku button.
+
+Alternative you can start building voice scripts.
 
 ## Building your own Voice Application
 
 When building your own voice scripts the best way is to work locally.
 
-First make sure that you have [Node.js](https://nodejs.org) installed. For Violet you Node v6.x or later.
+First make sure that you have [Node.js](https://nodejs.org) installed. For Violet you need Node v6.x or later.
 
-You can then create a node project and then install the `violet` dependency by typing:
+You can then create a node project and install the `violet` dependency by typing:
 ```bash
 $ npm install violet --save
 ```

@@ -9,8 +9,6 @@ users-will-hear in voice *scripts*, writing reusable scripts as *widgets*,
 externalizing integration logic into *plugins*, and adding application logic
 in *services*.
 
-# Go bottom up of top down? Goals depend on the definiton of conversations? Top down is more human like while bottom up is more technical!
-
 ## Conversations
 Once a user initiates a Voice Application a conversation is said to have begun.
 Conversations are by default ongoing with Violet, i.e. after a response from

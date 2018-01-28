@@ -13,6 +13,6 @@ The storage plugins make significant use of
 [generator functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function*) and corresponding
 [yields](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/yield).
 
-Violet runs as a Web App on [Node.js](https://nodejs.org/) runtime. You will need it installed where you are developing, testing, and deploying Violet scripts.
+Violet runs as a Web App on [Node.js](https://nodejs.org/) runtime. You will need it installed (v6.x or later) where you are developing, testing, and deploying Violet scripts.
 
 Violet takes advantage of a number of additional frameworks that are installed automatically by the Node package manager (npm). These frameworks primarily include [Express](https://expressjs.com/) and the [alexa-app](https://github.com/alexa-js/alexa-app) frameworks, as well as as [Mocha](https://mochajs.org/) and [Istanbul](https://github.com/gotwarlost/istanbul) for testing and code coverage respectively.

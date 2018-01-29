@@ -169,6 +169,7 @@ p a, p a:visited, p a:active {
 }
 nav#sideNav {
   margin-bottom: 100px;
+  background-color: white;  
 }
 nav#sideNav a, nav#sideNav a:visited, nav#sideNav a:active {
   /* color: #8a63bd */

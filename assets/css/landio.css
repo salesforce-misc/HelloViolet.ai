@@ -191,6 +191,10 @@ nav#sideNav h3 {
   padding: 1px 5px;
 }
 
+.codeDocs h4 {
+  margin-top: 30px;
+}
+
 em {
   font-style: italic;
 }

@@ -6,9 +6,10 @@ title: 'JSDoc: Module: violet'
 <h1 class="page-title">Module: violet</h1>
 
 <div id="generatedNav" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-violet.script-__getResponse-response.html">response</a></li><li><a href="module-violet.script-violet.html">violet</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-response.html">response</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-InputMgr.html">InputMgr</a></li><li><a href="module-conversationEngine-OutputMgr.html">OutputMgr</a></li><li><a href="module-conversationEngine-ScriptParser.html">ScriptParser</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
 </div>
 
+<div class="codeDocs">
 {% raw %}
 
 
@@ -29,11 +30,12 @@ title: 'JSDoc: Module: violet'
     <div class="container-overview">
     
         
-            <div class="description">This is the Core Violet Module - it provides the conversation engine that
-voice-scripts can take advantage of.
-Voice scripts can be grouped into multiple apps that are available on a
-single server. Currently Violet only supports registering intents for
-Amazon's Alexa Skills Kit.</div>
+            <div class="description">This is the Core Violet Module - it returns the conversation engine that
+voice scripts can take advantage of.
+<br><br>
+Voice scripts can be grouped into a single app and multiple apps can be made
+available on a single server. Currently Violet only supports registering
+intents for Amazon's Alexa Skills Kit.</div>
         
 
         
@@ -137,7 +139,7 @@ Amazon's Alexa Skills Kit.</div>
     
 
     
-    <h4 class="name" id=".clearAppInfo"><span class="type-signature">(static) </span>clearAppInfo<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".clearAppInfo"><span class="type-signature">(static) </span>clearAppInfo<span class="signature">(appName)</span><span class="type-signature"></span></h4>
     
 
     
@@ -145,96 +147,9 @@ Amazon's Alexa Skills Kit.</div>
 
 
 <div class="description">
-    Clears any previous script information for the specified app - this helps
-because by default Violet intentionally groups scripts into an app). This
+    Violet intentionally groups scripts into an app. The method clears any
+previous script information for the specified app. This
 method is primarily used by the test suite as it uses the same app repeatedly.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line97">line 97</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".script"><span class="type-signature">(static) </span>script<span class="signature">(appName)</span><span class="type-signature"> &rarr; {violet}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Instantiates and returns the core Violet class. Most violet scripts start
-by making this call.
 </div>
 
 
@@ -281,9 +196,140 @@ by making this call.
 
             
 
-            <td class="description last">App name to attach this script to. Not setting this
-parameter will allow Violet to attach this script to the previous App. It is
-recommended to not set this parameter here (in the script) but to define it
+            <td class="description last">App name to reset script information.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line61">line 61</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".script"><span class="type-signature">(static) </span>script<span class="signature">(appName)</span><span class="type-signature"> &rarr; {ConversationEngine}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Instantiates and returns the Violet Conversation Engine. Most violet scripts
+start by making this call.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>appName</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">(optional) App name to attach this script to. Not setting this
+parameter will mean that Violet will attach this script to the previous App. It is
+recommended to not set this parameter (in the script) but to define it
 in the parent where the script is being loaded.</td>
         </tr>
 
@@ -325,7 +371,7 @@ in the parent where the script is being loaded.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line112">line 112</a>
+        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line76">line 76</a>
     </li></ul></dd>
     
 
@@ -352,8 +398,8 @@ in the parent where the script is being loaded.</td>
 
         
 <div class="param-desc">
-    - The primary object:
-<a href="module-violet.script-violet.html">Violet</a> that scripts will be defining
+    - The primary
+<a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a> that scripts will be defining
 intents, goals, etc against.
 </div>
 
@@ -365,7 +411,7 @@ intents, goals, etc against.
     </dt>
     <dd>
         
-<span class="param-type">violet</span>
+<span class="param-type">ConversationEngine</span>
 
 
     </dd>
@@ -436,7 +482,7 @@ apps to have multiple scripts.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line70">line 70</a>
+        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line32">line 32</a>
     </li></ul></dd>
     
 
@@ -467,146 +513,6 @@ apps to have multiple scripts.
         
     
 
-    
-        <h3 class="subsection-title">Type Definitions</h3>
-
-        
-                
-
-    
-
-    
-    <h4 class="name" id="~resolveCallback"><span class="type-signature"></span>resolveCallback<span class="signature">(response)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Called when a user triggers one of the actions (intents) that has been
-registered by a script.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>response</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The response object</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line885">line 885</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
     
 
     
@@ -670,7 +576,7 @@ registered by a script.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line954">line 954</a>
+        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line114">line 114</a>
     </li></ul></dd>
     
 
@@ -708,10 +614,11 @@ registered by a script.
 
 
 {% endraw %}
+</div>
 
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jan 05 2018 20:01:08 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 29 2018 11:46:18 GMT-0500 (EST)
 </footer>
 
 <script> /*prettyPrint();*/ </script>

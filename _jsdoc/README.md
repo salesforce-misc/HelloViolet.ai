@@ -14,7 +14,7 @@ npm install violet --save
 
 b) trying a simple intent:
 ```javascript
-var violet = require('violet/lib/violet').script();
+var violet = require('violet').script();
 
 violet.respondTo({
   expecting: "Whats next on my todo",

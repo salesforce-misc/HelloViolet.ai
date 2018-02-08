@@ -23,7 +23,7 @@ $ npm install violet --save
 
 Now you can start working on your script. Start by adding a reference to Violet:
 ```javascript
-var violet = require('violet/lib/violet').script();
+var violet = require('violet').script();
 ```
 
 Once you have done then, you can just declare what your script will respond to (i.e. an intent) and what it should do when triggered:

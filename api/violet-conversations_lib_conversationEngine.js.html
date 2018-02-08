@@ -43,6 +43,12 @@ const paramsGRE  = /\[\[([a-zA-Z0-9_\.]*)\]\]/g;
 const pauseStr = ' &lt;break time="500ms"/> ';
 
 ///////////////////////////
+// generic utilities
+///////////////////////////
+var topInArr = (arr, ndx)=>{if (arr.length==0 || ndx>=arr.length) return undefined; else return arr[arr.length-ndx-1];}
+var updateArr = (arr, ndx, newVal)=>{if (arr.length==0 || ndx&lt;0 || ndx>=arr.length) return false;  arr[arr.length-ndx-1] = newVal; return true;}
+
+///////////////////////////
 // registration utilities
 ///////////////////////////
 
@@ -296,85 +302,99 @@ class InputMgr {
   }
 
   // response - conversationalResponse object
-  // tgtGoal - removed from the goalsToMeet list when tgtResolve is done without error; can be null
-  // tgtResolve - what triggered us right now
-  _followGoals(response, tgtGoal, tgtResolve) {
+  // goalName - removed from the goalsToMeet list when intentResolveCB is done without error; can be null
+  // intentResolveCB - what triggered us right now
+  _followGoals(response, goalName, intentResolveCB) {
     var convo = this.convoEngine;
 
-    var listGoals = (action)=>{console.log(action + ' goals to meet: ', convo.getGoals(response));}
-    var topGoal = (goalNdx)=>{listGoals('top'); return convo.mostRecentGoal(response, goalNdx);}
-    var removeGoal = (goal)=>{listGoals('remove'); convo.clearGoal(response, goal);}
-    var resolveGoal = function(tgtResolve, tgtGoal, response) {
-      var result = tgtResolve(response);
+    var listGoals = (action)=>{console.log(`[${action}] goals to meet: `, convo._getGoalsRaw(response));}
+    var topGoalWithState = (goalNdx)=>{listGoals('top'); return convo.mostRecentGoalStates(response, goalNdx);}
+    var updateGoalState = (goalNdx, goalWithState)=>{listGoals('updateState'); return convo.updateMostRecentGoalStates(response, goalNdx, goalWithState); }
+    var removeGoal = (goalName)=>{listGoals(`remove ${goalName}`); convo.clearGoal(response, goalName);}
+    var resolveGoal = function(resolveCB, goalNameToResolve) {
+      var result = resolveCB(response);
 
       if (result==true || result==undefined) {
-        removeGoal(tgtGoal);
+        removeGoal(goalNameToResolve);
         return Promise.resolve();
       }
       var retPromise = null;
       if (result.then) retPromise = result;     // promise return
       if (result.next) retPromise = co(result); // generator return - run the rest of generator [co fortunately allow the genObj as a paramer and not just genFunc]
       if (retPromise) return retPromise.then((result)=>{
-          if (result==true || result==undefined) removeGoal(tgtGoal);
+          if (result==true || result==undefined) removeGoal(goalNameToResolve);
         });
       return Promise.resolve();
     };
+    var goalDefQueryable = (goalDef)=>{return goalDef.prompt || goalDef.query; }
 
-    // console.log('--> Triggered Goal [_followGoals]: ' + tgtGoal);
+    // console.log('--> Triggered Goal [_followGoals]: ' + goalName);
     var p = null;
-    if (tgtResolve)
-      p = resolveGoal(tgtResolve, tgtGoal, response);
+    if (intentResolveCB)
+      p = resolveGoal(intentResolveCB, goalName, response);
     else
       p = Promise.resolve();
 
     var moreGoalsToSeek = true;
-    var lastGoal = null;
-    var goalNdx = 0;
+    var lastGoalWithState = null;
+    var goalNdx = -1;
     if (convo.clearAlert) convo.clearAlert('{{unmetGoals}}');
 
     // the core goals loop - following all queued goals until no more
     return p.then(()=>{return utils.promiseWhile(
       ()=>{return convo.outputMgr.asked&lt;1 &amp;&amp; moreGoalsToSeek == true;},
       ()=>{
-        var tgtGoal = topGoal(goalNdx++);
-        if (!tgtGoal || tgtGoal == lastGoal) {
+        if (response.goalStateChanged) { // reset goal processing
+          response.goalStateChanged = false;
+          goalNdx = -1;
+        }
+        goalNdx+=1;
+        var goalWithState = topGoalWithState(goalNdx);
+        if (!goalWithState || goalWithState == lastGoalWithState) {
           // no need to follow goals if (a) we have nothing queued or (b) the
           //  current goals cannot be added or removed
           moreGoalsToSeek=false;
           return Promise.resolve();
         }
 
-        var tgtGoalObj = convo.registeredGoals[tgtGoal];
-        lastGoal = tgtGoal;
-        if (!tgtGoalObj) {
-          console.log('ERROR: Goal not defined - ' + tgtGoal);
+        var tgtGoalDef = convo.registeredGoals[goalWithState.key];
+        lastGoalWithState = goalWithState;
+        if (!tgtGoalDef) {
+          console.log('ERROR: Goal not defined - ' + goalWithState.key);
           moreGoalsToSeek=false;
           return Promise.resolve();
         }
 
-        // console.log('--> Trying to meet goal: ' + tgtGoal);
+        // console.log('--> Trying to meet goal: ' + goalWithState.key);
         // console.log('--> registeredGoals: ', convo.registeredGoals);
-        // console.log('--> tgtGoalObj: ', tgtGoalObj);
-        if (tgtGoalObj.resolve) {
-          return resolveGoal(tgtGoalObj.resolve, tgtGoal, response);
-        } else if (tgtGoalObj.prompt) {
-          convo.outputMgr.prompt(response, tgtGoalObj.prompt);
-        } else if (tgtGoalObj.ask) {
-          convo.outputMgr.ask(response, tgtGoalObj.ask);
+        // console.log('--> tgtGoalDef: ', tgtGoalDef);
+        if (tgtGoalDef.resolve) {
+          return resolveGoal(tgtGoalDef.resolve, goalWithState.key, response);
+        } else if (goalDefQueryable(tgtGoalDef) &amp;&amp; goalWithState.queried) {
+          console.log(`Goal: ${goalWithState.key} -- already queried. Skipping`);
+        } else if (goalDefQueryable(tgtGoalDef) &amp;&amp; !goalWithState.queried) {
+          if (tgtGoalDef.prompt) {
+            convo.outputMgr.prompt(response, tgtGoalDef.prompt);
+          } else if (tgtGoalDef.ask) {
+            convo.outputMgr.ask(response, tgtGoalDef.ask);
+          } else {
+          }
+          goalWithState.queried = true;
+          updateGoalState(goalNdx, goalWithState);
         } else {
-          console.log('*** Goal: ' + tgtGoal + ' -- does not have resolve or prompt');
+          console.log(`*** Goal: ${goalWithState.key} -- does not have resolve or prompt`);
         }
         return Promise.resolve();
     })});
   };
 
   // this is what gets called every time a user says something
-  _processIntent(requ, resp, goal, resolveCB) {
+  _processIntent(requ, resp, goalName, intentResolveCB) {
     var response = new Response(this.convoEngine, requ, resp);
     var outputMgr = this.convoEngine.outputMgr;
     outputMgr.setSpeaking();
     outputMgr.initialize();
-    return this._followGoals(response, goal, resolveCB)
+    return this._followGoals(response, goalName, intentResolveCB)
       .then(()=>{
         outputMgr.sendFromQueue(resp);
         outputMgr.initialize();       // clear buffers
@@ -410,7 +430,69 @@ class InputMgr {
 
 }
 
-const convoGoals = 'convoGoals';
+
+/*
+ * Space sensitive js serialization only supporting array items (using ';') and
+ * boolean flags being true (using ':')
+ */
+class ShortJSON {
+  static sjnToArr(str) {
+    if (!str) str = '';
+    if (str == '') return [];
+    return str.split(';');
+  }
+  static arrToSJN(arr) { return arr.join(';'); }
+  static arrToArrObj(arr) {
+    return arr.map(arrItem=>{
+      var arrObj = {};
+      arrItem.split(':').forEach((arrObjProp, ndx)=>{
+        if (ndx==0)
+          arrObj.key = arrObjProp;
+        else
+          arrObj[arrObjProp] = true;
+      })
+      return arrObj;
+    })
+  }
+  static arrObjToArr(arrObj) {
+    return arrObj.map(arrObjItem=>{
+      var arrItem = arrObjItem.key;
+      Object.keys(arrObjItem).forEach(arrObjProp=>{
+        if (arrObjProp == 'key') return;
+        if (arrObjItem[arrObjProp]) arrItem += ':' + arrObjProp;
+      })
+      return arrItem;
+    })
+  }
+  static arrToArrObjKey(arr) {
+    return this.arrToArrObj(arr).map(i=>{return i.key;});
+  }
+  static arrPush(arr, str) {
+    // console.log(`||| arrPush -- sjnArr: ${arr} // str: ${str}`)
+    if (!arr)
+      return str;
+    else
+      return arr + ';' + str;
+  }
+  static inSJN(sjnArr, str) {
+    if (!sjnArr) sjnArr = '';
+    // console.log(`||| inSJN -- sjnArr: ${sjnArr} // str: ${str}`)
+    return (sjnArr.match(new RegExp(`\\b${str}\\b`)) != null);
+  }
+  // clears first object
+  static clearInSJN(sjnArr, str) {
+    // console.log(`clearInSJN -- sjnArr: ${sjnArr} // str: ${str}`)
+    if (!sjnArr) sjnArr = '';
+    return sjnArr
+            .replace(new RegExp(`\\b${str}(:[a-z]*)*\\b`),'') // remove as many goal attributes
+            .replace(/;;/,';')                                // cleanup
+            .replace(/;$/,'')
+            .replace(/^;/,'');
+  }
+}
+
+
+const convoGoals = 'convoGoalState';
 
 /**
  * The primary class for scripts to use to define how they
@@ -461,46 +543,62 @@ class ConversationEngine {
     this.allIntents = [];
   }
 
-  getGoals(response) {
-    return ShortJSON.arrFromSJN(response.get(convoGoals));
+
+  // optimizations taking advantage of ShortJSON
+  _getGoalsRaw(response) {
+    return response.get(convoGoals);
   }
-  setGoals(response, goalArr) {
-    response.set(convoGoals, ShortJSON.sjnFromArr(goalArr));
+  getGoalNames(response) {
+    return ShortJSON.arrToArrObjKey(ShortJSON.sjnToArr(this._getGoalsRaw(response)));
   }
-  addGoal(response, goal) {
-    console.log('--> Goal added: ' + goal);
-    var goalsToMeet = this.getGoals(response, convoGoals);
-    goalsToMeet.push(goal);
-    this.setGoals(response, goalsToMeet);
+  getGoalStates(response) {
+    return ShortJSON.arrToArrObj(ShortJSON.sjnToArr(this._getGoalsRaw(response)));
+  }
+  setGoalStates(response, goalObjsArr) {
+    response.set(convoGoals, ShortJSON.arrToSJN(ShortJSON.arrObjToArr(goalObjsArr)));
+  }
+  appendGoal(response, goalName) {
+    var sjnArr = this._getGoalsRaw(response);
+    response.set(convoGoals, ShortJSON.arrPush(sjnArr, goalName));
+  }
+  clearGoal(response, goalName) {
+    console.log('--> Clearing Goal: ' + goalName);
+    if (!goalName) return; // no need to check when we are not clearing anything
+    var curGoals = this._getGoalsRaw(response);
+    if (!curGoals) curGoals = '';
+    var updatedGoals = ShortJSON.clearInSJN(curGoals, goalName);
+    if (curGoals.length == updatedGoals.length)
+      console.log('\t Goal Not Found');
+    else
+      response.set(convoGoals, updatedGoals);
+  };
+  hasGoal(response, goalName) {
+    console.log('--> Checking goal: ' + goalName);
+    return ShortJSON.inSJN(this._getGoalsRaw(response), goalName);
+  };
+
+
+  addGoal(response, goalName) {
+    console.log('--> Adding Goal: ' + goalName);
+    this.appendGoal(response, goalName);
     if (!this.outputMgr.speaking()) {
       if (this.setAlert) this.setAlert('{{unmetGoals}}');
     }
   };
-  hasGoal(response, goal) {
-    console.log('--> Checking goal: ' + goal);
-    var goalsToMeet = this.getGoals(response, convoGoals);
-    var ndx = goalsToMeet.indexOf(goal);
-    return (ndx !== -1);
+  clearAllGoals(response) {
+    this.setGoalStates(response, []);
   };
   // a LIFO queue
-  mostRecentGoal(response, goalNdx) {
-    var top = (arr, ndx)=>{if (arr.length==0 || ndx>=arr.length) return undefined; else return arr[arr.length-ndx-1];}
-    return top(this.getGoals(response), goalNdx);
+  mostRecentGoalStates(response, goalNdx) {
+    return topInArr(this.getGoalStates(response), goalNdx);
   }
-  clearGoal(response, goal) {
-    console.log('--> Clearing Goal: ' + goal);
-    var goalsToMeet = this.getGoals(response, convoGoals);
-    var ndx = goalsToMeet.indexOf(goal);
-    if (ndx == -1)
-      console.log('\t Goal Not Found');
-    else {
-      goalsToMeet.splice(ndx, 1);
-      this.setGoals(response, goalsToMeet);
+  updateMostRecentGoalStates(response, goalNdx, goalWithState) {
+    console.log(`--> Updating Goal[${goalNdx}]:  ${goalWithState.key} `, goalWithState);
+    var goals = this.getGoalStates(response);
+    if (updateArr(goals, goalNdx, goalWithState)) {
+      this.setGoalStates(response, goals);
     }
-  };
-  clearAllGoals(response) {
-    this.setGoals(response, []);
-  };
+  }
   // experimental
   addTopLevelGoal(response, goal) {
     console.log('--> TL Goal added: ' + goal);
@@ -791,7 +889,7 @@ module.exports = ConversationEngine;
 
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 29 2018 11:46:18 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Feb 07 2018 23:36:31 GMT-0500 (EST)
 </footer>
 
 <script> /*prettyPrint();*/ </script>

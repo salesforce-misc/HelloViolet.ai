@@ -29,6 +29,9 @@ var examineNode = function(node, e, parser, currentSourceName) {
               return arrNode.value;
             }).join(', ');
           }
+          if (result.type == 'MemberExpression') {
+            return '(expression)';
+          }
           console.log(`Unexpected type ${result.type}`);
           return result;
         };

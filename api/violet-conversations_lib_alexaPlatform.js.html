@@ -1,9 +1,9 @@
 ---
 layout: docs
-title: 'JSDoc: Source: violet-samples/tutorials/integration-script.js'
+title: 'JSDoc: Source: violet-conversations/lib/alexaPlatform.js'
 ---
 
-<h1 class="page-title">Source: violet-samples/tutorials/integration-script.js</h1>
+<h1 class="page-title">Source: violet-conversations/lib/alexaPlatform.js</h1>
 
 <div id="generatedNav" style="display:none">
     <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-response.html">response</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-InputMgr.html">InputMgr</a></li><li><a href="module-conversationEngine-OutputMgr.html">OutputMgr</a></li><li><a href="module-conversationEngine-ScriptParser.html">ScriptParser</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
@@ -21,28 +21,64 @@ title: 'JSDoc: Source: violet-samples/tutorials/integration-script.js'
             <pre class="prettyprint source linenums"><code>/* Copyright (c) 2017-present, salesforce.com, inc. All rights reserved */
 /* Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license */
 
-'use strict';
+const alexa = require('alexa-app');
+const alexaAppExt = require('./alexaAppExt.js');
 
-var violet = require('violet').script();
-var violetClientTx = require('violet/lib/violetClientTx')(violet);
+// Currently an extremely thin shim that needs to grow to support other platforms
+class AlexaPlatform {
+  /**
+   * Constructed and returned by Violet when a Voice Script initializes
+   */
+  constructor(appName) {
+    this.appName = appName;
+    this._app = new alexa.app(appName);
+  }
 
-violet.respondTo([
-      "Hello"
-    ], (response) => {
-    response.say(['Hi!']);
-});
+  getAppName() {
+    return this.appName;
+  }
 
-violet.respondTo({
-  name: 'MajorIntent',
-  expecting: [
-      "What are you doing"
-    ],
-  resolve: (response) => {
-    response.say(`Major thing happened.`);
-}});
+  setServerApp(alexaRouter) {
+    this._app.express({
+      router: alexaRouter,
+      checkCert: false,
+      debug: true,
+    });
+  }
+
+  onError(cb) {
+    this._app.error = (exception, requ, resp) => {
+      console.log(exception);
+      cb(exception.message, requ, resp)
+    };
+  }
+
+  onLaunch(cb) {
+    this._app.launch((requ, resp) => {
+      return cb(requ, resp);
+    });
+  }
+
+  regIntent(name, params, cb) {
+    console.log('registering: ', name, params);
+    this._app.intent(name, params, (requ, resp)=>{
+      console.log(`Intent Request - ${name}: ${params.utterances[0]}, ...`);
+      return cb(requ, resp);
+    });
+  }
+
+  regCustomSlot(type, values) {
+    this._app.customSlot(type, values);
+  }
+
+  getSlotsFromReq(requ) {
+    return alexaAppExt.reqListSlots(requ)
+  }
 
 
-module.exports = violet;
+}
+
+module.exports = AlexaPlatform;
 </code></pre>
         </article>
     </section>

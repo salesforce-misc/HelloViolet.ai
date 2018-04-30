@@ -6,7 +6,7 @@ title: 'JSDoc: Source: violet-conversations/lib/violet.js'
 <h1 class="page-title">Source: violet-conversations/lib/violet.js</h1>
 
 <div id="generatedNav" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-response.html">response</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-InputMgr.html">InputMgr</a></li><li><a href="module-conversationEngine-OutputMgr.html">OutputMgr</a></li><li><a href="module-conversationEngine-ScriptParser.html">ScriptParser</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-response.html">response</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-InputMgr.html">InputMgr</a></li><li><a href="module-conversationEngine-OutputMgr.html">OutputMgr</a></li><li><a href="module-conversationEngine-ScriptParser.html">ScriptParser</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
 </div>
 
 <div class="codeDocs">
@@ -32,9 +32,7 @@ title: 'JSDoc: Source: violet-conversations/lib/violet.js'
  * @module violet
  */
 
-var co = require('co');
 var path = require('path');
-var Promise = require('bluebird');
 
 var ConversationEngine = require('./conversationEngine.js');
 
@@ -51,22 +49,23 @@ var appToVioletConversationEngines = {};
  */
 module.exports.server = function() {
   return {
-    loadScript: (contextDir, scriptPath, name, alexaRouter) => {
+    loadScript: (contextDir, scriptPath, name, svcRouter) => {
       appName = name;
-      var script = require(path.join(contextDir, scriptPath));
+      require(path.join(contextDir, scriptPath));
+      const script = module.exports.script();
       script.registerIntents();
-      script.setServerApp(alexaRouter);
+      script.platform.setServerApp(svcRouter);
       return script;
     },
-    loadMultipleScripts: (contextDir, scriptPaths, name, alexaRouter) => {
+    loadMultipleScripts: (contextDir, scriptPaths, name, svcRouter) => {
       appName = name;
-      var script = null;
       scriptPaths.forEach(p=>{
         // all instances of script below should be identical
-        script = require(path.join(contextDir, p));
+        require(path.join(contextDir, p));
       })
+      const script = module.exports.script();
       script.registerIntents();
-      script.setServerApp(alexaRouter);
+      script.platform.setServerApp(svcRouter);
       return script;
     }
   };
@@ -89,49 +88,43 @@ module.exports.clearAppInfo = function(_appName) {
  * parameter will mean that Violet will attach this script to the previous App. It is
  * recommended to not set this parameter (in the script) but to define it
  * in the parent where the script is being loaded.
+ * @param Platform - (optional) Voice Platform to support (Alexa or Google). Not setting this
+ * parameter will mean that Violet will support Alexa.
+ * @param svcEndpoint - (optional) Service Endpoint to use. Not setting this
+ * parameter will mean that Violet will use 'alexa'.
  * @returns {ConversationEngine} - The primary
  * {@link module:conversationEngine~ConversationEngine ConversationEngine} that scripts will be defining
  * intents, goals, etc against.
  */
-module.exports.script = function(_appName) {
+module.exports.script = function(_appName, Platform, svcEndpoint) {
+  if (Platform == null) Platform = require('./alexaPlatform.js');
   if (appName == null &amp;&amp; _appName != null) appName = _appName;
   if (appName == null) {
     // allow scripts to be launched without the server and instead just initialize after 1s
-    var violetSrvr = require('./violetSrvr.js')('/alexa');
+    if (svcEndpoint == null) svcEndpoint = 'alexa'
+    var violetSrvr = require('./violetSrvr.js')('/' + svcEndpoint);
     var srvrInstance = violetSrvr.createAndListen(process.env.PORT || 8080);
     appName = 'local'
     setTimeout(()=>{ // run after the full script loads
       violet.registerIntents();
-      violet.setServerApp(violetSrvr.getSvcRouter());
+      violet.platform.setServerApp(violetSrvr.getSvcRouter());
       violetSrvr.displayScriptInitialized(srvrInstance, violet);
     }, 1*1000);
   }
   if (appToVioletConversationEngines[appName]) return appToVioletConversationEngines[appName];
 
-  var violet = new ConversationEngine(appName);
+  var voicePlatform = new Platform(appName);
+  var violet = new ConversationEngine(voicePlatform);
 
-  violet._app.error = function( exception, requ, resp ) {
-    console.log(exception);
-    console.log(requ);
-    console.log(resp);
-    violet.outputMgr.sendFromQueue(resp, null, 'Sorry an error occurred ' + exception.message);
-  };
-
-  violet._app.launch( function( requ, resp ) {
-    return _processIntent(requ, resp, null, (response)=>{
-      // TODO: needs to be re-enabled
-      // if (fAlert.length > 0) {
-      //   response.say('You have an alert.');
-      //   console.log('Alerts: ', fAlert);
-      //   console.log('Goals: ', goalsToMeet);
-      //   console.log('User Info: ', requ.userId);
-      //   return;
-      // }
-      response.say(['Yes. How can I help?', 'Hey. Need me?', 'Yup. I am here.']);
-    });
-  });
-
-  violet.respondTo({name: 'closeSession', expecting: ["I am good", "No I am good", "Thanks", "Thank you"], resolve: (response) => { response.clearAllGoals(); response.endConversation(); }});
+  if (violet.convo.closeRequests) {
+    violet.respondTo({
+      name: 'closeSession',
+      expecting: violet.convo.closeRequests,
+      resolve: (response) => {
+        response.clearAllGoals();
+        response.endConversation();
+    }});
+  }
 
   appToVioletConversationEngines[appName] = violet;
   return violet;
@@ -148,7 +141,7 @@ module.exports.script = function(_appName) {
 
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Feb 07 2018 23:36:31 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 29 2018 20:14:18 GMT-0400 (EDT)
 </footer>
 
 <script> /*prettyPrint();*/ </script>

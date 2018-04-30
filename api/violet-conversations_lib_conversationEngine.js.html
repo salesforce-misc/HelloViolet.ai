@@ -6,7 +6,7 @@ title: 'JSDoc: Source: violet-conversations/lib/conversationEngine.js'
 <h1 class="page-title">Source: violet-conversations/lib/conversationEngine.js</h1>
 
 <div id="generatedNav" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-response.html">response</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-InputMgr.html">InputMgr</a></li><li><a href="module-conversationEngine-OutputMgr.html">OutputMgr</a></li><li><a href="module-conversationEngine-ScriptParser.html">ScriptParser</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-response.html">response</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-InputMgr.html">InputMgr</a></li><li><a href="module-conversationEngine-OutputMgr.html">OutputMgr</a></li><li><a href="module-conversationEngine-ScriptParser.html">ScriptParser</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
 </div>
 
 <div class="codeDocs">
@@ -31,8 +31,8 @@ title: 'JSDoc: Source: violet-conversations/lib/conversationEngine.js'
  * @module conversationEngine
  */
 
-var alexa = require('alexa-app');
-var alexaAppExt = require('./alexaAppExt.js');
+var co = require('co');
+var Promise = require('bluebird');
 
 var utils = require('./utils.js');
 var Response = require('./response.js');
@@ -53,7 +53,7 @@ var updateArr = (arr, ndx, newVal)=>{if (arr.length==0 || ndx&lt;0 || ndx>=arr.l
 ///////////////////////////
 
 var _registeredIntents = 0;
-var _genIntentName = _getAlphabeticStr = function() {
+var _getAlphabeticStr = function() {
   // trying to generate: A, B, C, ... Z, AA, AB, AC, ... AZ, BA, BB, ...
   // intent names cannot have digits in them
   var validChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -65,13 +65,11 @@ var _genIntentName = _getAlphabeticStr = function() {
   _registeredIntents++;
   return retStr;
 };
-var _regIntent = (app, name, params, cb) => {
-  console.log('registering: ', name, params);
-  app.intent(name, params, (requ, resp)=>{
-    console.log(`Intent Request - ${name}: ${params.utterances[0]}, ...`);
-    return cb(requ, resp);
-  });
-};
+var _genIntentName = _getAlphabeticStr;
+
+///////////////////////////
+// output utilities
+///////////////////////////
 var _interpolate = function(originalStr, foundStr, foundStrPos, replaceStr) {
   return originalStr.substring(0, foundStrPos) + replaceStr + originalStr.substring(foundStrPos + foundStr.length);
 }
@@ -87,10 +85,7 @@ var _interpolateParamsFromStore = function(str, varExtractionRE, store) {
   return str;
 };
 
-///////////////////////////
-// output utilities
-///////////////////////////
-_pick = function(response, potResponses) {
+var _pick = function(response, potResponses) {
   var str = potResponses;
   if (Array.isArray(potResponses)) {
     str = potResponses[utils.getRand(0, potResponses.length)];
@@ -357,7 +352,7 @@ class InputMgr {
           return Promise.resolve();
         }
 
-        var tgtGoalDef = convo.registeredGoals[goalWithState.key];
+        var tgtGoalDef = convo.convo.registeredGoals[goalWithState.key];
         lastGoalWithState = goalWithState;
         if (!tgtGoalDef) {
           console.log('ERROR: Goal not defined - ' + goalWithState.key);
@@ -366,7 +361,7 @@ class InputMgr {
         }
 
         // console.log('--> Trying to meet goal: ' + goalWithState.key);
-        // console.log('--> registeredGoals: ', convo.registeredGoals);
+        // console.log('--> registeredGoals: ', convo.convo.registeredGoals);
         // console.log('--> tgtGoalDef: ', tgtGoalDef);
         if (tgtGoalDef.resolve) {
           return resolveGoal(tgtGoalDef.resolve, goalWithState.key, response);
@@ -402,10 +397,10 @@ class InputMgr {
       });
   };
 
-  processAllIntents(requ, resp, idName, intentDefArr) {
+  processAllIntents(requ, resp, idName, intentParams, intentDefArr) {
     // console.log(`--> Rcvd Input [processAllIntents]: ${idName} / Potential intents: ${intentDefArr.length}`)
     // setup - copy request variables to session variables
-    alexaAppExt.reqListSlots(requ).forEach((slotName)=>{
+    this.convoEngine.platform.getSlotsFromReq(requ).forEach((slotName)=>{
       console.log('store upgrade: requstSlots->sessionStore: ' + slotName);
       requ.getSession().set(slotName, requ.slot(slotName));
     });
@@ -415,11 +410,15 @@ class InputMgr {
       return this._processIntent(requ, resp, intentDefArr[0].goal, intentDefArr[0].resolve);
     }
     // pick right resolveCB from intentDefArr
-    for (var ndx = this.goalsToMeet.length; ndx--; ) {
-      var currentGoal = this.goalsToMeet[ndx];
+    // TODO clearer definition of when a response is created &amp; move away from 'new Response' below!
+    var tmpResp = new Response(this.convoEngine, requ, resp);
+    var ndx=0;
+    while (true) {
+      var currentGoalState = this.convoEngine.mostRecentGoalStates(tmpResp, ndx++)
+      if (currentGoalState==null) break;
       for (var ndx2 = 0; ndx2 &lt; intentDefArr.length; ndx2++) {
         var intentDef = intentDefArr[ndx2];
-        if (intentDef.goal &amp;&amp; intentDef.goal == currentGoal) {
+        if (intentDef.goal &amp;&amp; intentDef.goal == currentGoalState.key) {
           return this._processIntent(requ, resp, intentDef.goal, intentDef.resolve);
         }
       }
@@ -510,37 +509,63 @@ class ConversationEngine {
   /**
    * Constructed and returned by Violet when a Voice Script initializes
    */
-  constructor(appName) {
-    this._app = new alexa.app(appName);
+  constructor(platform) {
+    this.platform = platform;
 
     this.inputMgr = new InputMgr(this);
     this.outputMgr = new OutputMgr();
 
-    // list(array) of equivalent phrases
-    this.phraseEquivalents = [];
+    var convoEngine = this;
+    this.platform.onError(( exceptionMsg, requ, resp ) => {
+      console.log(requ);
+      console.log(resp);
+      this.outputMgr.sendFromQueue(resp, null, 'Sorry an error occurred ' + exceptionMsg);
+    });
+    this.platform.onLaunch( function( requ, resp ) {
+      return convoEngine.inputMgr._processIntent(requ, resp, null, (response)=>{
+        // TODO: needs to be re-enabled
+        // if (fAlert.length > 0) {
+        //   response.say('You have an alert.');
+        //   console.log('Alerts: ', fAlert);
+        //   console.log('Goals: ', goalsToMeet);
+        //   console.log('User Info: ', requ.userId);
+        //   return;
+        // }
+        response.say(convoEngine.convo.launchPhrases);
+      });
+    });
 
-    // variable names and their types
-    this.keyTypes = {};
-
-    this.registeredGoals = {};
-    // this.goalsToMeet = []; // changing implmenetation to be a session variable
-    this.topLevelGoals = [];
 
     this.persistentStore = null;
 
+    // the Conversational Object Model
+    this.convo = {};
+
+    // list(array) of equivalent phrases
+    this.convo.phraseEquivalents = [];
+
+    // variable names and their types
+    this.convo.keyTypes = {};
+
+    this.convo.registeredGoals = {};
+    // this.goalsToMeet = []; // changing implmenetation to be a session variable
+    this.convo.topLevelGoals = [];
+
+    this.convo.launchPhrases = ['Yes. How can I help?', 'Hey. Need me?', 'Yup. I am here.'];
+    this.convo.closeRequests = ['I am good', 'No I am good', 'Thanks', 'Thank you'];
 
     // userSpeechDef looks like {
     //      userSpeechItem1: [intentDef1, ...]
     //      userSpeechItem2: [intentDef2, intentDef3...]
     //    }
     // where intentDef looks like {goal, resolveCB}
-    this.userSpeechDef = {};
+    this.convo.userSpeechDef = {};
     // for debuggability we would like to keep the order of the phrases - which is why we are keeping the additional array
     // allIntents looks like
     // [[intent1-userSpeechItem1, intent1-userSpeechItem2],
     //  [intent2-userSpeechItem3, intent2-userSpeechItem4, intent2-userSpeechItem5],
     //     ...]
-    this.allIntents = [];
+    this.convo.allIntents = [];
   }
 
 
@@ -602,18 +627,35 @@ class ConversationEngine {
   // experimental
   addTopLevelGoal(response, goal) {
     console.log('--> TL Goal added: ' + goal);
-    this.topLevelGoals.push(goal);
+    this.convo.topLevelGoals.push(goal);
   };
 
+  /**
+   * Override the default launch phrases. Parameter is used directly
+   * with the response.say() function when Alexa launches this app
+   *
+   * @param {string[]} phrases - response or array of potential responses
+   */
+  setLaunchPhrases(phrases) {
+    this.convo.launchPhrases = phrases;
+  }
 
+  /**
+   * Override the default phrases to close the session.
+   *
+   * @param {string[]} phrases - response or array of potential responses
+   */
+  setCloseRequests(phrases) {
+    this.convo.closeRequests = phrases;
+  }
 
   _registerIntentDef(userSpeech, intentDefArr) {
     userSpeech = ScriptParser.forPunctuation(userSpeech);
-    userSpeech = ScriptParser.forSlots(this.keyTypes, userSpeech);
-    userSpeech = ScriptParser.forPhraseEquivalents(this.phraseEquivalents, userSpeech);
+    userSpeech = ScriptParser.forSlots(this.convo.keyTypes, userSpeech);
+    userSpeech = ScriptParser.forPhraseEquivalents(this.convo.phraseEquivalents, userSpeech);
     var intentParams = {};
     intentParams["utterances"] = userSpeech;
-    let expectedParams = ScriptParser.extractParamsFromSpeech(this.keyTypes, userSpeech);
+    let expectedParams = ScriptParser.extractParamsFromSpeech(this.convo.keyTypes, userSpeech);
     if (Object.keys(expectedParams).length > 0)
       intentParams["slots"] = expectedParams;
 
@@ -624,17 +666,17 @@ class ConversationEngine {
     }
     if (idName==undefined) idName = _genIntentName();
 
-    _regIntent(this._app,  idName, intentParams, (requ, resp) => {
-      return this.inputMgr.processAllIntents(requ, resp, idName, intentDefArr);
+    this.platform.regIntent(idName, intentParams, (requ, resp) => {
+      return this.inputMgr.processAllIntents(requ, resp, idName, intentParams, intentDefArr);
     });
   }
 
   _getIntentsDef() {
     return {
-      allIntents: this.allIntents,
-      userSpeechDef: this.userSpeechDef,
-      registeredGoals: this.registeredGoals,
-      keyTypes: this.keyTypes
+      allIntents: this.convo.allIntents,
+      userSpeechDef: this.convo.userSpeechDef,
+      registeredGoals: this.convo.registeredGoals,
+      keyTypes: this.convo.keyTypes
     }
   }
   _registerIntents({allIntents, userSpeechDef, registeredGoals, keyTypes}) {
@@ -665,19 +707,11 @@ class ConversationEngine {
     // register custom slots
     for (var kt in keyTypes) {
       if (typeof keyTypes[kt] == 'object' &amp;&amp; keyTypes[kt].values)
-        this._app.customSlot(keyTypes[kt].type, keyTypes[kt].values);
+        this.platform.regCustomSlot(keyTypes[kt].type, keyTypes[kt].values);
     }
 
   }
 
-
-  setServerApp(alexaRouter) {
-    this._app.express({
-      router: alexaRouter,
-      checkCert: false,
-      debug: true,
-    });
-  }
 
   /**
    * Used to define parameters that can be expected from the user
@@ -712,7 +746,7 @@ class ConversationEngine {
    */
   addInputTypes(_keyTypes) {
     for (var type in _keyTypes) {
-      this.keyTypes[type] = _keyTypes[type];
+      this.convo.keyTypes[type] = _keyTypes[type];
     }
   }
 
@@ -734,7 +768,7 @@ class ConversationEngine {
       _equivSets.forEach((_phrase) => {
         newEquivSet.push(_phrase.toLowerCase());
       });
-      this.phraseEquivalents.push(newEquivSet);
+      this.convo.phraseEquivalents.push(newEquivSet);
     });
   }
 
@@ -805,7 +839,7 @@ class ConversationEngine {
    * @param {Object[]} goalDef.respondTo - array of intents than can be triggered only after this goal has been triggered - for details see the {@link module:conversationEngine~ConversationEngine#respondTo respondTo} method (required if prompt or ask have been provided)
    */
   defineGoal(goalObj) {
-    this.registeredGoals[goalObj.goal] = goalObj;
+    this.convo.registeredGoals[goalObj.goal] = goalObj;
 
     // register nested intents
     if (goalObj.respondTo) {
@@ -865,10 +899,10 @@ class ConversationEngine {
     }
 
     // index speech items and their definitions - so that we can register them when they have all been defined
-    this.allIntents.push(intentDef.expecting);
+    this.convo.allIntents.push(intentDef.expecting);
     intentDef.expecting.forEach((userSpeechItem) => {
-      if (!this.userSpeechDef[userSpeechItem]) this.userSpeechDef[userSpeechItem] = [];
-      this.userSpeechDef[userSpeechItem].push(intentDef);
+      if (!this.convo.userSpeechDef[userSpeechItem]) this.convo.userSpeechDef[userSpeechItem] = [];
+      this.convo.userSpeechDef[userSpeechItem].push(intentDef);
     });
   }
 
@@ -889,7 +923,7 @@ module.exports = ConversationEngine;
 
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Feb 07 2018 23:36:31 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 29 2018 20:14:18 GMT-0400 (EDT)
 </footer>
 
 <script> /*prettyPrint();*/ </script>

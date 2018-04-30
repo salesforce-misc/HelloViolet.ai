@@ -6,7 +6,7 @@ title: 'JSDoc: Source: violet-conversations/lib/response.js'
 <h1 class="page-title">Source: violet-conversations/lib/response.js</h1>
 
 <div id="generatedNav" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-response.html">response</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-InputMgr.html">InputMgr</a></li><li><a href="module-conversationEngine-OutputMgr.html">OutputMgr</a></li><li><a href="module-conversationEngine-ScriptParser.html">ScriptParser</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-response.html">response</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-InputMgr.html">InputMgr</a></li><li><a href="module-conversationEngine-OutputMgr.html">OutputMgr</a></li><li><a href="module-conversationEngine-ScriptParser.html">ScriptParser</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
 </div>
 
 <div class="codeDocs">
@@ -31,33 +31,7 @@ title: 'JSDoc: Source: violet-conversations/lib/response.js'
 
 var alexaAppExt = require('./alexaAppExt.js');
 
-const paramsRE   = /\[\[([a-zA-Z0-9_\.]*)\]\]/;
-const paramsGRE  = /\[\[([a-zA-Z0-9_\.]*)\]\]/g;
 
-// support for multiple classes of parameters - DEPRECATED as we simplify usage
-__matchAgainstStore = function(varStr, rePattern) {
-  var varMatch = rePattern.exec(varStr);
-  if (varMatch == null) return {matched: false};
-  return {matched: true, varMatch: varMatch};
-}
-__getStoreVarUsingMatched = function(matchResult) {
-  return matchResult.varMatch[1];
-}
-__containsUsingMatched = function(matchResult, storeType) {
-  var storeVar = __getStoreVarUsingMatched(matchResult);
-  if (storeType.contains) {
-    return storeType.contains(storeVar);
-  } else {
-    return storeType.get(storeVar) != undefined;
-  }
-}
-__getUsingMatched = function(matchResult, storeType) {
-  var storeVar = __getStoreVarUsingMatched(matchResult);
-  return storeType.get(storeVar);
-}
-__isStorageParamClassed = function(varStr) {
-  return varStr.startsWith('[[') || varStr.startsWith('{{') || varStr.startsWith('&lt;&lt;');
-}
 
 /**
  * The Response class that forwards requests to the ConversationEngine's
@@ -138,13 +112,7 @@ class Response {
   endConversation() {this.outputMgr.keepConversationRunning=false}
 
   contains(varStr) {
-    if (!__isStorageParamClassed(varStr)) return (this.sessionStore.get(varStr) != undefined);
-
-    var matchResult = __matchAgainstStore(varStr, paramsRE);
-    if (matchResult.matched) return __containsUsingMatched(matchResult, this.sessionStore);
-
-    console.log(`*** Cannot process param: ${varStr} ***`);
-    return false;
+    return (this.sessionStore.get(varStr) != undefined);
   }
 
   /**
@@ -164,12 +132,7 @@ class Response {
    * @param {string} varStr - variable name
    */
   get(varStr) {
-    if (!__isStorageParamClassed(varStr)) return this.sessionStore.get(varStr);
-
-    var matchResult = __matchAgainstStore(varStr, paramsRE);
-    if (matchResult.matched) return __getUsingMatched(matchResult, this.sessionStore);
-
-    return "store type not found";
+    return this.sessionStore.get(varStr);
   }
 
   /**
@@ -179,15 +142,7 @@ class Response {
    * @param {Object} val - value attached to the variable
    */
   set(varStr, val) {
-    if (!__isStorageParamClassed(varStr)) return this.sessionStore.set(varStr, val);
-
-    var varMatch = paramsRE.exec(varStr);
-    if (varMatch != null) {
-      console.log('Setting session variable: ' + varMatch[1] + ' &lt;-- ' + val);
-      return this.sessionStore.set(varMatch[1], val);
-    }
-
-    return "store type not found";
+    return this.sessionStore.set(varStr, val);
   }
 
   /**
@@ -196,15 +151,7 @@ class Response {
    * @param {string} varStr - variable name
    */
   clear(varStr) {
-    if (!__isStorageParamClassed(varStr)) return this.sessionStore.clear(varStr);
-
-    var varMatch = paramRE.exec(varStr);
-    if (varMatch != null) {
-      console.log('Setting session variable: ' + varMatch[1] + ' &lt;-- ' + val);
-      return this.sessionStore.clear(varMatch[1]);
-    }
-
-    return "store type not found";
+    return this.sessionStore.clear(varStr);
   }
 
   // persistence support
@@ -330,7 +277,7 @@ module.exports = Response;
 
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Feb 07 2018 23:36:31 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 29 2018 20:14:18 GMT-0400 (EDT)
 </footer>
 
 <script> /*prettyPrint();*/ </script>

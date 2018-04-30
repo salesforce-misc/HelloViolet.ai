@@ -6,7 +6,7 @@ title: 'JSDoc: Module: violet'
 <h1 class="page-title">Module: violet</h1>
 
 <div id="generatedNav" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-response.html">response</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-InputMgr.html">InputMgr</a></li><li><a href="module-conversationEngine-OutputMgr.html">OutputMgr</a></li><li><a href="module-conversationEngine-ScriptParser.html">ScriptParser</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-response.html">response</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-InputMgr.html">InputMgr</a></li><li><a href="module-conversationEngine-OutputMgr.html">OutputMgr</a></li><li><a href="module-conversationEngine-ScriptParser.html">ScriptParser</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
 </div>
 
 <div class="codeDocs">
@@ -237,7 +237,7 @@ method is primarily used by the test suite as it uses the same app repeatedly.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line61">line 61</a>
+        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line60">line 60</a>
     </li></ul></dd>
     
 
@@ -271,7 +271,7 @@ method is primarily used by the test suite as it uses the same app repeatedly.
     
 
     
-    <h4 class="name" id=".script"><span class="type-signature">(static) </span>script<span class="signature">(appName)</span><span class="type-signature"> &rarr; {ConversationEngine}</span></h4>
+    <h4 class="name" id=".script"><span class="type-signature">(static) </span>script<span class="signature">(appName, Platform, svcEndpoint)</span><span class="type-signature"> &rarr; {ConversationEngine}</span></h4>
     
 
     
@@ -334,6 +334,44 @@ in the parent where the script is being loaded.</td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>Platform</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">(optional) Voice Platform to support (Alexa or Google). Not setting this
+parameter will mean that Violet will support Alexa.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>svcEndpoint</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">(optional) Service Endpoint to use. Not setting this
+parameter will mean that Violet will use 'alexa'.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -371,7 +409,7 @@ in the parent where the script is being loaded.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line76">line 76</a>
+        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line79">line 79</a>
     </li></ul></dd>
     
 
@@ -482,7 +520,7 @@ apps to have multiple scripts.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line32">line 32</a>
+        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line30">line 30</a>
     </li></ul></dd>
     
 
@@ -532,7 +570,7 @@ apps to have multiple scripts.
 
 
 <div class="description">
-    <br><b>Responds To:</b> I am good, No I am good, Thanks, Thank you
+    <br><b>Responds To:</b> (unnamed)
 </div>
 
 
@@ -576,7 +614,7 @@ apps to have multiple scripts.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line114">line 114</a>
+        <a href="violet-conversations_lib_violet.js.html">violet-conversations/lib/violet.js</a>, <a href="violet-conversations_lib_violet.js.html#line100">line 100</a>
     </li></ul></dd>
     
 
@@ -618,7 +656,7 @@ apps to have multiple scripts.
 
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Feb 07 2018 23:36:31 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 29 2018 20:14:18 GMT-0400 (EDT)
 </footer>
 
 <script> /*prettyPrint();*/ </script>

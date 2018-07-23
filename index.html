@@ -127,7 +127,7 @@ layout: default
         </p>
       </div>
       <div class="col-md-8">
-        <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.addScript(`
+        <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.addFlow(`
     &lt;app&gt;&lt;choice&gt;
       &lt;expecting&gt;Whats next on my todo&lt;/expecting&gt;
       &lt;say&gt;Next item on your list is [[todoSvc.getNextItem()]]&lt;/say&gt;
@@ -149,7 +149,7 @@ layout: default
       </div>
       <div class="col-md-8">
         <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.addInputTypes({'todoItem': phrase});
-violet.addScript(`
+violet.addFlow(`
   &lt;app&gt;&lt;choice&gt;
     &lt;expecting&gt;Remind me to do [[todoItem]]&lt;/expecting&gt;
     &lt;resolve value="[[todoSvc.add(response, 'todoItem')]]"&gt;

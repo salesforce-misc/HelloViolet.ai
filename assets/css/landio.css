@@ -3524,7 +3524,7 @@ input[type="button"].btn-block {
 }
 
 .navbar-brand>img {
-    display: block
+    /* display: block */
 }
 
 .navbar-divider {
@@ -4013,6 +4013,10 @@ a.label:hover {
     padding-right: 0;
     padding-left: 0;
     border-radius: 0
+}
+
+.jumbotron h2 {
+  font-size: 3.5rem;
 }
 
 .media {

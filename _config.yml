@@ -1,7 +1,7 @@
-title: Violet - Voice Application Framework
-description: Enabling Sophisticated Voice Conversations
+title: Violet - Build Voice Apps
+description: Build Great Voice Experiences
 google_analytics: UA-109193428-1
-release_version: v0.10.0
+release_version: v0.11.2
 permalink: /blog/:year/:month/:day/:title
 plugins:
   - jekyll-feed

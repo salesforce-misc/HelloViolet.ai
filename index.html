@@ -7,17 +7,17 @@ layout: default
 
 <header class="jumbotron bg-inverse text-xs-center center-vertically notfull" role="banner">
   <div class="container">
-    <h1 class="display-3">Violet</h1>
-    <h2 class="m-b-3">Enabling Sophisticated Voice Conversations</h2>
+    <!-- <h1 class="display-3">Violet</h1> -->
+    <h2 class="m-b-3">Build Great Voice Experiences</h2>
     <!-- <a class="btn btn-secondary-outline m-b-1" href="http://tympanus.net/codrops/?p=25217" role="button"><span class="icon-sketch"></span>Sketch included</a> -->
     <div class="row">
       <div class="hidden-xs-down col-md-2"></div>
       <div class="col-xs-12 col-md-8">
         <p>
-          Create Voice Scripts using Node.js.
-          Conversations can be tested locally in a browser, plugins
-          simplify API calls, and scripts can be
-          deployed on Smart Speakers (Amazon’s Alexa and Google's Home), Mobile
+          Create Conversation Flows using an HTML-inspired language and Javascript (Node.js).
+          Benefit from local browser-based testing, plugins to
+          simplify API calls, and
+          deploy to Amazon’s Alexa, Google's Home, Mobile
           Apps, or Web Pages.
         </p>
       </div>
@@ -47,10 +47,8 @@ layout: default
             </div>
 
             <p>
-              Violet's core is designed to aid in building Conversational applications.
-              Basic Voice scripts require minimal coding, and longer conversations
-              are enabled using Goals.
-              <!-- Tools are provided so that scripts built here can be easily tested using a Web-UI, as well as an interface to ease skill registration. -->
+              Violet is designed to easily build common Voice User Experience
+              Patterns using Conversational Flows and require minimal coding.
             </p>
           </div>
         </div>
@@ -129,12 +127,13 @@ layout: default
         </p>
       </div>
       <div class="col-md-8">
-        <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.respondTo({
-  expecting: "Whats next on my todo",
-  resolve: function(response) {
-    var nextItem = todoSvc.getNextItem();
-    response.say(`Next item on your list is ${nextItem}`);
-}});</code></pre>
+        <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.addFlow(`
+    &lt;app&gt;&lt;choice&gt;
+      &lt;expecting&gt;Whats next on my todo&lt;/expecting&gt;
+      &lt;say&gt;Next item on your list is [[todoSvc.getNextItem()]]&lt;/say&gt;
+    &lt;/choice&gt;&lt;/app&gt;
+  `, todoSvc);</code></pre>
+
       </div>
     </div>
     <div class="row">
@@ -149,16 +148,15 @@ layout: default
         </p>
       </div>
       <div class="col-md-8">
-        <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.addInputTypes({
-  'todoItem': LITERAL
-});
-
-violet.respondTo({
-  expecting: 'Remind me to do [[todoItem]]'],
-  response: function(response) {
-    todoSvc.add(response.get('todoItem'));
-    response.say('Added [[todoItem]] to your list');
-}});</code></pre>
+        <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.addInputTypes({'todoItem': phrase});
+violet.addFlow(`
+  &lt;app&gt;&lt;choice&gt;
+    &lt;expecting&gt;Remind me to do [[todoItem]]&lt;/expecting&gt;
+    &lt;resolve value="[[todoSvc.add(response, 'todoItem')]]"&gt;
+      &lt;say&gt;Added [[todoItem]] to your list&lt;/say&gt;
+    &lt;/resolve&gt;
+  &lt;/choice&gt;&lt;/app&gt;
+`, todoSvc);</code></pre>
       </div>
     </div>
 
@@ -195,34 +193,29 @@ violet.respondTo(
 
     <div class="row">
       <div class="col-xs-12">
-        <h2>Conversation Goals</h2>
+        <h2>User Decisions</h2>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4">
         <p>
-          Sophisticated conversations are supported by grouping user intents and responses into goals.
-          When a user indicates a need for a discussion on a particular topic, a script can just add the
-          topic as a goal to be met.
+          Sophisticated conversations are supported by grouping user choices into (potentially nested) decisions.
         </p>
       </div>
       <div class="col-md-8">
-        <pre style="white-space: pre-wrap" class="line-numbers"><code class="language-javascript">violet.respondTo({
-  expecting: 'Remind me [to do [todoItem]]',
-  resolve: (response) => {
-    if (quipSvc.getCategoryCount() > 1)
-      response.addGoal('getCategory');
-    //...
-}});
-
-violet.defineGoal({
-  goal: 'getCategory',
-  prompt: 'Which category?',
-  respondTo: [{
-    expecting: 'Category [[categoryNo]]',
-    resolve: (response) => {
-      //...
-}]});</code></pre>
+        <pre style="white-space: pre-wrap" class="line-numbers"><code class="language-html">&lt;app&gt;&lt;choice&gt;&lt;expecting&gt;Remind me to do [[todoItem]]&lt;/expecting&gt;
+  &lt;check value="[[todoSvc.getCategoryCount() > 1]]"&gt;
+    &lt;case value="true"&gt;
+      &lt;decision&gt;&lt;prompt&gt;Which category&lt;/prompt&gt;
+        &lt;choice&gt;&lt;expecting&gt;Category [[categoryNo]]&lt;/expecting&gt;
+          &lt;!-- choice implementation --&gt;
+        &lt;/choice&gt;
+        &lt;!-- other choices --&gt;
+      &lt;/decision&gt;
+    &lt;/case&gt;
+    &lt;!-- other cases --&gt;
+  &lt;/check&gt;
+&lt;/choice&gt;&lt;/app&gt;</code></pre>
       </div>
     </div>
 

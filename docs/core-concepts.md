@@ -17,7 +17,7 @@ ended by the application by calling
 [endConversation](/api/module-response-Response#endConversation) in your script
 and by the user by just not responding back to the application.
 
-## Goals (Dialog Management)
+## Goals (States &amp; Dialog Management)
 Consider conversations as having a set of small milestones or *Goals*. Goals
 allow for the grouping of application and user responses. Your voice script can
 [add a goal](/api/module-response-Response#addGoal) or

@@ -18,7 +18,7 @@ We are excited to have you contribute to this project!
 ## The Process
 
 
-If you are a new contributor, please sign, scan, and send the Salesforce [Contributor License Agreement](./SFDC_CLA.pdf) to osscore@salesforce.com.
+If you are a new contributor, please sign, scan, and sign the Salesforce [Contributor License Agreement](https://cla.salesforce.com/sign-cla).
 
 1. Search for an existing issue. If none exists, create a new issue so that other contributors can keep track of what you are trying to add/fix and offer suggestions (or let you know if there is already an effort in progress).
 

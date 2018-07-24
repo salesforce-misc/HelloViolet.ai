@@ -203,22 +203,17 @@ violet.respondTo(
         </p>
       </div>
       <div class="col-md-8">
-        <pre style="white-space: pre-wrap" class="line-numbers"><code class="language-html">&lt;app&gt;&lt;choice&gt;
-  &lt;expecting&gt;Remind me to do [[todoItem]]&lt;/expecting&gt;
+        <pre style="white-space: pre-wrap" class="line-numbers"><code class="language-html">&lt;app&gt;&lt;choice&gt;&lt;expecting&gt;Remind me to do [[todoItem]]&lt;/expecting&gt;
   &lt;check value="[[todoSvc.getCategoryCount() > 1]]"&gt;
     &lt;case value="true"&gt;
-      &lt;decision&gt;
-        &lt;prompt&gt;Which category&lt;/prompt&gt;
-        &lt;choice&gt;
-          &lt;expecting&gt;Category [[categoryNo]]&lt;/expecting&gt;
-          &lt;!-- --&gt;
+      &lt;decision&gt;&lt;prompt&gt;Which category&lt;/prompt&gt;
+        &lt;choice&gt;&lt;expecting&gt;Category [[categoryNo]]&lt;/expecting&gt;
+          &lt;!-- choice implementation --&gt;
         &lt;/choice&gt;
-        &lt;!-- --&gt;
+        &lt;!-- other choices --&gt;
       &lt;/decision&gt;
     &lt;/case&gt;
-    &lt;default"&gt;
-      &lt;!-- --&gt;
-    &lt;/default&gt;
+    &lt;!-- other cases --&gt;
   &lt;/check&gt;
 &lt;/choice&gt;&lt;/app&gt;</code></pre>
       </div>

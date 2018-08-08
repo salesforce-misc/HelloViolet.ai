@@ -1,44 +1,44 @@
 <h2><a href="/docs/quickstart">Developer Guide</a></h2>
 <ul>
-  <li><a href="/docs/prerequisites">Prerequisites</a></li>
-  <li><a href="/docs/quickstart">Get Started</a></li>
-  <li><a href="/docs/core-concepts">Core Concepts</a></li>
+  <li {% if page.url == '/docs/prerequisites' %} class="active" {% endif %}><a href="/docs/prerequisites">Prerequisites</a></li>
+  <li {% if page.url == '/docs/quickstart' %} class="active" {% endif %}><a href="/docs/quickstart">Get Started</a></li>
+  <li {% if page.url == '/docs/core-concepts' %} class="active" {% endif %}><a href="/docs/core-concepts">Core Concepts</a></li>
 </ul>
 <h2><a href="/docs/conversation-flow-basics">Flow Scripts</a></h2>
 <ul>
-  <li><a href="/docs/conversation-flow-basics">Basics</a></li>
-  <li><a href="/docs/conversation-input-output">Input &amp; Output</a></li>
-  <li><a href="/docs/conversation-elements">Conv. Elements</a></li>
-  <li><a href="/docs/conversation-changing-flow">Changing Flow</a></li>
-  <li><a href="/docs/conversation-app-logic">Application Logic</a></li>
-  <li><a href="/docs/conversation-example">An Example</a></li>
+  <li {% if page.url == '/docs/conversation-flow-basics' %} class="active" {% endif %}><a href="/docs/conversation-flow-basics">Basics</a></li>
+  <li {% if page.url == '/docs/conversation-input-output' %} class="active" {% endif %}><a href="/docs/conversation-input-output">Input &amp; Output</a></li>
+  <li {% if page.url == '/docs/conversation-elements' %} class="active" {% endif %}><a href="/docs/conversation-elements">Conv. Elements</a></li>
+  <li {% if page.url == '/docs/conversation-changing-flow' %} class="active" {% endif %}><a href="/docs/conversation-changing-flow">Changing Flow</a></li>
+  <li {% if page.url == '/docs/conversation-app-logic' %} class="active" {% endif %}><a href="/docs/conversation-app-logic">Application Logic</a></li>
+  <li {% if page.url == '/docs/conversation-example' %} class="active" {% endif %}><a href="/docs/conversation-example">An Example</a></li>
 </ul>
 <h2><a href="/api">API Reference</a></h2>
 <h3>Core</h3>
 <!-- <h3>Modules</h3> -->
 <ul>
-  <li><a href="/api/module-violet">violet</a></li>
-  <li><a href="/api/module-response">response</a></li>
+  <li {% if page.url == '/api/module-violet' %} class="active" {% endif %}><a href="/api/module-violet">violet</a></li>
+  <li {% if page.url == '/api/module-response' %} class="active" {% endif %}><a href="/api/module-response">response</a></li>
   <ul>
-    <li><a href="/api/module-response-Response">- Response</a></li>
+    <li {% if page.url == '/api/module-response-Response' %} class="active" {% endif %}><a href="/api/module-response-Response">- Response</a></li>
   </ul>
-  <li><a href="/api/module-conversationEngine">conversationEngine</a></li>
+  <li {% if page.url == '/api/module-conversationEngine' %} class="active" {% endif %}><a href="/api/module-conversationEngine">conversationEngine</a></li>
   <ul>
-    <li><a href="/api/module-conversationEngine-ConversationEngine">- ConversationEngine</a></li>
-    <li><a href="/api/module-conversationEngine-InputMgr">- InputMgr</a></li>
-    <li><a href="/api/module-conversationEngine-OutputMgr">- OutputMgr</a></li>
-    <li><a href="/api/module-conversationEngine-ScriptParser">- ScriptParser</a></li>
+    <li {% if page.url == '/api/module-conversationEngine-ConversationEngine' %} class="active" {% endif %}><a href="/api/module-conversationEngine-ConversationEngine">- ConversationEngine</a></li>
+    <li {% if page.url == '/api/module-conversationEngine-InputMgr' %} class="active" {% endif %}><a href="/api/module-conversationEngine-InputMgr">- InputMgr</a></li>
+    <li {% if page.url == '/api/module-conversationEngine-OutputMgr' %} class="active" {% endif %}><a href="/api/module-conversationEngine-OutputMgr">- OutputMgr</a></li>
+    <li {% if page.url == '/api/module-conversationEngine-ScriptParser' %} class="active" {% endif %}><a href="/api/module-conversationEngine-ScriptParser">- ScriptParser</a></li>
   </ul>
-  <li><a href="/api/module-violetSrvr">violetSrvr</a></li>
-  <li><a href="/api/module-utils">utils</a></li>
+  <li {% if page.url == '/api/module-violetSrvr' %} class="active" {% endif %}><a href="/api/module-violetSrvr">violetSrvr</a></li>
+  <li {% if page.url == '/api/module-utils' %} class="active" {% endif %}><a href="/api/module-utils">utils</a></li>
   <!-- <li><hr style="margin-top:0.5rem;margin-bottom:0.5rem;width:75%"/></li> -->
   <li><h3>Plugins</h3></li>
-  <li><a href="/api/module-violetTime">violetTime</a></li>
-  <li><a href="/api/module-violetStorePG">violetStorePG</a></li>
-  <li><a href="/api/module-violetStorePG-pgStore">- pgStore</a></li>
-  <li><a href="/api/module-violetStoreSF">violetStoreSF</a></li>
-  <li><a href="/api/module-violetStoreSF-sfStore">- sfStore</a></li>
-  <li><a href="/api/module-violetList">violetList</a></li>
-  <li><a href="/api/module-violetList-listWidget">- listWidget</a></li>
+  <li {% if page.url == '/api/module-violetTime' %} class="active" {% endif %}><a href="/api/module-violetTime">violetTime</a></li>
+  <li {% if page.url == '/api/module-violetStorePG' %} class="active" {% endif %}><a href="/api/module-violetStorePG">violetStorePG</a></li>
+  <li {% if page.url == '/api/module-violetStorePG-pgStore' %} class="active" {% endif %}><a href="/api/module-violetStorePG-pgStore">- pgStore</a></li>
+  <li {% if page.url == '/api/module-violetStoreSF' %} class="active" {% endif %}><a href="/api/module-violetStoreSF">violetStoreSF</a></li>
+  <li {% if page.url == '/api/module-violetStoreSF-sfStore' %} class="active" {% endif %}><a href="/api/module-violetStoreSF-sfStore">- sfStore</a></li>
+  <li {% if page.url == '/api/module-violetList' %} class="active" {% endif %}><a href="/api/module-violetList">violetList</a></li>
+  <li {% if page.url == '/api/module-violetList-listWidget' %} class="active" {% endif %}><a href="/api/module-violetList-listWidget">- listWidget</a></li>
 </ul>
 <h2><a href="/docs/contributing">Contributing</a></h2>

@@ -5,3 +5,4 @@ release_version: v0.12.4
 permalink: /blog/:year/:month/:day/:title
 plugins:
   - jekyll-feed
+  - jekyll-redirect-from

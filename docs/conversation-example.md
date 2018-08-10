@@ -1,97 +1,18 @@
 ---
 layout: docs
-title: Conversation Flow - Application Logic
+title: Conversation Flow - Examples
 ---
-# An Example
+# Examples
 
-Consider the below code that creates a simple voice-based calculator.
+You can see examples of Voice Scripts in a few of the samples that we have built.
 
-We first load violet, declare input variables and their types, define the service, and then load the conversational script.
+You will notice that each of them first loads the Violet engine and any dependencies, then defines variables to be used for input from the user (via `addInputTypes`), followed by defining business logic, and finally defines the conversation flow with a link to the business logic services.
 
-```javascript
-var violet = require('violet').script();
+1. The [basic calculator](https://github.com/salesforce/violet-samples/blob/master/scripts/basicCalculator.js) is the simplest example using nested menus via decisions to build a calculator. It allows users to add, subtract, multiply, and divide.
 
-violet.addInputTypes({
-  "NumOne": "NUMBER",
-  "NumTwo": "NUMBER",
-});
+2. The [financial calculator](https://github.com/salesforce/violet-samples/blob/master/scripts/financeCalculator.js) takes things one step further, building a calculator for personal-finance use-cases and leverages both decisions and dialogs. Users can find it allows them to split bills, calculate tips as well as find out how many payments will need to be made on a mortgage.
 
-var app = {
-  add: (a, b)=>{return parseInt(a)+parseInt(b); },
-  subtract: (a, b)=>{return parseInt(a)-parseInt(b); },
-  multiply: (a, b)=>{return parseInt(a)*parseInt(b); },
-  divide: (a, b)=>{return parseInt(a)/parseInt(b); }
-}
-violet.addFlowScript('script.cfl', {app});
-```
+3. The [leads and opportunities](https://github.com/salesforce/violet-samples/blob/master/scripts/sf-leadsAndOpportunities.js) example leverages the Salesforce plugin to show integration with it. It connects to a specific Salesforce instance and allows users to check opportunity status, calendar, leads, as well as to allows for the creation of new leads. For taking this script further, and using account linking to allow users to login to their Salesforce instance see this [trailhead module](https://trailhead.salesforce.com/en/projects/build-a-private-alexa-for-business-skill-for-salesforce/steps/create-a-connected-app-and-link-to-alexa).
 
-The conversational script becomes:
-```xml
-<app>
-  <choice id="launch">
-    <expecting>What can you do</expecting>
-    <say>I can add, subtract, multiply, or divide two numbers</say>
-  </choice>
-  <choice>
-    <expecting>I want to add</expecting>
-    <say>Sure</say>
-    <decision>
-      <prompt>What two numbers would you like me to add</prompt>
-      <prompt>What would you like me to add</prompt>
-      <choice>
-        <expecting>[[NumOne]] and [[NumTwo]]</expecting>
-        <say>The sum of [[NumOne]] and [[NumTwo]] is [[app.add(NumOne, NumTwo)]]</say>
-      </choice>
-      <choice>
-        <expecting>Cancel</expecting>
-        <say>Canceling Addition</say>
-      </choice>
-    </decision>
-  </choice>
-  <choice>
-    <expecting>I want to subtract</expecting>
-    <say>Sure</say>
-    <decision>
-      <prompt>What two numbers would you like me to subtract</prompt>
-      <choice>
-        <expecting>[[NumOne]] and [[NumTwo]]</expecting>
-        <say>Subtracting [[NumTwo]] from [[NumOne]] gives [[app.subtract(NumOne, NumTwo)]]</say>
-      </choice>
-      <choice>
-        <expecting>Cancel</expecting>
-        <say>Canceling Subtraction</say>
-      </choice>
-    </decision>
-  </choice>
-  <choice>
-    <expecting>I want to multiply</expecting>
-    <say>Sure</say>
-    <decision>
-      <prompt>What two numbers would you like me to multiply</prompt>
-      <choice>
-        <expecting>[[NumOne]] and [[NumTwo]]</expecting>
-        <say>Multiplying [[NumOne]] and [[NumTwo]] gives [[app.multiply(NumOne, NumTwo)]]</say>
-      </choice>
-      <choice>
-        <expecting>Cancel</expecting>
-        <say>Canceling Multiplication</say>
-      </choice>
-    </decision>
-  </choice>
-  <choice>
-    <expecting>I want to divide</expecting>
-    <say>Sure</say>
-    <decision>
-      <prompt>What two numbers would you like me to divide</prompt>
-      <choice>
-        <expecting>[[NumOne]] and [[NumTwo]]</expecting>
-        <say>Dividing [[NumOne]] by [[NumTwo]] gives [[app.divide(NumOne, NumTwo)]]</say>
-      </choice>
-      <choice>
-        <expecting>Cancel</expecting>
-        <say>Canceling Division</say>
-      </choice>
-    </decision>
-  </choice>
-</app>
-```
+
+While reviewing the samples you will find it helpful to use the web-tooling that is made available after clicking the single-click deploy buttons located at the [Readme page](https://github.com/salesforce/violet-samples#violet-samples) of the samples project.

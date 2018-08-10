@@ -18,6 +18,9 @@ nav#sideNav ul a, nav#sideNav ul a:visited, nav#sideNav ul a:active {
 nav li {
   margin-top: inherit;
 }
+nav li.active a {
+  font-weight: bold;
+}
 nav.navbar {
   float: none;
 }

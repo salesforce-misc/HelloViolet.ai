@@ -42,4 +42,6 @@ When you launch the web-interface, you can send requests and get responses from 
 
 ![Alt text](/assets/images/content/web-tooling-ss.png){:width="700px"}
 
-Finally, as you get ready to deploy, make sure to put the service where it is accessible on the internet and when you need to - click on the registration button to follow the instructions.
+As you get ready to deploy, make sure to put the service where it is accessible on the internet and when you need to - click on the registration button to follow the instructions.
+
+Now that you have built a simple app, try building something more sophisticated by thinking of [Conversational Flow](/docs/conversation-elements).

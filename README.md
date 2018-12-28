@@ -10,6 +10,17 @@ You can run the website locally by typing:
    bundle exec jekyll serve
 ```
 
+### Working with API Documentation
+The generated navigation for the API Documentation has been customized in a few ways:
+* Internal modules are hidden - these are the modules where the framework instantiates a supporting class.
+* Classes are not shown as children of parent modules, since often instances of these Classes are returned through another Object.
+* Plugins are separated out.
+
+To see the generated list you can type the following in a web-browser:
+```
+   $('#generatedNav').show()
+```
+
 ### Updating Generated (API) Documentation
 API Documentation can be updated by making sure that the other violet projects are siblings to
 this project with all repositories updated, and then typing:

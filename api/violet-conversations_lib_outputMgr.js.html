@@ -1,0 +1,184 @@
+---
+layout: docs
+title: 'JSDoc: Source: violet-conversations/lib/outputMgr.js'
+---
+
+
+  <h1 class="page-title">Source: violet-conversations/lib/outputMgr.js</h1>
+
+
+<div id="generatedNav" style="display:none">
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-flowScriptCompiler.html">flowScriptCompiler</a></li><li><a href="module-outputMgr.html">outputMgr</a></li><li><a href="module-response.html">response</a></li><li><a href="module-scriptParser.html">scriptParser</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-IntentMgr.html">IntentMgr</a></li><li><a href="module-conversationEngine-PlatformMgr.html">PlatformMgr</a></li><li><a href="module-conversationEngine-PlatformPlugin.html">PlatformPlugin</a></li><li><a href="module-conversationEngine-PlatformReq.html">PlatformReq</a></li><li><a href="module-flowScriptCompiler-FlowScriptCompiler.html">FlowScriptCompiler</a></li><li><a href="module-outputMgr-OutputMgr.html">OutputMgr</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-scriptParser-ScriptParser.html">ScriptParser</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetList-ListWidget_.html">ListWidget</a></li><li><a href="module-violetStorePG-VioletStorePG.html">VioletStorePG</a></li><li><a href="module-violetStoreSF-VioletStoreSF.html">VioletStoreSF</a></li><li><a href="StorePlugin.html">StorePlugin</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-conversationEngine.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
+</div>
+
+<div class="codeDocs">
+{% raw %}
+
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* Copyright (c) 2017-present, salesforce.com, inc. All rights reserved */
+/* Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license */
+
+/**
+ * Defines the OutputMgr class that helps the ConversationEngine build an output
+ * as provided by Violet Scripts
+ *
+ * @module outputMgr
+ */
+var utils = require('./utils.js');
+var ScriptParser = require('./scriptParser.js');
+
+
+var _pickAndInterpolate = function(potResponses, interpolationStore) {
+  var str = potResponses;
+  if (Array.isArray(potResponses)) {
+    str = potResponses[utils.getRand(0, potResponses.length)];
+  }
+  if (interpolationStore) { // unlikely, but in error situations interpolationStore can be null
+    str = ScriptParser.interpolateParamsFromStore(str, ScriptParser.paramsRE, interpolationStore);
+  }
+  if (!str) console.log(new Error().stack);
+  console.log('picking for output: ' + str);
+  return str;
+}
+
+
+/**
+ * Helps the ConversationEngine build an output (back to Alexa) as provided by
+ * calls from Violet Scripts to the Response class. This class can theoretically
+ * span multiple Response's (when multiple goals are being met).
+ * &lt;br>&lt;br>
+ * Methods in this class are currently only used internally and therefore
+ * documentation is not exposed.
+ *
+ * @class
+ */
+class OutputMgr {
+  constructor(_platReq) {
+    this.platReq = _platReq;
+
+    this.asked = 0;      // can be less than one for partial questions, i.e. prompts
+    this.sayQueue = [];
+    this.askQueue = [];
+
+    this.keepConversationRunning = true;
+
+    this.__speaking = false;
+  }
+  initialize() {
+    this.asked = 0;
+
+    this.sayQueue = [];
+    this.askQueue = [];
+
+    this.keepConversationRunning = true;
+  }
+
+
+  setSpeaking() { this.__speaking = true; }
+  clearSpeaking() { this.__speaking = false; }
+  isSpeaking() { return this.__speaking; }
+
+  getPauseStr(response) {
+    if (response.convoEngine.convo.pauseTime)
+      return ` &lt;break time="${response.convoEngine.convo.pauseTime}"/> `;
+    else
+      return null;
+  }
+  queuePause(response) {
+    var p = this.getPauseStr(response);
+    if (p) this.sayQueue.push(p);
+  }
+  say(response, potResponses, quick) {
+    if (this.sayQueue.length>0 &amp;&amp; !quick) this.queuePause(response);
+    this.sayQueue.push(_pickAndInterpolate(potResponses, response._sessionStore()));
+  }
+  prompt(response, potResponses) {
+    this.askQueue.push(_pickAndInterpolate(potResponses, response._sessionStore()));
+    this.asked += 0.34;
+  }
+  ask(response, potResponses) {
+    this.askQueue.push(_pickAndInterpolate(potResponses, response._sessionStore()));
+    this.asked += 1;
+  }
+  sendFromQueue(spokenRate, response, potResponses) {
+    if (potResponses) this.sayQueue.push(_pickAndInterpolate(potResponses, response._sessionStore()));
+    // build outBuffer
+    var outBuffer = '';
+    this.sayQueue.forEach(str=>{
+      if (outBuffer.length == 0)
+        outBuffer = str;
+      else
+        outBuffer += ' ' + str;
+    });
+    this.askQueue.forEach((str, ndx)=>{
+      if (outBuffer.length == 0) {
+        outBuffer = str;
+        return;
+      }
+      if (ndx==0) {
+        var p = this.getPauseStr(response);
+        if (p) outBuffer += p;
+        outBuffer += str;
+      } else if (ndx==this.askQueue.length-1)
+        outBuffer += ' or ' + str;
+      else
+        outBuffer += ', ' + str;
+    });
+
+    if (spokenRate) outBuffer = `&lt;prosody rate="${spokenRate}">${outBuffer}&lt;/prosody>`;
+    outBuffer = outBuffer.replace(/\s&amp;\s/g, ' and ');
+
+    if (outBuffer !== '') {
+      console.log('Saying: ' + outBuffer);
+      this.platReq.say(outBuffer);
+    }
+    if (this.keepConversationRunning) this.platReq.shouldEndSession(false);
+    return outBuffer;
+  }
+  /*DANGER - will likely remove these soon - only used by ClientTx plugin - DANGER*/
+  __get_sendFromQueue() {return this.sendFromQueue;}
+  __set_sendFromQueue(val) {this.sendFromQueue = val;}
+
+}
+
+
+module.exports = OutputMgr;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+{% endraw %}
+</div>
+
+
+<footer class="container">
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Dec 28 2018 09:52:24 GMT-0500 (EST)
+</footer>
+
+<script> /*prettyPrint();*/ </script>
+<!-- script src="scripts/linenumber.js"> </script -->
+<script>
+  // prism-ize: add language type and line-numbers
+  var codeEntries = document.getElementsByTagName('pre');
+  for (var ndx=0; ndx<codeEntries.length; ndx++) {
+    var node = codeEntries[ndx];
+    if (node.children.length!=1 && node.children[0].tagName!='CODE') continue;
+    if (!node.className.match(/lang/)) node.className += ' language-javascript'
+    if (node.className.match(/linenums/)) node.className += ' line-numbers'
+  }
+  // changes '<h3 class="subsection-title">Events</h3>'==><h3 class="subsection-title">Intents</h3>
+  var headingEntries = document.getElementsByTagName('h3');
+  for (var ndx=0; ndx<headingEntries.length; ndx++) {
+    var node = headingEntries[ndx];
+    if (node.className !== 'subsection-title') continue;
+    if (node.textContent == 'Events') node.textContent = 'Intents';
+  }
+</script>

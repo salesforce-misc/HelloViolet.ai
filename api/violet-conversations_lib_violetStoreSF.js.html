@@ -3,10 +3,12 @@ layout: docs
 title: 'JSDoc: Source: violet-conversations/lib/violetStoreSF.js'
 ---
 
-<h1 class="page-title">Source: violet-conversations/lib/violetStoreSF.js</h1>
+
+  <h1 class="page-title">Source: violet-conversations/lib/violetStoreSF.js</h1>
+
 
 <div id="generatedNav" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-response.html">response</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-InputMgr.html">InputMgr</a></li><li><a href="module-conversationEngine-OutputMgr.html">OutputMgr</a></li><li><a href="module-conversationEngine-ScriptParser.html">ScriptParser</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-flowScriptCompiler.html">flowScriptCompiler</a></li><li><a href="module-outputMgr.html">outputMgr</a></li><li><a href="module-response.html">response</a></li><li><a href="module-scriptParser.html">scriptParser</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-IntentMgr.html">IntentMgr</a></li><li><a href="module-conversationEngine-PlatformMgr.html">PlatformMgr</a></li><li><a href="module-conversationEngine-PlatformPlugin.html">PlatformPlugin</a></li><li><a href="module-conversationEngine-PlatformReq.html">PlatformReq</a></li><li><a href="module-flowScriptCompiler-FlowScriptCompiler.html">FlowScriptCompiler</a></li><li><a href="module-outputMgr-OutputMgr.html">OutputMgr</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-scriptParser-ScriptParser.html">ScriptParser</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetList-ListWidget_.html">ListWidget</a></li><li><a href="module-violetStorePG-VioletStorePG.html">VioletStorePG</a></li><li><a href="module-violetStoreSF-VioletStoreSF.html">VioletStoreSF</a></li><li><a href="StorePlugin.html">StorePlugin</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-conversationEngine.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
 </div>
 
 <div class="codeDocs">
@@ -37,6 +39,7 @@ title: 'JSDoc: Source: violet-conversations/lib/violetStoreSF.js'
  * @module violetStoreSF
  */
 
+const StorePlugin = require('./storePlugin.js');
 var nforce = require('nforce');
 var org = nforce.createConnection({
   clientId: process.env.V_SFDC_CLIENT_ID,
@@ -67,74 +70,54 @@ org.authenticate({ username: process.env.V_SFDC_USERNAME, password: process.env.
 
 const builtIn='*';
 
-var _nameToStr = (commonName)=>{
-  if (commonName.endsWith(builtIn))
-    return commonName.slice(0,-builtIn.length);
-  else
-    return commonName+'__c';
-};
-
-var _getCompoundNameToStr = (commonName)=>{
-  names = commonName.split('.');
-  var ret = '';
-  names.forEach((n)=>{
-    if (ret.length>0) ret+='.';
-    ret+=_nameToStr(n);
-  });
-  return ret;
-};
-var _getCompoundProperty = (obj, prop)=>{
-  var __nget=(o,p)=>{
-    if (o==null) {
-      console.log('Trying to get property: ' + prop + ' from null');
-      return null;
-    }
-    if (o.get)
-      return o.get(p);
-    else
-      return o[p];
-  }
-  var ret = obj;
-  propItems = prop.split('.');
-  propItems.forEach((p, ndx)=>{
-    ret = __nget(ret, _nameToStr(p));
-  });
-  return ret;
-}
-var _setCompundProperty = (obj, prop, val)=>{
-  prop = prop.replace(/\*/g,'');  // strip the built-in property differentiator
-  propItems = prop.split('.');
-  var lastObj = null;
-  propItems.forEach((p, ndx)=>{
-    lastObj = obj;
-    if (obj[p]==undefined) obj[p]={};
-    obj = obj[p];
-  });
-  lastObj[propItems[propItems.length-1]] = val;
-}
-var _dedupe = (ary)=>{
-  return ary.sort().filter((item, ndx, _ary)=>{
-    if (ndx!=0 &amp;&amp; item == ary[ndx-1]) return false;
-    return true;
-  });
-}
 
 
 /**
  * Implements support for the core operations supported by Violet (for
  * Force.com).
- *
- * @class
  */
-var sfStore = {
-  defaultPropOfInterest: ['Id*', 'CreatedDate*'],
-  _objProps: (params)=>{
-    var objProps = [];
-    if (params.objName) objProps = objProps.concat(sfStore.propOfInterest[params.objName]);
-    if (params.propOfInterest) objProps = objProps.concat(params.propOfInterest);
-    if (objProps.length == 0) return objProps; // return empty array if we don't have a way to get any propOfInterest
-    return objProps.concat(sfStore.defaultPropOfInterest);
-  },
+class VioletStoreSF extends StorePlugin {
+  constructor(violet) {
+    super(violet);
+    this.defaultPropOfInterest = ['Id*', 'CreatedDate*'];
+  }
+
+  _nameToStr(commonName) {
+    if (commonName.endsWith(builtIn))
+      return commonName.slice(0,-builtIn.length);
+    else
+      return commonName+'__c';
+  };
+
+  _getCompoundProperty(obj, prop) {
+    var __nget=(o,p)=>{
+      if (o==null) {
+        console.log('Trying to get property: ' + prop + ' from null');
+        return null;
+      }
+      if (o.get)
+        return o.get(p);
+      else
+        return o[p];
+    }
+    var ret = obj;
+    var propItems = prop.split('.');
+    propItems.forEach((p, ndx)=>{
+      ret = __nget(ret, this._nameToStr(p));
+    });
+    return ret;
+  }
+  _setCompundProperty(obj, prop, val) {
+    prop = prop.replace(/\*/g,'');  // strip the built-in property differentiator
+    var propItems = prop.split('.');
+    var lastObj = null;
+    propItems.forEach((p, ndx)=>{
+      lastObj = obj;
+      if (obj[p]==undefined) obj[p]={};
+      obj = obj[p];
+    });
+    lastObj[propItems[propItems.length-1]] = val;
+  }
 
   /**
    * Retrieves given object from the underlying data store.
@@ -180,38 +163,22 @@ var sfStore = {
    * @param {string} queryParams.filter - additional query results filter - this
    *  is added to the end of the SQL query
    * @param {string} queryParams.queryXtra - additional bits to be
-   *  added to the end of the query, for example "LIMIT 100". "LIMIT 100" is auto added. 
+   *  added to the end of the query, for example "LIMIT 100". "LIMIT 100" is auto added.
    *  Use false to prevent auto adding, for example when using aggregate queries.
    * @returns {Promise} Promise that resolves with the data
    */
-  load:  (params)=>{
-    // console.log('sfStore.load: ' + params.objName, sfStore._objProps(params));
-    var q = 'SELECT ';
-    if (params.query)
-      q+=' ' + params.query;
-    else
-      q+= _dedupe(sfStore._objProps(params).map((p)=>{return _getCompoundNameToStr(p);})).join(', ');
-    if (params.objName)
-      q+= ' FROM ' + _getCompoundNameToStr(params.objName);
-    if (params.keyName || params.filter) q+= ' WHERE';
-    if (params.keyName &amp;&amp; params.keyVal) {
-      if (params.keyName.startsWith(params.objName))
-        q+= ' ' + _getCompoundNameToStr(params.keyName.substr(params.objName.length+1)) + ' = \'' + params.keyVal + '\'';
-      else
-        q+= ' ' + _getCompoundNameToStr(params.keyName)+' = \'' + params.keyVal + '\'';
-    }
-    if (params.keyName &amp;&amp; params.keyVal &amp;&amp; params.filter) q+= ' AND'
-    if (params.filter) q+=' ' + params.filter;
-    if (params.queryXtra) q+=' ' + params.queryXtra;
+  load(params) {
+    // console.log('VioletStoreSF.load: ' + params.objName, this._objProps(params));
+    var q = this._buildQuery(params);
     console.log('soql: ' + q);
 
-    return org.query({ query: q }).then(function(resp){
+    return org.query({ query: q }).then(resp => {
       if (!resp.records) {
         console.log('no results');
         return;
       } else console.log('found ' + resp.records.length + ' records');
 
-      var objProperties = sfStore._objProps(params);
+      var objProperties = this._objProps(params);
       if (objProperties.length==0) {
         // we can't convert to js object
         return resp.records;
@@ -221,7 +188,7 @@ var sfStore = {
       resp.records.forEach((rec)=>{
         var recStore = {};
         objProperties.forEach((p)=> {
-          _setCompundProperty(recStore, p, _getCompoundProperty(rec,p));
+          this._setCompundProperty(recStore, p, this._getCompoundProperty(rec,p));
         });
         memRecords.push(recStore);
       });
@@ -230,7 +197,7 @@ var sfStore = {
     }).catch((err)=>{
       console.log('sfdc query err', err);
     });
-  },
+  }
 
   /**
    * Does a search
@@ -246,18 +213,18 @@ var sfStore = {
    * @param {string} searchStr - the search string to look up
    * @returns {Promise} Promise that resolves when the data has been found
    */
-  search: (objName, searchStr)=>{
+  search(objName, searchStr) {
     // identical to load, except that we have a little more preamble in query,
     // we pull properties from a hardcoded 'search' object, call the method
     // `search` instead of `query` and get results in `searchRecords` instead of
     // `records`
-    console.log('sfStore.search: ' + searchStr + ' in ' + objName);
-    var q = 'FIND {' + searchStr + '} IN ALL FIELDS RETURNING ' + _getCompoundNameToStr(objName) + '(';
-    q+= _dedupe(sfStore._objProps({objName}).map((p)=>{return _getCompoundNameToStr(p);})).join(', ');
+    console.log('VioletStoreSF.search: ' + searchStr + ' in ' + objName);
+    var q = 'FIND {' + searchStr + '} IN ALL FIELDS RETURNING ' + this._getCompoundNameToStr(objName) + '(';
+    q+= this._dedupe(this._objProps({objName}).map((p)=>{return this._getCompoundNameToStr(p);})).join(', ');
     q+=" WHERE PublishStatus='Online' AND LANGUAGE ='en_US')"
     console.log('sosl: ' + q);
 
-    return org.search({ search: q/*, raw: true*/ }).then(function(resp){
+    return org.search({ search: q/*, raw: true*/ }).then(resp => {
       // console.log(resp);
       if (!resp.searchRecords) {
         console.log('no results');
@@ -267,8 +234,8 @@ var sfStore = {
       var memRecords = [];
       resp.searchRecords.forEach((rec)=>{
         var recStore = {};
-        sfStore._objProps({objName}).forEach((p)=> {
-          _setCompundProperty(recStore, p, _getCompoundProperty(rec,p));
+        this._objProps({objName}).forEach((p)=> {
+          this._setCompundProperty(recStore, p, this._getCompoundProperty(rec,p));
         });
         memRecords.push(recStore);
       });
@@ -277,7 +244,7 @@ var sfStore = {
     }).catch((err)=>{
       console.log('sfdc search err', err);
     });
-  },
+  }
 
   /**
    * Adds given object to the underlying data store.
@@ -299,18 +266,18 @@ var sfStore = {
    * @returns {Promise} Promise that resolves when the data has been written in
    *   the store
    */
-  store: (objName, dataToStore)=>{
-    var dl = nforce.createSObject(_getCompoundNameToStr(objName));
+  store(objName, dataToStore) {
+    var dl = nforce.createSObject(this._getCompoundNameToStr(objName));
     // console.log(dataToStore);
     console.log('storing: ' + objName, dataToStore);
     for(var key in dataToStore){
-      dl.set(_getCompoundNameToStr(key), dataToStore[key]);
+      dl.set(this._getCompoundNameToStr(key), dataToStore[key]);
     }
 
     return org.insert({ sobject: dl }).then(()=>{
       console.log('Stored');
     });
-  },
+  }
 
   /**
    * Updates given object in the underlying data store.
@@ -333,20 +300,13 @@ var sfStore = {
    * @returns {Promise} Promise that resolves when the data has been updated in
    *   the store
    */
-  update: (objName, keyName, keyVal, updateData)=>{
-    // console.log('sfStore.update: ' + objName, sfStore._objProps({objName}));
-    var q = 'SELECT ';
-    q+= _dedupe(sfStore._objProps({objName}).map((p)=>{return _getCompoundNameToStr(p);})).join(', ');
-    q+= ' FROM ' + _getCompoundNameToStr(objName);
-    q+= ' WHERE ';
-    if (keyName.startsWith(objName))
-      q+= _getCompoundNameToStr(keyName.substr(objName.length+1)) + ' = \'' + keyVal + '\'';
-    else
-      q+= _getCompoundNameToStr(keyName)+' = \'' + keyVal + '\'';
+  update(objName, keyName, keyVal, updateData) {
+    // console.log('VioletStoreSF.update: ' + objName, this._objProps({objName}));
+    var q = this._buildQuery({objName, keyName, keyVal});
     q+=' LIMIT 1';
     console.log('soql: ' + q);
 
-    return org.query({ query: q }).then(function(resp){
+    return org.query({ query: q }).then(resp => {
       if (!resp.records || resp.records.length == 0) {
         console.log('no results');
         return;
@@ -356,7 +316,7 @@ var sfStore = {
 
       console.log('query succeded... updating: ' + objName, updateData);
       for(var key in updateData){
-        dbObj.set(_getCompoundNameToStr(key), updateData[key]);
+        dbObj.set(this._getCompoundNameToStr(key), updateData[key]);
       }
 
       return org.update({ sobject: dbObj }).then(()=>{ console.log('Updated'); });
@@ -364,7 +324,7 @@ var sfStore = {
     }).catch((err)=>{
       console.log('sfdc update err', err);
     });
-  },
+  }
 
   /**
    * Deletes given object in the underlying data store.
@@ -383,16 +343,9 @@ var sfStore = {
    * @returns {Promise} Promise that resolves when the data has been deleted in
    *   the store
    */
-  delete: (objName, keyName, keyVal)=>{
-    // console.log('sfStore.delete: ' + objName, sfStore._objProps({objName}));
-    var q = 'SELECT ';
-    q+= _dedupe(sfStore._objProps({objName}).map((p)=>{return _getCompoundNameToStr(p);})).join(', ');
-    q+= ' FROM ' + _getCompoundNameToStr(objName);
-    q+= ' WHERE ';
-    if (keyName.startsWith(objName))
-      q+= _getCompoundNameToStr(keyName.substr(objName.length+1)) + ' = \'' + keyVal + '\'';
-    else
-      q+= _getCompoundNameToStr(keyName)+' = \'' + keyVal + '\'';
+  delete(objName, keyName, keyVal) {
+    // console.log('VioletStoreSF.delete: ' + objName, this._objProps({objName}));
+    var q = this._buildQuery({objName, keyName, keyVal});
     q+=' LIMIT 1';
     console.log('soql: ' + q);
 
@@ -411,11 +364,12 @@ var sfStore = {
     }).catch((err)=>{
       console.log('sfdc delete err', err);
     });
-  },
+  }
+
 };
 
 module.exports = function(violet) {
-  if (violet) violet.setPersistentStore(sfStore);
+  var sfStore = new VioletStoreSF(violet);
   return {
     /**
      * Returns a promise which will resolve with the store having access to the
@@ -443,7 +397,7 @@ module.exports = function(violet) {
 
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jul 23 2018 23:46:45 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Dec 28 2018 09:52:24 GMT-0500 (EST)
 </footer>
 
 <script> /*prettyPrint();*/ </script>

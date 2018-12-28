@@ -3,7 +3,7 @@ layout: docs
 title: Conversational Elements - Decisions
 redirect_from: /docs/conversation-changing-flow
 ---
-# Decisions
+# &lt;decision&gt;
 Most voice applications boil down to the system asking a question, the user making a `decision`, responding back, and the conversation flow going into one of many `choices` or branches.
 
 An example of decisions can be seen below:

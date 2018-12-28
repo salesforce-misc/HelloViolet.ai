@@ -161,7 +161,7 @@
 }
 
 /* site customizations */
-p a, p a:visited, p a:active {
+#main li a, #main li a:visited, #main li a:active, p a, p a:visited, p a:active {
   background-color: rgba(138, 99, 189, 0.3);
   border-bottom: 1px solid rgba(0,0,0,0.2);
   color: black;

@@ -3,10 +3,12 @@ layout: docs
 title: 'JSDoc: Source: violet-conversations/lib/violetStorePG.js'
 ---
 
-<h1 class="page-title">Source: violet-conversations/lib/violetStorePG.js</h1>
+
+  <h1 class="page-title">Source: violet-conversations/lib/violetStorePG.js</h1>
+
 
 <div id="generatedNav" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-response.html">response</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-InputMgr.html">InputMgr</a></li><li><a href="module-conversationEngine-OutputMgr.html">OutputMgr</a></li><li><a href="module-conversationEngine-ScriptParser.html">ScriptParser</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-flowScriptCompiler.html">flowScriptCompiler</a></li><li><a href="module-outputMgr.html">outputMgr</a></li><li><a href="module-response.html">response</a></li><li><a href="module-scriptParser.html">scriptParser</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-IntentMgr.html">IntentMgr</a></li><li><a href="module-conversationEngine-PlatformMgr.html">PlatformMgr</a></li><li><a href="module-conversationEngine-PlatformPlugin.html">PlatformPlugin</a></li><li><a href="module-conversationEngine-PlatformReq.html">PlatformReq</a></li><li><a href="module-flowScriptCompiler-FlowScriptCompiler.html">FlowScriptCompiler</a></li><li><a href="module-outputMgr-OutputMgr.html">OutputMgr</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-scriptParser-ScriptParser.html">ScriptParser</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetList-ListWidget_.html">ListWidget</a></li><li><a href="module-violetStorePG-VioletStorePG.html">VioletStorePG</a></li><li><a href="module-violetStoreSF-VioletStoreSF.html">VioletStoreSF</a></li><li><a href="StorePlugin.html">StorePlugin</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-conversationEngine.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
 </div>
 
 <div class="codeDocs">
@@ -32,6 +34,7 @@ title: 'JSDoc: Source: violet-conversations/lib/violetStorePG.js'
  */
 
 // only load is implemented, need to implement store and update
+const StorePlugin = require('./storePlugin.js');
 var pg = require('pg');
 
 var client = null;
@@ -57,31 +60,16 @@ var _connectToDB = function() {
 _connectToDB();
 
 
-// a lot of the below can be simplified
-var _getCompoundNameToStr = (commonName)=>{
-  names = commonName.split('.');
-  var ret = '';
-  names.forEach((n)=>{
-    if (ret.length>0) ret+='.';
-    ret+=n;
-  });
-  return ret;
-};
-
 /**
  * Implements support for the core operations supported by Violet (for
  * Postgres).
- *
- * @class
  */
-var pgStore = {
-  defaultPropOfInterest: [],
-  _objProps: (params)=>{
-    var objProps = pgStore.defaultPropOfInterest;
-    if (params.objName) objProps = objProps.concat(pgStore.propOfInterest[params.objName]);
-    if (params.propOfInterest) objProps = objProps.concat(params.propOfInterest);
-    return objProps;
-  },
+class VioletStorePG extends StorePlugin {
+
+  constructor(violet) {
+    super(violet);
+    this.defaultPropOfInterest = [];
+  }
 
   /**
    * Retrieves given object from the underlying data store.
@@ -130,24 +118,9 @@ var pgStore = {
    *  added to the end of the query, for example "LIMIT 100"
    * @returns {Promise} Promise that resolves with the data
    */
-  load:  (params)=>{
-    // console.log('pgStore.load: ' + params.objName, pgStore._objProps(params));
-    var q = 'SELECT ';
-    if (params.query)
-      q+=' ' + params.query;
-    else
-      q+= pgStore._objProps(params).map((p)=>{return _getCompoundNameToStr(p);}).join(', ');
-    q+= ' FROM ' + _getCompoundNameToStr(params.objName);
-    if (params.keyName || params.filter) q+= ' WHERE';
-    if (params.keyName &amp;&amp; params.keyVal) {
-      if (params.keyName.startsWith(params.objName))
-        q+= ' ' + _getCompoundNameToStr(params.keyName.substr(params.objName.length+1)) + ' = \'' + params.keyVal + '\'';
-      else
-        q+= ' ' + _getCompoundNameToStr(params.keyName)+' = \'' + params.keyVal + '\'';
-    }
-    if (params.keyName &amp;&amp; params.keyVal &amp;&amp; params.filter) q+= ' AND'
-    if (params.filter) q+=' ' + params.filter;
-    if (params.queryXtra) q+=' ' + params.queryXtra;
+  load(params) {
+    // console.log('this.load: ' + params.objName, this._objProps(params));
+    var q = this._buildQuery(params);
     console.log('sql: ' + q);
 
     return client.query(q).then(function(resp){
@@ -162,7 +135,7 @@ var pgStore = {
     }).catch((err)=>{
       console.log('sfdc query err', err);
     });
-  },
+  }
 
   /**
    * Adds given object to the underlying data store.
@@ -184,18 +157,18 @@ var pgStore = {
    * @returns {Promise} Promise that resolves when the data has been written in
    *   the store
    */
-  store: (objName, dataToStore)=>{
+  store(objName, dataToStore) {
     var objKeys = Object.keys(dataToStore);
     var objValues =  objKeys.map(k=>{return dataToStore[k]});
     var insertValues = Object.keys(objKeys).map(k=>{return '$'+(parseInt(k)+1)});
-    var insertStmt = `insert into ${_getCompoundNameToStr(objName)} (${objKeys.join(', ')}) values (${insertValues.join(', ')})`;
+    var insertStmt = `insert into ${this._getCompoundNameToStr(objName)} (${objKeys.join(', ')}) values (${insertValues.join(', ')})`;
     console.log('storing: ' + insertStmt, objValues);
     return client.query({text: insertStmt, values: objValues}).then(()=>{
       console.log('Stored');
     }).catch((err)=>{
       console.log('pg store err', err);
     });
-  },
+  }
 
   /**
    * Updates given object in the underlying data store.
@@ -218,14 +191,14 @@ var pgStore = {
    * @returns {Promise} Promise that resolves when the data has been updated in
    *   the store
    */
-  update: (objName, keyName, keyVal, updateData)=>{
+  update(objName, keyName, keyVal, updateData) {
     // console.log('sfStore.update: ' + objName, sfStore._objProps({objName}));
     var objKeys = Object.keys(updateData);
     var objValues =  objKeys.map(k=>{return updateData[k]});
     var updateValues = Object.keys(objKeys).map(k=>{return '$'+(parseInt(k)+1)});
-    var updateStmt = `UPDATE ${_getCompoundNameToStr(objName)}
+    var updateStmt = `UPDATE ${this._getCompoundNameToStr(objName)}
               SET (${objKeys.join(', ')}) = (${updateValues.join(', ')})
-              WHERE ${_getCompoundNameToStr(keyName)} = '${keyVal}'`;
+              WHERE ${this._getCompoundNameToStr(keyName)} = '${keyVal}'`;
 
     console.log('updating: ' + updateStmt, objValues);
     return client.query({ text: updateStmt, values: objValues }).then(function(){
@@ -233,7 +206,7 @@ var pgStore = {
     }).catch((err)=>{
       console.log('pg update err', err);
     });
-  },
+  }
 
   /**
    * Deletes given object in the underlying data store.
@@ -252,10 +225,10 @@ var pgStore = {
    * @returns {Promise} Promise that resolves when the data has been deleted in
    *   the store
    */
-  delete: (objName, keyName, keyVal)=>{
+  delete(objName, keyName, keyVal) {
     // console.log('sfStore.update: ' + objName, sfStore._objProps({objName}));
-    var deleteStmt = `Delete FROM ${_getCompoundNameToStr(objName)}
-              WHERE ${_getCompoundNameToStr(keyName)} = '${keyVal}'`;
+    var deleteStmt = `Delete FROM ${this._getCompoundNameToStr(objName)}
+              WHERE ${this._getCompoundNameToStr(keyName)} = '${keyVal}'`;
 
     console.log('deleting: ' + deleteStmt);
     return client.query(deleteStmt).then(function(){
@@ -263,14 +236,14 @@ var pgStore = {
     }).catch((err)=>{
       console.log('pg delete err', err);
     });
-  },
+  }
 
 
 };
 
 // module.exports.store = pgStore;
 module.exports = function(violet) {
-  if (violet) violet.setPersistentStore(pgStore);
+  var pgStore = new VioletStorePG(violet);
   var connectionsCnt = 0;
   return {
     /** Allows access to the store */
@@ -311,7 +284,7 @@ module.exports = function(violet) {
 
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jul 23 2018 23:46:45 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Dec 28 2018 09:52:24 GMT-0500 (EST)
 </footer>
 
 <script> /*prettyPrint();*/ </script>

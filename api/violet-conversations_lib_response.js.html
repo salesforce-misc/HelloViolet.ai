@@ -3,10 +3,12 @@ layout: docs
 title: 'JSDoc: Source: violet-conversations/lib/response.js'
 ---
 
-<h1 class="page-title">Source: violet-conversations/lib/response.js</h1>
+
+  <h1 class="page-title">Source: violet-conversations/lib/response.js</h1>
+
 
 <div id="generatedNav" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-response.html">response</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-InputMgr.html">InputMgr</a></li><li><a href="module-conversationEngine-OutputMgr.html">OutputMgr</a></li><li><a href="module-conversationEngine-ScriptParser.html">ScriptParser</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-flowScriptCompiler.html">flowScriptCompiler</a></li><li><a href="module-outputMgr.html">outputMgr</a></li><li><a href="module-response.html">response</a></li><li><a href="module-scriptParser.html">scriptParser</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-IntentMgr.html">IntentMgr</a></li><li><a href="module-conversationEngine-PlatformMgr.html">PlatformMgr</a></li><li><a href="module-conversationEngine-PlatformPlugin.html">PlatformPlugin</a></li><li><a href="module-conversationEngine-PlatformReq.html">PlatformReq</a></li><li><a href="module-flowScriptCompiler-FlowScriptCompiler.html">FlowScriptCompiler</a></li><li><a href="module-outputMgr-OutputMgr.html">OutputMgr</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-scriptParser-ScriptParser.html">ScriptParser</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetList-ListWidget_.html">ListWidget</a></li><li><a href="module-violetStorePG-VioletStorePG.html">VioletStorePG</a></li><li><a href="module-violetStoreSF-VioletStoreSF.html">VioletStoreSF</a></li><li><a href="StorePlugin.html">StorePlugin</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-conversationEngine.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
 </div>
 
 <div class="codeDocs">
@@ -43,38 +45,44 @@ class Response {
    * Constructed by the ConversationEngine before calling a Voice Script's
    * intent or when trying to resolve a goal
    */
-  constructor(convoEngine, requ, resp) {
+  constructor(convoEngine, platReq) {
     this.convoEngine = convoEngine;
-    this.outputMgr = convoEngine.outputMgr;
 
-    this.requ = requ;
-    this.resp = resp;
+    this.platReq = platReq;
+    this.outputMgr = platReq.outputMgr;
 
     this.goalStateChanged = false;
 
     this.paramsStore = {
       get: (varName) => {
-        if (varName == 'userId') return requ.userId;
-        return requ.slot(varName);
+        if (varName == 'userId') return platReq.getUserId();
+        return platReq.getSlot(varName);
       },
       contains: (varName) => {
         if (varName == 'userId') return true;
         return alexaAppExt.reqContainsSlot(req, varName);
       }
     };
-    var requestStore = requ.getSession();
+    var requestStore = platReq.getSession();
     this.sessionStore = {
       get: (varName, addlContext) => {
         var myContext = requestStore.getAttributes()
+        if (varName.indexOf('.')==-1 &amp;&amp; varName.indexOf('(')==-1) return myContext[varName];
+
+        // don't want to change the underlying stores attributes
+        myContext = Object.assign({}, myContext);
+        // potentially execute script
         myContext = Object.assign(myContext, this.convoEngine.scriptModels)
         if (addlContext)
           myContext = Object.assign(myContext, addlContext)
-        // console.log('myContext: ', myContext)
+        console.log(`\t*** store.get(${varName})... myContext: ${Object.keys(myContext)}`);
         var result;
         try {
           result = safeEval(varName, myContext);
-        } catch (err) {}
-        // console.log(`store.get(${varName}) = ${result}`)
+        } catch (err) {
+          console.log(err);
+        }
+        console.log(`\t*** store.get(${varName})... result: ${result}`)
         return result;
       },
       clear: (varName) => {
@@ -88,10 +96,6 @@ class Response {
       }
     };
   }
-
-  // so that users can try out cuting edge features - using this will possibly limit support for AWS Lex, Google Home, etc.
-  _alexa_request() {return this.requ;}
-  _alexa_response() {return this.resp;}
 
   // for advanced users
   _paramsStoreReal() {return this.paramsStore;}
@@ -155,7 +159,8 @@ class Response {
    *
    * @param {string} varStr - variable name
    */
-  get(varStr, addlContext = null) {
+  get(varStr, addlContext = {}) {
+    if (!addlContext.response) addlContext.response = this;
     return this.sessionStore.get(varStr, addlContext);
   }
 
@@ -176,64 +181,6 @@ class Response {
    */
   clear(varStr) {
     return this.sessionStore.clear(varStr);
-  }
-
-  // persistence support
-  /**
-   * Retrieves the given object from the Salesforce database.
-   *
-   * @param {Object} queryParams - query parameters
-   * @param {string} queryParams.objName - the object/table name in the data
-   *   store where the give object is to be updated
-   * @param {string} queryParams.keyName - the key name to find the object to be updated
-   * @param {string} queryParams.keyVal - the key value to find the object to be updated
-   * @param {string} queryParams.query - the SOQL query, i.e. what gets executed is "SELECT &lt;query>"
-   * @param {string} queryParams.filter - additional query results filter - this
-   *  is added to the end of the SQL query
-   * @param {string} queryParams.queryXtra - additional bits to be
-   *  added to the end of the query, for example "LIMIT 100". "LIMIT 100" is auto added.
-   *  Use false to prevent auto adding, for example when using aggregate queries.
-   * alternatively, can pass in params as: objName, keyName, keyVal, filter, queryXtra
-  */
-  load(params) {
-    if (arguments.length>1) {
-      var p = {};
-      if (arguments[0]) p.objName   = arguments[0];
-      if (arguments[1]) p.keyName   = arguments[1];
-      if (arguments[2]) p.keyVal    = arguments[2];
-      if (arguments[3]) p.filter    = arguments[3];
-      if (arguments[4]) p.queryXtra = arguments[4];
-      return this.load(p);
-    }
-
-    if (!params.objName &amp;&amp; !params.query) {
-      console.log('Need object or query to load');
-      return Promise.resolve();
-    }
-
-    if (!params.query) params.query = ''
-    if (typeof params.queryXtra === "undefined") params.queryXtra = ''
-    if (params.queryXtra !== false &amp;&amp; params.query.toLowerCase().indexOf('limit') == -1 &amp;&amp;
-          params.queryXtra.toLowerCase().indexOf('limit') == -1)
-      params.queryXtra += ' limit 100';
-
-    if (params.objName)
-      console.log('Loading object: ' + params.objName);
-    else
-    console.log('Loading: ', params);
-    return this.convoEngine.persistentStore.load(params);
-  }
-  store(objName, dataToStore) {
-    console.log('Storing object: ' + objName);
-    return this.convoEngine.persistentStore.store(objName, dataToStore);
-  }
-  update(objName, keyName, keyVal, updateData) {
-    console.log('Updating object: ' + objName);
-    return this.convoEngine.persistentStore.update(objName, keyName, keyVal, updateData);
-  }
-  delete(objName, keyName, keyVal, deleteData) {
-    console.log('Deleting object: ' + objName);
-    return this.convoEngine.persistentStore.delete(objName, keyName, keyVal, deleteData);
   }
 
   // goals support
@@ -307,7 +254,7 @@ module.exports = Response;
 
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jul 23 2018 23:46:45 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Dec 28 2018 09:52:24 GMT-0500 (EST)
 </footer>
 
 <script> /*prettyPrint();*/ </script>

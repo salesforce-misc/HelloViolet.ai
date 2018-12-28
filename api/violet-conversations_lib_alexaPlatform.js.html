@@ -3,10 +3,12 @@ layout: docs
 title: 'JSDoc: Source: violet-conversations/lib/alexaPlatform.js'
 ---
 
-<h1 class="page-title">Source: violet-conversations/lib/alexaPlatform.js</h1>
+
+  <h1 class="page-title">Source: violet-conversations/lib/alexaPlatform.js</h1>
+
 
 <div id="generatedNav" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-response.html">response</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-InputMgr.html">InputMgr</a></li><li><a href="module-conversationEngine-OutputMgr.html">OutputMgr</a></li><li><a href="module-conversationEngine-ScriptParser.html">ScriptParser</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetStorePG-pgStore.html">pgStore</a></li><li><a href="module-violetStoreSF-sfStore.html">sfStore</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-violet.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-flowScriptCompiler.html">flowScriptCompiler</a></li><li><a href="module-outputMgr.html">outputMgr</a></li><li><a href="module-response.html">response</a></li><li><a href="module-scriptParser.html">scriptParser</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-IntentMgr.html">IntentMgr</a></li><li><a href="module-conversationEngine-PlatformMgr.html">PlatformMgr</a></li><li><a href="module-conversationEngine-PlatformPlugin.html">PlatformPlugin</a></li><li><a href="module-conversationEngine-PlatformReq.html">PlatformReq</a></li><li><a href="module-flowScriptCompiler-FlowScriptCompiler.html">FlowScriptCompiler</a></li><li><a href="module-outputMgr-OutputMgr.html">OutputMgr</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-scriptParser-ScriptParser.html">ScriptParser</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetList-ListWidget_.html">ListWidget</a></li><li><a href="module-violetStorePG-VioletStorePG.html">VioletStorePG</a></li><li><a href="module-violetStoreSF-VioletStoreSF.html">VioletStoreSF</a></li><li><a href="StorePlugin.html">StorePlugin</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-conversationEngine.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
 </div>
 
 <div class="codeDocs">
@@ -23,6 +25,8 @@ title: 'JSDoc: Source: violet-conversations/lib/alexaPlatform.js'
 
 const alexa = require('alexa-app');
 const alexaAppExt = require('./alexaAppExt.js');
+const PlatformReq = require('./platformPlugin.js').PlatformReq;
+const PlatformPlugin = require('./platformPlugin.js').PlatformPlugin;
 
 const violetToPlatformTypeMap = {
   'number': 'NUMBER',
@@ -33,19 +37,44 @@ const violetToPlatformTypeMap = {
   'phrase': 'AMAZON.SearchQuery'
 };
 
+class AlexaPlatformReq extends PlatformReq {
+  constructor(platform, request, response) {
+    super(platform, request, response);
+  }
+
+  getUserId() {
+    return this.request.userId;
+  }
+
+  getInputTypes() {
+    return alexaAppExt.reqListSlots(this.request);
+  }
+
+  getInputType(inputName) {
+    return this.request.slot(inputName);
+  }
+
+  getSession() {
+    return this.request.getSession();
+  }
+
+  say(str) {
+    this.response.say(str);
+  }
+
+  shouldEndSession(flag) {
+    this.response.shouldEndSession(flag);
+  }
+}
 
 // Started as an extremely thin shim that was created to support other platforms
-class AlexaPlatform {
+class AlexaPlatform extends PlatformPlugin {
   /**
    * Constructed and returned by Violet when a Voice Script initializes
    */
-  constructor(appName) {
-    this.appName = appName;
-    this._app = new alexa.app(appName);
-  }
-
-  getAppName() {
-    return this.appName;
+  constructor(endpoint) {
+    super(endpoint);
+    this._app = new alexa.app(this.endpoint);
   }
 
   setServerApp(alexaRouter) {
@@ -59,38 +88,37 @@ class AlexaPlatform {
   onError(cb) {
     this._app.error = (exception, requ, resp) => {
       console.log(exception);
-      cb(exception.message, requ, resp)
+      cb(exception.message, new AlexaPlatformReq(this, requ, resp));
     };
   }
 
   onLaunch(cb) {
     this._app.launch((requ, resp) => {
-      return cb(requ, resp);
+      return cb(new AlexaPlatformReq(this, requ, resp));
     });
   }
 
   regIntent(name, params, cb) {
     // translate from Violet types to Platform types
-    if (params.slots) {
-      Object.keys(params.slots).forEach(k=>{
-        if (violetToPlatformTypeMap[params.slots[k]]) {
-         params.slots[k] = violetToPlatformTypeMap[params.slots[k]];
+    if (params.inputTypes) {
+      params.slots = [];
+      Object.keys(params.inputTypes).forEach(k=>{
+        if (violetToPlatformTypeMap[params.inputTypes[k]]) {
+         params.slots[k] = violetToPlatformTypeMap[params.inputTypes[k]];
+       } else {
+         params.slots[k] = params.inputTypes[k];
        }
       });
     }
-    console.log('registering: ', name, params);
+    console.log('alexaPlatform: registering: ', name, params);
     this._app.intent(name, params, (requ, resp)=>{
       console.log(`Intent Request - ${name}: ${params.utterances[0]}, ...`);
-      return cb(requ, resp);
+      return cb(new AlexaPlatformReq(this, requ, resp));
     });
   }
 
   regCustomSlot(type, values) {
     this._app.customSlot(type, values);
-  }
-
-  getSlotsFromReq(requ) {
-    return alexaAppExt.reqListSlots(requ)
   }
 
 
@@ -109,7 +137,7 @@ module.exports = AlexaPlatform;
 
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jul 23 2018 23:46:45 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Dec 28 2018 09:52:24 GMT-0500 (EST)
 </footer>
 
 <script> /*prettyPrint();*/ </script>

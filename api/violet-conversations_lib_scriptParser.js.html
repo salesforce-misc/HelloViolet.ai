@@ -1,0 +1,190 @@
+---
+layout: docs
+title: 'JSDoc: Source: violet-conversations/lib/scriptParser.js'
+---
+
+
+  <h1 class="page-title">Source: violet-conversations/lib/scriptParser.js</h1>
+
+
+<div id="generatedNav" style="display:none">
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-flowScriptCompiler.html">flowScriptCompiler</a></li><li><a href="module-outputMgr.html">outputMgr</a></li><li><a href="module-response.html">response</a></li><li><a href="module-scriptParser.html">scriptParser</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-IntentMgr.html">IntentMgr</a></li><li><a href="module-conversationEngine-PlatformMgr.html">PlatformMgr</a></li><li><a href="module-conversationEngine-PlatformPlugin.html">PlatformPlugin</a></li><li><a href="module-conversationEngine-PlatformReq.html">PlatformReq</a></li><li><a href="module-flowScriptCompiler-FlowScriptCompiler.html">FlowScriptCompiler</a></li><li><a href="module-outputMgr-OutputMgr.html">OutputMgr</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-scriptParser-ScriptParser.html">ScriptParser</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetList-ListWidget_.html">ListWidget</a></li><li><a href="module-violetStorePG-VioletStorePG.html">VioletStorePG</a></li><li><a href="module-violetStoreSF-VioletStoreSF.html">VioletStoreSF</a></li><li><a href="StorePlugin.html">StorePlugin</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-conversationEngine.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
+</div>
+
+<div class="codeDocs">
+{% raw %}
+
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* Copyright (c) 2017-present, salesforce.com, inc. All rights reserved */
+/* Licensed under BSD 3-Clause - see LICENSE.txt or git.io/sfdc-license */
+
+/**
+ * Defines the ScriptParser class that helps parse Violet Scripts. This is the
+ * lower level - within strings parsing and is used by both the Script API as
+ * well as the Flow Language.
+ *
+ * @module scriptParser
+ */
+var utteranceHelper = require('alexa-utterances');
+var utils = require('./utils.js');
+
+ /**
+  * A set of static methods to help the ConversationEngine parse the Violet
+  * Script.
+  * &lt;br>&lt;br>
+  * Methods in this class are currently only used internally and therefore
+  * documentation is not exposed.
+  *
+  * @class
+  */
+class ScriptParser {
+  static get paramsRE() {
+    return /\[\[([a-zA-Z0-9_,+\-*\/\s\\\.\(\)\']*)\]\]/;
+  }
+  static get paramsGRE() {
+    return /\[\[([a-zA-Z0-9_,+\-*\/\s\\\.\(\)\']*)\]\]/g;
+  }
+
+  static interpolate(originalStr, foundStr, foundStrPos, replaceStr) {
+    return originalStr.substring(0, foundStrPos) + replaceStr + originalStr.substring(foundStrPos + foundStr.length);
+  }
+  static interpolateParamsFromStore(str, varExtractionRE, store) {
+    var varMatch;
+    while ((varMatch = varExtractionRE.exec(str)) != null) {
+      // varMatch[0] - {{varName}}
+      // varMatch[1] - varName
+      // varMatch.index - match position
+      // input - input string
+      // console.log('matched: ', varMatch[1])
+      str = ScriptParser.interpolate(str, varMatch[0], varMatch.index, store.get(varMatch[1]));
+    }
+    return str;
+  };
+
+  static forPunctuation(userSpeech) {
+    userSpeech = userSpeech.map(function(userSpeechItem) {
+      return userSpeechItem.replace(/[,?]/g,'');
+    });
+    userSpeech = userSpeech.map(function(userSpeechItem) {
+      return ScriptParser.interpolateParamsFromStore(userSpeechItem, /(\d+)/, {get: (num)=>{return utils.getNumAsStr(num);}});
+    });
+    return userSpeech;
+  }
+
+  static forInputTypes(inputTypes, userSpeech) {
+    // I. prevent conflicts between {x|y} and {|var}: split {x|y} into x, y
+    var userSpeechSplit = userSpeech.map(userSpeechItem => utteranceHelper(userSpeechItem) );
+    userSpeech = Array.prototype.concat(... userSpeechSplit); //single level flatten
+    // II. change to variable/slot format: [[varName]] -> {-|varName}
+    userSpeech = userSpeech.map((userSpeechItem) => {
+      // try to put in literal sampleValues (if available)
+      // we want to do:
+      // return userSpeechItem.replace(ScriptParser.paramsGRE,'{-|\$1}');
+      // but instead of the '-' we want to put in real values depending on the param matched
+      var literalSampleValuesStore = {
+        get: (inStr)=>{
+          // console.log('** inStr: ' + inStr);
+          var sampleValues = '-';
+          if (inputTypes[inStr] &amp;&amp; inputTypes[inStr].sampleValues) {
+            inputTypes[inStr].sampleValues = inputTypes[inStr].sampleValues
+                              .map(v=>{return v.trim();});
+            sampleValues = inputTypes[inStr].sampleValues.join('|');
+            // console.log('** literalSampleValuesStore: ' + inStr + ': ' + sampleValues);
+          } else if (!inputTypes[inStr]) {
+            console.error('ERROR - Received unexpected type :', inStr);
+            inputTypes[inStr] = 'phrase';
+          }
+          return '{' + sampleValues + '|' + inStr + '}';
+        }
+      };
+      return ScriptParser.interpolateParamsFromStore(userSpeechItem, ScriptParser.paramsRE, literalSampleValuesStore);
+    });
+    return userSpeech;
+  }
+
+  static forPhraseEquivalents(phraseEquivalents, userSpeech) {
+    // return userSpeech;
+    var max = userSpeech.length;
+    for (var ndx = 0; ndx&lt;max; ndx++) {
+      var userSpeechItem = userSpeech[ndx];
+      // go through all equivalent phrases (phraseEquivalents x equivSets) to see if there are any matches
+      phraseEquivalents.forEach((equivSets) => {
+        equivSets.forEach((phrase, phraseNdx) => {
+          var phrasePos = userSpeechItem.toLowerCase().indexOf(phrase.toLowerCase());
+          if (phrasePos == -1) return;
+
+          // found a match, lets add everything in the equivSets
+          var foundPhrasePos = phrasePos;
+          var foundPhrase = phrase;
+          var foundPhraseNdx = phraseNdx;
+          equivSets.forEach((phraseToInclude, phraseToIncludeNdx) => {
+            if (phraseToIncludeNdx == foundPhraseNdx) return;
+            userSpeech.push(ScriptParser.interpolate(userSpeechItem, foundPhrase, foundPhrasePos, phraseToInclude));
+          });
+        });
+      });
+    }
+    return userSpeech;
+  }
+
+  static extractParamsFromSpeech(inputTypes, userSpeech) {
+    var expectedParams = {};
+    userSpeech.forEach((speechStr) => {
+      var extractedVars = speechStr.match(/\|[a-zA-Z]*}/g);
+      if (!extractedVars) return;
+      extractedVars.forEach((extractedVar) => {
+        var ev = extractedVar.slice(1,-1); // strip first and last characters
+        if (ev.length == 0) return;
+        if (inputTypes[ev]) {
+          expectedParams[ev] = inputTypes[ev];
+          if (typeof expectedParams[ev] == 'object') { // support for custom types
+            expectedParams[ev]=expectedParams[ev].type;
+          }
+        }
+      });
+    });
+    return expectedParams;
+  }
+
+}
+
+module.exports = ScriptParser;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+{% endraw %}
+</div>
+
+
+<footer class="container">
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Dec 28 2018 09:52:24 GMT-0500 (EST)
+</footer>
+
+<script> /*prettyPrint();*/ </script>
+<!-- script src="scripts/linenumber.js"> </script -->
+<script>
+  // prism-ize: add language type and line-numbers
+  var codeEntries = document.getElementsByTagName('pre');
+  for (var ndx=0; ndx<codeEntries.length; ndx++) {
+    var node = codeEntries[ndx];
+    if (node.children.length!=1 && node.children[0].tagName!='CODE') continue;
+    if (!node.className.match(/lang/)) node.className += ' language-javascript'
+    if (node.className.match(/linenums/)) node.className += ' line-numbers'
+  }
+  // changes '<h3 class="subsection-title">Events</h3>'==><h3 class="subsection-title">Intents</h3>
+  var headingEntries = document.getElementsByTagName('h3');
+  for (var ndx=0; ndx<headingEntries.length; ndx++) {
+    var node = headingEntries[ndx];
+    if (node.className !== 'subsection-title') continue;
+    if (node.textContent == 'Events') node.textContent = 'Intents';
+  }
+</script>

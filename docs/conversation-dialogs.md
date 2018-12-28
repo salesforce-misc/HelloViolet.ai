@@ -3,7 +3,7 @@ layout: docs
 title: Conversational Elements - Dialogs
 redirect_from: /docs/conversation-changing-flow
 ---
-# Dialogs
+# &lt;dialog&gt;
 While most of a conversation can be defined by its branching nature, there are times when there are multiple inputs needed from a user for a particular task. In web apps, these are often done via forms.
 
 We use `dialog` to enable obtaining data for such a situation. The biggest difference between a dialog and a form is that dialogs are constantly checking (via `elicit` attribute on dialog) if they have all the input parameters to `resolve`. Dialogs need to define an `expecting` phrase (which is used to trigger them from a parent decision), any input parameters (via `item`) along with how to prompt for them, as well as a function to determine the next input parameter to ask the user for.

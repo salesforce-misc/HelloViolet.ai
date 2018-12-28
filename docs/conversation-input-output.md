@@ -2,9 +2,9 @@
 layout: docs
 title: Conversation - Input & Output Elements
 ---
-# Input & Output Elements
+# Input & Output
 
-Voice scripts often need communicate to users, and can do this primarily through the `say` element and can define what phrases could trigger an intent through the `expecting` element. When there are multiple `say` elements, they are concatenated.
+Voice scripts need to communicate to users, and they often do this by telling things to the user through the `say` element and by defining what they can listen through the `expecting` element.
 
 A trivial voice script would be:
 ```xml
@@ -15,9 +15,11 @@ A trivial voice script would be:
 </choice></app>
 ```
 
-The above script, on being triggered (such as by saying 'Hello'), would respond and say: 'Hey. Good to meet you'.
+The above script gets triggered by saying 'Hello', and would respond by saying: 'Hey. Good to meet you'. When there are multiple `say` elements, such as in the above example, the output has them all being included serially.
 
-For receiving user input such as parameters to an action, scripts need to first define the parameter type, for example:
+## Input Types
+
+Beyond just receiving pre-defined phrases as through the `expecting` element above, scripts can also receive typed parameters such as a number or a date from a user. In order to do this scripts need to first define the parameter type, for example:
 ```javascript
 violet.addInputTypes({
   'name': 'firstName',
@@ -37,9 +39,10 @@ The above script lets the user give their name and greets them accordingly.
 
 Scripts can use one of many supported parameter types including: `firstName`, `lastName`, `number`, `date`, `time`, `phoneNumber`, and `phrase`.
 
+## Output Elements
 
 Beyond the `say` element, scripts can provide output by:
-- Using the `sayOne` element to describe multiple optional output phrases for the framework to pick one randomly and provide for a variety of responses.
+- Using the [`sayOne`](/docs/conversation-element-sayOne) element to describe multiple optional output phrases for the framework to pick one randomly and provide for a variety of responses.
 - Using the `ask` element to ask a question to the user, which the framework will present to the user at the end of all the `say` elements.
 - Using the `prompt` element to ask one of up to 3 questions to the user, which will be presented together to the user at the end.
 

@@ -37,41 +37,7 @@ Additionally, the following are used to close conversation sessions by default:
 * Thanks
 * Thank you
 
-## Application Logic
-
-Voice scripts access session variables or services provided by the app by providing expressions in the form `[[expr]]`. When needing to process a method call before executing on other elements, the `resolve` element can be used, for example:
-
-```xml
-<resolve value="[[svc.methCall()]]">
-  <!-- elements that are run after the promise in methCall above returns -->
-</resolve>
-```
-
-Scripts can call a method to see if it returns a `true` value or not using the `if` tag:
-```xml
-<if value="[[svc.exists()]]">
-  <!-- ... -->
-</if>
-```
-
-Finally, scripts can check for multiple values using a `check`-`case`-`default` set of elements:
-```xml
-<check value="[[svc.exists()]]">
-  <case value="...">
-    <!-- ... -->
-  </case>
-  <default>
-    <!-- ... -->
-  </default>
-</check>
-```
-
-## Changing Flow
-
-Voice scripts can have the conversational flow `jump` to any other element by adding the target location:
-```xml
-  <jump target="#id"/>
-```
+Voice scripts access session variables or services provided by the app by providing expressions in the form `[[expr]]`.
 
 {%comment%}
 Additionally, a `scriptlet` element does not do anything other than grouping other elements. This element is often used to group a bunch of items that can be jumped to from another location.

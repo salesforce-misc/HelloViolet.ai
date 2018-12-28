@@ -3,7 +3,11 @@ layout: docs
 title: 'JSDoc: <?js= title ?>'
 ---
 
-<h1 class="page-title"><?js= title ?></h1>
+<?js if (title === 'Home') { ?>
+  <h1 class="page-title">API Reference</h1>
+<?js } else { ?>
+  <h1 class="page-title"><?js= title ?></h1>
+<?js } ?>
 
 <div id="generatedNav" style="display:none">
     <?js= this.nav ?>

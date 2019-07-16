@@ -3,6 +3,9 @@ description: Build Great Voice Experiences
 google_analytics: UA-109193428-1
 release_version: v0.14.1
 permalink: /blog/:year/:month/:day/:title
+paginate: 10
+paginate_path: /blog/page/:num
 plugins:
   - jekyll-feed
   - jekyll-redirect-from
+  - jekyll-paginate

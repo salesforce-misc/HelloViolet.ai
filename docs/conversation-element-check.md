@@ -6,7 +6,7 @@ title: Conversation Flow - Application Logic
 
 Finally, scripts can check for multiple values using a `check`-`case`-`default` set of elements:
 ```xml
-<check value="[[svc.exists()]]">
+<check value="svc.exists()">
   <case value="...">
     <!-- ... -->
   </case>

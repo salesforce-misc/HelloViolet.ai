@@ -26,22 +26,38 @@ Now you can start working on your script. Start by adding a reference to Violet:
 var violet = require('violet').script();
 ```
 
-Once you have done then, you can just declare what your script will respond to (i.e. an intent) and what it should do when triggered:
+Once you have done that, you can create a simple service that will get triggered:
+
 ```javascript
-violet.respondTo({
-  expecting: "Whats next on my todo",
-  resolve: function(response) {
-    var nextItem = todoSvc.getNextItem();
-    response.say(`Next item on your list is ${nextItem}`);
-}});
+const todoSvc = {
+  getNextItem: function() {
+    return "get the milk";
+  }
+};
 ```
 
-With this you can start the service.
+Now, all you need to do is declare what your script will respond to (i.e. the conversational flow) and hook it up to the service above:
+```javascript
+violet.addFlow(`
+    <app><choice>
+      <expecting>Whats next on my todo</expecting>
+      <say>Next item on your list is [[app.getNextItem()]]</say>
+    </choice></app>
+  `, {app: todoSvc});
+```
+
+
+With this you can start the code.
 
 When you launch the web-interface, you can send requests and get responses from the service:
 
 ![Alt text](/assets/images/content/web-tooling-ss.png){:width="700px"}
 
-As you get ready to deploy, make sure to put the service where it is accessible on the internet and when you need to - click on the registration button to follow the instructions.
+This web-interface tooling is incredibly helpful in debugging code. Once you are
+comfortable with this stage, you can work on deploying the code and having it
+work on a voice-enabled device.
+
+In order to deploy, make sure to first put the service where it is accessible
+on the internet. Once that is done - click on the Register button to follow the instructions.
 
 Now that you have built a simple app, try building something more sophisticated by thinking of [Conversational Flow](/docs/conversation-elements).

@@ -8,7 +8,7 @@ title: 'JSDoc: Source: violet-conversations/lib/flowScriptCompiler.js'
 
 
 <div id="generatedNav" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-flowScriptCompiler.html">flowScriptCompiler</a></li><li><a href="module-outputMgr.html">outputMgr</a></li><li><a href="module-response.html">response</a></li><li><a href="module-scriptParser.html">scriptParser</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-IntentMgr.html">IntentMgr</a></li><li><a href="module-conversationEngine-PlatformMgr.html">PlatformMgr</a></li><li><a href="module-conversationEngine-PlatformPlugin.html">PlatformPlugin</a></li><li><a href="module-conversationEngine-PlatformReq.html">PlatformReq</a></li><li><a href="module-flowScriptCompiler-FlowScriptCompiler.html">FlowScriptCompiler</a></li><li><a href="module-outputMgr-OutputMgr.html">OutputMgr</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-scriptParser-ScriptParser.html">ScriptParser</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetList-ListWidget_.html">ListWidget</a></li><li><a href="module-violetStorePG-VioletStorePG.html">VioletStorePG</a></li><li><a href="module-violetStoreSF-VioletStoreSF.html">VioletStoreSF</a></li><li><a href="StorePlugin.html">StorePlugin</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-conversationEngine.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-flowScriptCompiler.html">flowScriptCompiler</a></li><li><a href="module-outputMgr.html">outputMgr</a></li><li><a href="module-response.html">response</a></li><li><a href="module-scriptParser.html">scriptParser</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-IntentMgr.html">IntentMgr</a></li><li><a href="module-conversationEngine-PlatformMgr.html">PlatformMgr</a></li><li><a href="module-conversationEngine-PlatformPlugin.html">PlatformPlugin</a></li><li><a href="module-conversationEngine-PlatformReq.html">PlatformReq</a></li><li><a href="module-flowScriptCompiler-FlowScriptCompiler.html">FlowScriptCompiler</a></li><li><a href="module-outputMgr-OutputMgr.html">OutputMgr</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-scriptParser-ScriptParser.html">ScriptParser</a></li><li><a href="module-violetList-ListWidget.html">ListWidget</a></li><li><a href="module-violetList-listWidget_.html">listWidget</a></li><li><a href="module-violetStorePG-VioletStorePG.html">VioletStorePG</a></li><li><a href="module-violetStoreSF-VioletStoreSF.html">VioletStoreSF</a></li><li><a href="StorePlugin.html">StorePlugin</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-conversationEngine.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
 </div>
 
 <div class="codeDocs">
@@ -32,8 +32,8 @@ title: 'JSDoc: Source: violet-conversations/lib/flowScriptCompiler.js'
 const Promise = require('bluebird');
 const co = require('co');
 const cheerio = require('cheerio');
-const debug = require('debug')('flowScriptCompiler');
-
+const debug = require('debug')('flowScriptCompiler'); // to enable run as: DEBUG=flowScriptCompiler OR DEBUG=*
+const warn = require('debug')('warn:flowScriptCompiler'); // to enable run as: DEBUG=warn:flowScriptCompiler OR DEBUG=*
 ////////////////////
 // Utilities
 ////////////////////
@@ -56,6 +56,9 @@ class ConvoEl {
     this.cdoc = _cdoc;
     this.el = _el;
     this.node = _node;
+  }
+  hasAttrib(_name) {
+    return _name in this.el.attribs;
   }
   attrib(_name) {
     return this.el.attribs[_name];
@@ -84,6 +87,9 @@ class ConvoEl {
     return this.node.children().get().map((el)=>{
       return this._node(el);
     });
+  }
+  parent() {
+    return this._node(this.el.parent);
   }
   find(_sel) {
     // how is this different from selector?
@@ -182,17 +188,24 @@ class FlowScriptCompiler {
     FlowScriptCompiler.walkTree(flowScriptDoc, flowScriptDoc.root(), 0, dumpVisitor);
   }
 
-  static choiceHooksToRespondTo(flowScriptDoc, decisionChildType, decisionChildId, parentGoalId) {
-    var decisionChildNode = flowScriptDoc.selector(`#${decisionChildId}`)[0];
+  static _choiceHooksToRespondTo(flowScriptDoc, convoEngine, decisionChildType, decisionChildId, parentGoalId) {
+    var decisionChildIdSel = decisionChildId.replace(/([\.&lt;>@])/g, '\\$1');
+    var decisionChildNode = flowScriptDoc.selector(`#${decisionChildIdSel}`)[0];
     var intentDef = {
       name: decisionChildId
     };
     if (parentGoalId) intentDef.goal = parentGoalId;
 
     var expectings = decisionChildNode.find('> expecting');
-    if (expectings.length == 0) console.error(`ERROR - &lt;expecting> not found in ${decisionChildType}#${decisionChildId}`)
     if (expectings.length > 0)
       intentDef.expecting = expectings.map(n=>n.text());
+    if (convoEngine.expectings[decisionChildId]) {
+      if (intentDef.expecting &amp;&amp; !convoEngine.expectingsOverwrite)
+        intentDef.expecting = intentDef.expecting.concat(convoEngine.expectings[decisionChildId]);
+      else
+        intentDef.expecting = convoEngine.expectings[decisionChildId];
+    }
+    if (!intentDef.expecting || intentDef.expecting.length == 0) warn(`&lt;expecting> not found in ${decisionChildType}#${decisionChildId}`)
 
     // console.log(`tagging intentDef.resolve for ${decisionChildId} and ${decisionChildNode.name()}`);
     intentDef.resolve = (response) => {
@@ -202,19 +215,19 @@ class FlowScriptCompiler {
     return intentDef;
   }
 
-  static choiceHooksForRegistering(flowScriptDoc, parentGoalId, node, intentTags = intentWidgetTypes) {
+  static choiceHooksForRegistering(flowScriptDoc, convoEngine, parentGoalId, node, intentTags = intentWidgetTypes) {
     var respondArr = [];
     var intentTagSelector = intentTags.map(t=>`> ${t}`).join(', ');
     var intentTagNodes = node.find(intentTagSelector);
     intentTagNodes.forEach(child=>{
-      var rTo = FlowScriptCompiler.choiceHooksToRespondTo(flowScriptDoc, child.name(), child.id(), parentGoalId);
+      var rTo = FlowScriptCompiler._choiceHooksToRespondTo(flowScriptDoc, convoEngine, child.name(), child.id(), parentGoalId);
       // console.log(`decisionNodeChild id: ${child.attribs.id} `, rTo)
       respondArr.push(rTo);
     });
     return respondArr;
   }
 
-  static compile(flowScriptDoc, scriptModels, convoEngine, namespace='') {
+  static compile(flowScriptDoc, scriptModels, convoEngine, namespace='node') {
     // TODO: support 3rd party widgets with declared dependencies
 
     // the hard part here is in the automated-state-management (ASM), to support it
@@ -240,8 +253,8 @@ class FlowScriptCompiler {
       // and may only contain alphabets, periods, and underscores.
       if (idPrefix.length != 0) idPrefix += '_';
       const myId = idPrefix + _numToA26(ndx);
-      if (!childNode.node.attr('id')) childNode.node.attr('id', 'node_' + myId);
-      return myId;
+      if (!childNode.node.attr('id')) childNode.node.attr('id', myId);
+      return childNode.node.attr('id');
     };
     FlowScriptCompiler.walkTree(flowScriptDoc, flowScriptDoc.root(), namespace, idVisitor);
 
@@ -287,7 +300,7 @@ class FlowScriptCompiler {
     //console.log(`> resolveElementChildrenForOutlet: ${el.name} #${el.attribs.id} - ${elNode.text()}`)
     var elChildren = elNode.children();
     return Promise.mapSeries(elChildren, child=>{
-      if (exceptions.hasOwnProperty(child.name)) return;
+      if (exceptions.hasOwnProperty(child.name())) return;
       return FlowScriptCompiler.resolveElementForOutlet(response, flowScriptDoc, child);
     });
   }
@@ -354,7 +367,7 @@ module.exports = FlowScriptCompiler;
 
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Dec 28 2018 09:52:24 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Aug 15 2019 22:21:30 GMT-0400 (EDT)
 </footer>
 
 <script> /*prettyPrint();*/ </script>

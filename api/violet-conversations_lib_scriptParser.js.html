@@ -8,7 +8,7 @@ title: 'JSDoc: Source: violet-conversations/lib/scriptParser.js'
 
 
 <div id="generatedNav" style="display:none">
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-flowScriptCompiler.html">flowScriptCompiler</a></li><li><a href="module-outputMgr.html">outputMgr</a></li><li><a href="module-response.html">response</a></li><li><a href="module-scriptParser.html">scriptParser</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-IntentMgr.html">IntentMgr</a></li><li><a href="module-conversationEngine-PlatformMgr.html">PlatformMgr</a></li><li><a href="module-conversationEngine-PlatformPlugin.html">PlatformPlugin</a></li><li><a href="module-conversationEngine-PlatformReq.html">PlatformReq</a></li><li><a href="module-flowScriptCompiler-FlowScriptCompiler.html">FlowScriptCompiler</a></li><li><a href="module-outputMgr-OutputMgr.html">OutputMgr</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-scriptParser-ScriptParser.html">ScriptParser</a></li><li><a href="module-violetList-listWidget.html">listWidget</a></li><li><a href="module-violetList-ListWidget_.html">ListWidget</a></li><li><a href="module-violetStorePG-VioletStorePG.html">VioletStorePG</a></li><li><a href="module-violetStoreSF-VioletStoreSF.html">VioletStoreSF</a></li><li><a href="StorePlugin.html">StorePlugin</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-conversationEngine.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-conversationEngine.html">conversationEngine</a></li><li><a href="module-flowScriptCompiler.html">flowScriptCompiler</a></li><li><a href="module-outputMgr.html">outputMgr</a></li><li><a href="module-response.html">response</a></li><li><a href="module-scriptParser.html">scriptParser</a></li><li><a href="module-utils.html">utils</a></li><li><a href="module-violet.html">violet</a></li><li><a href="module-violetList.html">violetList</a></li><li><a href="module-violetSrvr.html">violetSrvr</a></li><li><a href="module-violetStorePG.html">violetStorePG</a></li><li><a href="module-violetStoreSF.html">violetStoreSF</a></li><li><a href="module-violetTime.html">violetTime</a></li></ul><h3>Classes</h3><ul><li><a href="AlexaPlatform.html">AlexaPlatform</a></li><li><a href="module-conversationEngine-ConversationEngine.html">ConversationEngine</a></li><li><a href="module-conversationEngine-IntentMgr.html">IntentMgr</a></li><li><a href="module-conversationEngine-PlatformMgr.html">PlatformMgr</a></li><li><a href="module-conversationEngine-PlatformPlugin.html">PlatformPlugin</a></li><li><a href="module-conversationEngine-PlatformReq.html">PlatformReq</a></li><li><a href="module-flowScriptCompiler-FlowScriptCompiler.html">FlowScriptCompiler</a></li><li><a href="module-outputMgr-OutputMgr.html">OutputMgr</a></li><li><a href="module-response-Response.html">Response</a></li><li><a href="module-scriptParser-ScriptParser.html">ScriptParser</a></li><li><a href="module-violetList-ListWidget.html">ListWidget</a></li><li><a href="module-violetList-listWidget_.html">listWidget</a></li><li><a href="module-violetStorePG-VioletStorePG.html">VioletStorePG</a></li><li><a href="module-violetStoreSF-VioletStoreSF.html">VioletStoreSF</a></li><li><a href="StorePlugin.html">StorePlugin</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:(unnamed)">(unnamed)</a></li><li><a href="module-conversationEngine.html#~event:closeSession">closeSession</a></li><li><a href="global.html#event:Howdy">Howdy</a></li><li><a href="global.html#event:HowWork">HowWork</a></li><li><a href="global.html#event:Intro">Intro</a></li><li><a href="global.html#event:MajorIntent">MajorIntent</a></li><li><a href="global.html#event:setAlert">setAlert</a></li><li><a href="module-violetTime.html#~event:timeFwd">timeFwd</a></li><li><a href="module-violetTime.html#~event:timeReq">timeReq</a></li><li><a href="global.html#event:unsetAlert">unsetAlert</a></li><li><a href="global.html#event:WakeUp">WakeUp</a></li></ul>
 </div>
 
 <div class="codeDocs">
@@ -33,6 +33,10 @@ title: 'JSDoc: Source: violet-conversations/lib/scriptParser.js'
 var utteranceHelper = require('alexa-utterances');
 var utils = require('./utils.js');
 
+const internalPrefixId = 'violet';
+const internalIdSep = '_';
+
+var _isPromise = obj => obj &amp;&amp; typeof obj.then == 'function';
  /**
   * A set of static methods to help the ConversationEngine parse the Violet
   * Script.
@@ -51,6 +55,10 @@ class ScriptParser {
   }
 
   static interpolate(originalStr, foundStr, foundStrPos, replaceStr) {
+    if (_isPromise(replaceStr)) {
+      console.log('ERROR: Cannot interpolate a promise');
+      return 'error';
+    }
     return originalStr.substring(0, foundStrPos) + replaceStr + originalStr.substring(foundStrPos + foundStr.length);
   }
   static interpolateParamsFromStore(str, varExtractionRE, store) {
@@ -82,6 +90,7 @@ class ScriptParser {
     userSpeech = Array.prototype.concat(... userSpeechSplit); //single level flatten
     // II. change to variable/slot format: [[varName]] -> {-|varName}
     userSpeech = userSpeech.map((userSpeechItem) => {
+      userSpeechItem = userSpeechItem.trim().replace(/\s+/,' ');
       // try to put in literal sampleValues (if available)
       // we want to do:
       // return userSpeechItem.replace(ScriptParser.paramsGRE,'{-|\$1}');
@@ -89,6 +98,11 @@ class ScriptParser {
       var literalSampleValuesStore = {
         get: (inStr)=>{
           // console.log('** inStr: ' + inStr);
+          if (inStr.startsWith(internalPrefixId) &amp;&amp; !inputTypes[inStr]) {
+            // just-in-time add internal types
+            inputTypes[inStr] = inStr.split(internalIdSep)[1];
+          }
+
           var sampleValues = '-';
           if (inputTypes[inStr] &amp;&amp; inputTypes[inStr].sampleValues) {
             inputTypes[inStr].sampleValues = inputTypes[inStr].sampleValues
@@ -97,7 +111,7 @@ class ScriptParser {
             // console.log('** literalSampleValuesStore: ' + inStr + ': ' + sampleValues);
           } else if (!inputTypes[inStr]) {
             console.error('ERROR - Received unexpected type :', inStr);
-            inputTypes[inStr] = 'phrase';
+            inputTypes[inStr] = ScriptParser.getDefaultType();
           }
           return '{' + sampleValues + '|' + inStr + '}';
         }
@@ -132,20 +146,29 @@ class ScriptParser {
     return userSpeech;
   }
 
+  static getVarType(inputTypes, type) {
+    var name = inputTypes[type];
+
+    // support custom types
+    if (name &amp;&amp; typeof name == 'object') name = name.type;
+
+    return name;
+  }
+
+  static getDefaultType() {
+    return "phrase";
+  }
+
   static extractParamsFromSpeech(inputTypes, userSpeech) {
     var expectedParams = {};
     userSpeech.forEach((speechStr) => {
-      var extractedVars = speechStr.match(/\|[a-zA-Z]*}/g);
+      var extractedVars = speechStr.match(/\|[a-zA-Z_]*}/g);
       if (!extractedVars) return;
       extractedVars.forEach((extractedVar) => {
         var ev = extractedVar.slice(1,-1); // strip first and last characters
         if (ev.length == 0) return;
-        if (inputTypes[ev]) {
-          expectedParams[ev] = inputTypes[ev];
-          if (typeof expectedParams[ev] == 'object') { // support for custom types
-            expectedParams[ev]=expectedParams[ev].type;
-          }
-        }
+        var evName = ScriptParser.getVarType(inputTypes, ev);
+        if (evName) expectedParams[ev] = evName;
       });
     });
     return expectedParams;
@@ -166,7 +189,7 @@ module.exports = ScriptParser;
 
 
 <footer class="container">
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Dec 28 2018 09:52:24 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Aug 15 2019 22:21:30 GMT-0400 (EDT)
 </footer>
 
 <script> /*prettyPrint();*/ </script>

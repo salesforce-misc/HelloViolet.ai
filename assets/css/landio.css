@@ -162,7 +162,8 @@
 
 /* site customizations */
 #main li a, #main li a:visited, #main li a:active, p a, p a:visited, p a:active {
-  background-color: rgba(138, 99, 189, 0.3);
+  /* background-color: rgba(138, 99, 189, 0.3); */
+  background-color: rgba(216, 187, 253, 0.3); /*keeping hue, but matching saturation and luminence as react.js*/
   border-bottom: 1px solid rgba(0,0,0,0.2);
   color: black;
   padding: 0 3px;
@@ -188,7 +189,8 @@ nav#sideNav h3 {
   font-size: 1.2rem;
   margin-top: 0.75rem;
   margin-bottom: 0.25rem;
-  background: lightgray;
+  /* background: lightgray; */
+  background: #eeeeee;
   padding: 1px 5px;
 }
 

@@ -28,8 +28,10 @@ this project with all repositories updated, and then typing:
    rm -rf api; jsdoc -c _jsdoc/conf.json
 ```
 
+When the API documentation needs to be updated, the above command should be run in the `master` branch before running the `_publish.sh` script below.
+
 ### Publishing
-Updated documentation and any other source files need to be copied to the `gh-pages` branch. The following command should help (assuming that the repository is checked out in a sibling directory):
+Updated documentation and any other source files need to be copied to the `gh-pages` branch. The following command should help (assuming that the repository is checked out in a sibling directory, and that the code is run in the `master` directory):
 ```
   ./_publish.sh
   cd ../HelloViolet.ai-gh

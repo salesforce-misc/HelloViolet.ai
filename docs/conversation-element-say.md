@@ -23,3 +23,5 @@ The pause between sequential `say` elements can be disabled by using the `quick`
 <say quick="true">Good to meet you</say>
 ...
 ```
+
+Assuming no nested nodes follow the `say` element, then by default the conversation will end (the client will not listen for a user response). However, whether the conversations are being kept open/running or being closed/ended can be set by adding the `endConversation` and the `keepConversationRunning` attributes to the `say` element.

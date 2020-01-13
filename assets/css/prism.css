@@ -134,6 +134,9 @@ pre.line-numbers > code {
   position: relative;
 }
 
+.line-numbers + .line-numbers {
+  margin-top: -3rem;
+}
 .line-numbers .line-numbers-rows {
   position: absolute;
   pointer-events: none;

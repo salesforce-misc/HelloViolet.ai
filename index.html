@@ -112,6 +112,26 @@ layout: default
 
 <section class="text-xs-left">
   <div class="container">
+
+    <div class="row">
+      <div class="col-xs-12">
+        <h2>Automatic Conversation Mangement</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <p>
+          Define conversations - using nested user decisions and voice-based &lsquo;forms&rsquo; - with an HTML-inspired <a href="/docs/conversation-flow-basics">Conversation Flow Language</a> and integrate with applicaion logic.
+        </p>
+      </div>
+      <div class="col-md-8">
+        <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">var violet = require('violet').script();
+var todoSvc = {...};
+
+violet.addFlow(`&lt;app&gt;&lt;!-- conversation --&gt;&lt;/app&gt;`, todoSvc);</code></pre>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-xs-12">
         <h2>Respond to Users</h2>
@@ -120,19 +140,20 @@ layout: default
     <div class="row">
       <div class="col-md-4">
         <p>
-          Declare what you would like to respond to from the user and what your response would be when the intent is triggered.
+          Declare when you want your conversation triggered by user choices (intents) and what you would like to respond with.
         </p>
       </div>
       <div class="col-md-8">
-        <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.addFlow(`
-    &lt;app&gt;&lt;choice&gt;
-      &lt;expecting&gt;Whats next on my todo&lt;/expecting&gt;
-      &lt;say&gt;Next item on your list is [[todoSvc.getNextItem()]]&lt;/say&gt;
-    &lt;/choice&gt;&lt;/app&gt;
-  `, todoSvc);</code></pre>
-
+        <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-html">&lt;app&gt;
+  &lt;choice&gt;
+    &lt;expecting&gt;Whats next on my todo&lt;/expecting&gt;
+    &lt;say&gt;Next item on your list is [[todoSvc.getNextItem()]]&lt;/say&gt;
+  &lt;/choice&gt;
+&lt;/app&gt;</code></pre>
       </div>
     </div>
+
+
     <div class="row">
       <div class="col-xs-12">
         <h2>Get Input from Users</h2>
@@ -141,19 +162,17 @@ layout: default
     <div class="row">
       <div class="col-md-4">
         <p>
-          Declare input variables and use them when expecting an input from users.
+          Define input variables and use them in your conversations when expecting an input from users.
         </p>
       </div>
       <div class="col-md-8">
-        <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.addInputTypes({'todoItem': phrase});
-violet.addFlow(`
-  &lt;app&gt;&lt;choice&gt;
-    &lt;expecting&gt;Remind me to do [[todoItem]]&lt;/expecting&gt;
+        <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.addInputTypes({'todoItem': phrase});</code></pre>
+        <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-html">&lt;app&gt;&lt;choice&gt;
+    &lt;expecting&gt;Remind me to [[todoItem]]&lt;/expecting&gt;
     &lt;resolve value="[[todoSvc.add(response, 'todoItem')]]"&gt;
       &lt;say&gt;Added [[todoItem]] to your list&lt;/say&gt;
     &lt;/resolve&gt;
-  &lt;/choice&gt;&lt;/app&gt;
-`, todoSvc);</code></pre>
+  &lt;/choice&gt;&lt;/app&gt;</code></pre>
       </div>
     </div>
 
@@ -196,7 +215,7 @@ violet.respondTo(
     <div class="row">
       <div class="col-md-4">
         <p>
-          Sophisticated conversations are supported by grouping user choices into (potentially nested) decisions.
+          Build sophisticated conversations by grouping user choices into (potentially nested) decisions.
         </p>
       </div>
       <div class="col-md-8">

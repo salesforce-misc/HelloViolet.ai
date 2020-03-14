@@ -7,7 +7,7 @@ redirect_from:
 ---
 # Flow Design
 
-Building Voice Applications can be challenging without defining a high-level flow of how conversations will happen. These flows describe a user's interaction with the app and shows how the app will guide the user to the right area. On larger teams Conversational Flows are typically defined by the UX team along with Sample Dialogs (see [Script Design](/docs/conversation-script-design) for more).
+Building Voice Applications can be challenging without defining a high-level flow of how conversations will happen. These flows describe a user's interaction with the app and shows how the app will guide the user to the right area. On larger teams Conversational Flows are typically defined by the UX team along with Sample Dialogs (see [Conversational Design](/docs/conversation-script-design) for more).
 
 Conversational Flows provide the skeleton of what state-management will need to be done by a Voice Application. These can be built by developers on an application-by-application basis or can be
 leveraged from a State-Management engine such as the one provided by Violet.

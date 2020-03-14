@@ -8,13 +8,13 @@ layout: default
 <header class="jumbotron bg-inverse text-xs-center center-vertically notfull" role="banner">
   <div class="container">
     <!-- <h1 class="display-3">Violet</h1> -->
-    <h2 class="m-b-3">Voice Bots for Alexa, Google &amp; Mobile</h2>
+    <h2 class="m-b-3">Voice Apps for Alexa, Google &amp; Mobile</h2>
     <!-- <a class="btn btn-secondary-outline m-b-1" href="http://tympanus.net/codrops/?p=25217" role="button"><span class="icon-sketch"></span>Sketch included</a> -->
     <div class="row">
       <div class="hidden-xs-down col-md-2"></div>
       <div class="col-xs-12 col-md-8">
         <p>
-          Building a Voice App? With Violet create Conversation Flows using an HTML-inspired language and Javascript (Node.js).<br/>
+          <!-- Building a Voice App? With Violet --> Create Conversation Flows using an HTML-like language and Javascript (Node.js).<br/>
           Code with built-in support for UX patterns, local browser-based testing, and plugins to
           simplify logic.
         </p>
@@ -168,11 +168,11 @@ violet.addFlow(`&lt;app&gt;&lt;!-- conversation --&gt;&lt;/app&gt;`, todoSvc);</
       <div class="col-md-8">
         <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-javascript">violet.addInputTypes({'todoItem': phrase});</code></pre>
         <pre class="line-numbers" style="white-space: pre-wrap"><code class="language-html">&lt;app&gt;&lt;choice&gt;
-    &lt;expecting&gt;Remind me to [[todoItem]]&lt;/expecting&gt;
-    &lt;resolve value="[[todoSvc.add(response, 'todoItem')]]"&gt;
-      &lt;say&gt;Added [[todoItem]] to your list&lt;/say&gt;
-    &lt;/resolve&gt;
-  &lt;/choice&gt;&lt;/app&gt;</code></pre>
+  &lt;expecting&gt;Remind me to [[todoItem]]&lt;/expecting&gt;
+  &lt;resolve value="[[todoSvc.add(response, 'todoItem')]]"&gt;
+    &lt;say&gt;Added [[todoItem]] to your list&lt;/say&gt;
+  &lt;/resolve&gt;
+&lt;/choice&gt;&lt;/app&gt;</code></pre>
       </div>
     </div>
 

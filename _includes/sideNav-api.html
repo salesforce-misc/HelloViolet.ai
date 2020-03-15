@@ -1,0 +1,63 @@
+{% assign urlWithDash  = page.url | split:'-' %} {% comment %} test for within conversation flow section:::: urlWithDash[0] == '/docs/conversation' {% endcomment %}
+{% assign urlWithSlash = page.url | split:'/' %} {% comment %} test for within api documentation section:::: urlWithSlash[1] == 'api' {% endcomment %}
+<h2><a href="/api">API Reference</a></h2>
+<!-- <h3>Core</h3> -->
+<h3><a href="/api/module-violet">Modules</a></h3>
+{% if urlWithSlash[1] == 'api' %}
+<ul>
+  <li {% if page.url == '/api/module-violet' %} class="active" {% endif %}><a href="/api/module-violet">violet</a></li>
+  <!-- // Remove pure Class Containers
+  <li {% if page.url == '/api/module-response' %} class="active" {% endif %}><a href="/api/module-response">response</a></li>
+  <li {% if page.url == '/api/module-conversationEngine' %} class="active" {% endif %}><a href="/api/module-conversationEngine">conversationEngine</a></li>
+  -->
+  <li {% if page.url == '/api/module-violetSrvr' %} class="active" {% endif %}><a href="/api/module-violetSrvr">violetSrvr</a></li>
+  <li {% if page.url == '/api/module-utils' %} class="active" {% endif %}><a href="/api/module-utils">utils</a></li>
+</ul>
+{% endif %}
+<h3><a href="/api/module-conversationEngine-ConversationEngine">Core</a></h3>
+{% if urlWithSlash[1] == 'api' %}
+<ul>
+  <li {% if page.url == '/api/module-conversationEngine-ConversationEngine' %} class="active" {% endif %}><a href="/api/module-conversationEngine-ConversationEngine">ConversationEngine</a></li>
+  <li {% if page.url == '/api/module-response-Response' %} class="active" {% endif %}><a href="/api/module-response-Response">Response</a></li>
+</ul>
+{% endif %}
+<h3><a href="/api/module-flowScriptCompiler-FlowScriptCompiler">Widgets</a></h3>
+{% if urlWithSlash[1] == 'api' %}
+<ul>
+  <li {% if page.url == '/api/module-flowScriptCompiler-FlowScriptCompiler' %} class="active" {% endif %}><a href="/api/module-flowScriptCompiler-FlowScriptCompiler">FlowScriptCompiler</a></li>
+  <li {% if page.url == '/api/module-flowScriptCompiler-ConvoDoc' %} class="active" {% endif %}><a href="/api/module-flowScriptCompiler-ConvoDoc">ConvoDoc</a></li>
+  <li {% if page.url == '/api/module-flowScriptCompiler-ConvoEl' %} class="active" {% endif %}><a href="/api/module-flowScriptCompiler-ConvoEl">ConvoEl</a></li>
+</ul>
+{% endif %}
+<h3><a href="/api/module-conversationEngine-IntentMgr">Support</a></h3>
+{% if urlWithSlash[1] == 'api' %}
+<ul>
+  <!-- <li><hr style="margin-top:0px;margin-bottom:0px"></li> -->
+  <li {% if page.url == '/api/module-conversationEngine-IntentMgr' %} class="active" {% endif %}><a href="/api/module-conversationEngine-IntentMgr">IntentMgr</a></li>
+  <li {% if page.url == '/api/module-outputMgr-OutputMgr' %} class="active" {% endif %}><a href="/api/module-outputMgr-OutputMgr">OutputMgr</a></li>
+  <li {% if page.url == '/api/module-scriptParser-ScriptParser' %} class="active" {% endif %}><a href="/api/module-scriptParser-ScriptParser">ScriptParser</a></li>
+  <li {% if page.url == '/api/module-conversationEngine-PlatformMgr' %} class="active" {% endif %}><a href="/api/module-conversationEngine-PlatformMgr">PlatformMgr</a></li>
+</ul>
+{% endif %}
+<h3><a href="/api/module-conversationEngine-PlatformPlugin">Platform Plugins</a></h3>
+{% if urlWithSlash[1] == 'api' %}
+<ul>
+  <li {% if page.url == '/api/module-conversationEngine-PlatformPlugin' %} class="active" {% endif %}><a href="/api/module-conversationEngine-PlatformPlugin">PlatformPlugin</a></li>
+  <li {% if page.url == '/api/module-conversationEngine-PlatformReq' %} class="active" {% endif %}><a href="/api/module-conversationEngine-PlatformReq">PlatformReq</a></li>
+  <!-- <li><hr style="margin-top:0.5rem;margin-bottom:0.5rem;width:75%"/></li> -->
+</ul>
+{% endif %}
+<h3><a href="/api/module-violetStorePG">Additional Plugins</a></h3>
+{% if urlWithSlash[1] == 'api' %}
+<ul>
+  <li {% if page.url == '/api/module-violetStorePG' %} class="active" {% endif %}><a href="/api/module-violetStorePG">violetStorePG</a></li>
+  <li {% if page.url == '/api/module-violetStorePG-VioletStorePG' %} class="active" {% endif %}><a href="/api/module-violetStorePG-VioletStorePG">- VioletStorePG</a></li>
+  <li {% if page.url == '/api/module-violetStoreSF' %} class="active" {% endif %}><a href="/api/module-violetStoreSF">violetStoreSF</a></li>
+  <li {% if page.url == '/api/module-violetStoreSF-VioletStoreSF' %} class="active" {% endif %}><a href="/api/module-violetStoreSF-VioletStoreSF">- VioletStoreSF</a></li>
+  <li {% if page.url == '/api/module-violetList' %} class="active" {% endif %}><a href="/api/module-violetList">violetList</a></li>
+  <li {% if page.url == '/api/module-violetList-ListWidget' %} class="active" {% endif %}><a href="/api/module-violetList-ListWidget">- ListWidget</a></li>
+</ul>
+{% endif %}
+<h2><a href="/docs/quickstart">Developer Guides</a></h2>
+<h2><a href="/docs/conversation-flow-design">Conversational Flow</a></h2>
+<h2><a href="/docs/contributing">Contributing</a></h2>

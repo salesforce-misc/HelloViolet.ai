@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: conversation
 title: Conversation - Input & Output Elements
 ---
 # &lt;prompt&gt;

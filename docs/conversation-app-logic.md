@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: conversation
 title: Conversation Flow - Application Logic
 ---
 # Application Object

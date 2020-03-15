@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: conversation
 title: Conversation Flow Scripts
 ---
 # Conversation Flow Scripts - Basics

@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: conversation
 title: Conversational Elements - Dialogs
 redirect_from: /docs/conversation-changing-flow
 ---

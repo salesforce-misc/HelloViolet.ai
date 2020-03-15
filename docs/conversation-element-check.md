@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: conversation
 title: Conversation Flow - Application Logic
 ---
 # &lt;check&gt;, &lt;case&gt; and &lt;default&gt;

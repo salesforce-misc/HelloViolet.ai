@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: conversation
 title: Conversational Flow - Elements
 ---
 # Conversational Elements
